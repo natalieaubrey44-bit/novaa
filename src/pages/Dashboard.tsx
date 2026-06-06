@@ -451,45 +451,45 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-muted text-[#0369a1] flex flex-col pt-16">
+    <div className="min-h-screen bg-brand-light text-brand-primary flex flex-col">
       {/* Dynamic Sub-header Info Alert Strip */}
-      <div className="bg-white border-b border-brand-secondary/60 px-4 py-2 text-xs flex flex-wrap justify-between items-center gap-2 relative z-20">
+      <div className="bg-brand-primary border-b border-white/8 px-4 py-2 text-xs flex flex-wrap justify-between items-center gap-2 relative z-20">
         <div className="flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-brand-success animate-pulse"></span>
-          <span className="text-[#0369a1]/90">
+          <span className="inline-block w-2 h-2 rounded-full bg-brand-accent"></span>
+          <span className="text-white/60">
             Multi-Factor Token Status:{" "}
-            <strong className="text-[#0369a1]">SECURE</strong>
+            <strong className="text-white/90">Secure</strong>
           </span>
         </div>
-        <div className="flex items-center gap-4 text-[#0369a1]/70">
+        <div className="flex items-center gap-4 text-white/40">
           <span>
             Client:{" "}
-            <strong className="text-[#0369a1] font-bold">{user.email}</strong>
+            <strong className="text-white/70 font-medium">{user.email}</strong>
           </span>
           <span className="hidden md:inline">
-            Last Login System IP: 192.168.1.104
+            Last login IP: 192.168.1.104
           </span>
         </div>
       </div>
 
       <div className="flex-1 flex flex-col lg:flex-row min-w-0 relative">
         {/* Mobile Header / Hamburger Row */}
-        <div className="lg:hidden bg-white border-b border-brand-secondary/40 px-4 py-3 flex items-center justify-between shadow-sm relative z-30">
+        <div className="lg:hidden bg-brand-primary border-b border-white/8 px-4 py-3 flex items-center justify-between relative z-30">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => setMobileSidebarOpen(true)}
               aria-label="Open navigation menu"
-              className="p-2 -ml-2 rounded-lg text-brand-primary hover:bg-brand-muted transition-colors cursor-pointer focus:outline-none"
+              className="p-2 -ml-2 rounded-lg text-white/70 hover:text-white transition-colors cursor-pointer focus:outline-none"
             >
               <Menu size={24} />
             </button>
-            <span className="font-bold text-sm text-brand-primary uppercase tracking-wider">
+            <span className="font-medium text-sm text-white/80 tracking-wide">
               {NAV_ITEMS.find((n) => n.id === activeTab)?.label || "Dashboard"}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold shadow-sm text-sm border border-brand-accent/20">
+            <div className="w-8 h-8 rounded-full bg-brand-accent/20 border border-brand-accent/30 text-white flex items-center justify-center font-medium text-sm">
               {user.name.charAt(0)}
             </div>
           </div>
@@ -512,19 +512,19 @@ export default function Dashboard() {
             LEFT SIDEBAR (Main Navigation)
            ======================================================= */}
         <aside
-          className={`fixed inset-y-0 left-0 z-50 w-72 lg:w-64 bg-white shadow-2xl lg:shadow-sm shrink-0 flex flex-col transition-transform duration-300 lg:relative lg:translate-x-0 lg:border-r border-brand-secondary/40 ${
+          className={`fixed inset-y-0 left-0 z-50 w-72 lg:w-64 bg-brand-primary shrink-0 flex flex-col transition-transform duration-300 lg:relative lg:translate-x-0 lg:border-r border-white/8 ${
             mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* Mobile Sidebar Header */}
-          <div className="p-4 flex items-center justify-between lg:hidden border-b border-brand-secondary/40 bg-brand-muted">
-            <span className="font-display font-medium text-lg tracking-tight text-brand-primary">
-              Nova<span className="text-brand-accent font-black">Finance</span>
+          <div className="p-4 flex items-center justify-between lg:hidden border-b border-white/8">
+            <span className="font-display font-semibold text-lg tracking-tight text-white">
+              Nova<span className="text-brand-accent">Finance</span>
             </span>
             <button
               type="button"
               onClick={() => setMobileSidebarOpen(false)}
-              className="p-2 text-brand-primary hover:bg-brand-secondary/50 rounded-full transition-colors cursor-pointer"
+              className="p-2 text-white/60 hover:text-white rounded-lg transition-colors cursor-pointer"
               aria-label="Close sidebar"
             >
               <X size={20} />
@@ -532,30 +532,27 @@ export default function Dashboard() {
           </div>
 
           {/* Sidebar Menu User Unit */}
-          <div className="p-6 border-b border-brand-secondary/40 bg-brand-muted/70 hidden lg:block">
+          <div className="p-6 border-b border-white/8 hidden lg:block">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-white border border-brand-accent flex items-center justify-center font-bold text-brand-primary shadow-sm text-lg">
+              <div className="w-10 h-10 rounded-sm bg-brand-accent/20 border border-brand-accent/30 flex items-center justify-center font-semibold text-white text-sm">
                 {user.name.charAt(0)}
               </div>
               <div className="min-w-0">
-                <p className="text-[10px] text-brand-primary/60 font-semibold uppercase tracking-wider">
-                  Secure Account Office
+                <p className="text-[10px] text-white/35 font-medium uppercase tracking-widest">
+                  Private Banking
                 </p>
-                <p className="text-sm font-bold text-brand-primary truncate">
+                <p className="text-sm font-medium text-white truncate">
                   {user.name}
                 </p>
               </div>
             </div>
 
-            {/* Quick Credit Meter */}
-            <div className="mt-5 p-3 rounded-xl bg-white border border-brand-secondary flex items-center justify-between text-xs">
+            <div className="mt-4 p-3 rounded-lg bg-white/5 border border-white/8 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
-                <ShieldCheck size={16} className="text-brand-accent" />
-                <span className="text-brand-primary/80">
-                  Equifax Credit Score
-                </span>
+                <ShieldCheck size={14} className="text-brand-accent" />
+                <span className="text-white/50">Credit score</span>
               </div>
-              <span className="font-bold text-brand-accent font-mono">
+              <span className="font-medium text-white font-mono">
                 {creditScore}
               </span>
             </div>
@@ -573,16 +570,16 @@ export default function Dashboard() {
                     setActiveTab(item.id as any);
                     setMobileSidebarOpen(false);
                   }}
-                  className={`w-full flex items-center gap-3 px-4 py-3.5 lg:py-3 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all shrink-0 cursor-pointer ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-sm text-xs font-normal tracking-wide transition-all shrink-0 cursor-pointer ${
                     isActive
-                      ? "bg-brand-accent/15 text-brand-accent border border-brand-accent/30 shadow-sm font-bold"
-                      : "text-brand-primary/80 hover:bg-brand-muted hover:text-brand-primary border border-transparent"
+                      ? "bg-white/8 text-white border-l-2 border-brand-accent pl-3.5"
+                      : "text-white/45 hover:bg-white/5 hover:text-white/80 border-l-2 border-transparent pl-3.5"
                   }`}
                 >
                   <Icon
-                    size={18}
+                    size={16}
                     className={
-                      isActive ? "text-brand-accent" : "text-brand-accent/60"
+                      isActive ? "text-brand-accent" : "text-white/30"
                     }
                   />
                   <span>{item.label}</span>
@@ -592,13 +589,13 @@ export default function Dashboard() {
           </nav>
 
           {/* Logout Unit */}
-          <div className="p-4 border-t border-brand-secondary/40 bg-brand-muted/40">
+          <div className="p-4 border-t border-white/8">
             <button
               onClick={logout}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 hover:text-red-700 border border-red-200 transition-all text-xs font-bold uppercase tracking-wider"
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-sm bg-white/5 hover:bg-white/10 text-white/50 hover:text-white/80 border border-white/8 transition-all text-xs font-normal tracking-wide"
             >
-              <LogOut size={16} />
-              <span>Sign Out Session</span>
+              <LogOut size={14} />
+              <span>Sign out</span>
             </button>
           </div>
         </aside>
@@ -610,28 +607,23 @@ export default function Dashboard() {
           {/* Top Greeting and Notification Bell Row */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div className="space-y-1">
-              <span className="text-xs font-semibold text-brand-accent uppercase tracking-widest block">
+              <span className="text-[10px] font-medium text-brand-accent uppercase tracking-[3px] block">
                 Operational Portal
               </span>
-              <h2 className="text-2xl sm:text-3xl font-display font-medium text-brand-primary flex items-center gap-2">
-                Welcome back,{" "}
-                <span className="text-brand-accent italic font-bold">
-                  {user.name}
-                </span>
+              <h2 className="text-2xl sm:text-3xl font-display font-semibold text-brand-primary">
+                Welcome back, {user.name}
               </h2>
             </div>
 
-            {/* Notification and Search Box */}
             <div className="flex items-center gap-3 self-stretch sm:self-auto relative">
-              {/* Notifications Widget */}
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-3 bg-white rounded-xl border border-brand-secondary hover:bg-brand-muted transition-all relative group"
+                  className="p-2.5 bg-white rounded-lg border border-brand-dark hover:bg-brand-muted transition-all relative"
                 >
-                  <Bell size={20} className="text-[#0369a1]" />
+                  <Bell size={18} className="text-brand-primary/60" />
                   {unreadCount > 0 && (
-                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-accent text-white text-[9px] font-black shadow-sm">
+                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-brand-accent text-white text-[9px] font-medium">
                       {unreadCount}
                     </span>
                   )}
@@ -649,76 +641,70 @@ export default function Dashboard() {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className="absolute right-0 mt-3 w-80 sm:w-96 bg-white border border-brand-secondary/80 rounded-2xl shadow-2xl p-4 z-50 space-y-3 text-left list-none"
+                        className="absolute right-0 mt-3 w-80 sm:w-96 bg-brand-primary border border-white/10 rounded-xl shadow-2xl p-4 z-50 space-y-3 text-left list-none"
                       >
-                        <div className="flex justify-between items-center pb-2 border-b border-brand-secondary/50">
-                          <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent">
-                            Secure Bank Alerts ({unreadCount} new)
+                        <div className="flex justify-between items-center pb-2 border-b border-white/8">
+                          <h4 className="font-medium text-xs uppercase tracking-widest text-white/50">
+                            Alerts ({unreadCount} new)
                           </h4>
-                          <span className="text-[10px] text-brand-primary/50">
-                            Realtime Monitor
+                          <span className="text-[10px] text-white/30">
+                            Live monitor
                           </span>
                         </div>
 
                         <div className="max-h-72 overflow-y-auto space-y-3 pr-1">
                           {notifications.length === 0 ? (
-                            <p className="text-xs text-brand-primary/50 py-4 text-center">
-                              No alerts in transmission.
+                            <p className="text-xs text-white/30 py-4 text-center">
+                              No alerts.
                             </p>
                           ) : (
                             notifications.map((notif) => (
                               <div
                                 key={notif.id}
-                                className={`p-3 rounded-xl border text-xs relative group ${
+                                className={`p-3 rounded-lg border text-xs relative group ${
                                   notif.read
-                                    ? "bg-brand-muted border-brand-secondary/40"
-                                    : "bg-brand-accent/10 border-brand-accent/30"
+                                    ? "bg-white/4 border-white/8"
+                                    : "bg-brand-accent/10 border-brand-accent/25"
                                 }`}
                               >
                                 {notif.type === "warning" && (
-                                  <span className="absolute top-3 right-3 text-amber-500">
-                                    <AlertTriangle size={14} />
+                                  <span className="absolute top-3 right-3 text-amber-400">
+                                    <AlertTriangle size={13} />
                                   </span>
                                 )}
                                 {notif.type === "critical" && (
-                                  <span className="absolute top-3 right-3 text-red-500">
-                                    <ShieldAlert size={14} />
+                                  <span className="absolute top-3 right-3 text-red-400">
+                                    <ShieldAlert size={13} />
                                   </span>
                                 )}
                                 {notif.type === "success" && (
                                   <span className="absolute top-3 right-3 text-brand-accent">
-                                    <CheckCircle2 size={14} />
+                                    <CheckCircle2 size={13} />
                                   </span>
                                 )}
 
-                                <p
-                                  className={`font-bold pr-5 ${notif.read ? "text-[#0369a1]/70" : "text-[#0369a1]"}`}
-                                >
+                                <p className={`font-medium pr-5 ${notif.read ? "text-white/40" : "text-white/80"}`}>
                                   {notif.title}
                                 </p>
-                                <p className="text-[#0369a1]/80 mt-1 leading-snug">
+                                <p className="text-white/40 mt-1 leading-snug">
                                   {notif.message}
                                 </p>
-                                <div className="flex justify-between items-center mt-2.5 pt-2 border-t border-brand-secondary/30">
-                                  <span className="text-[10px] text-brand-primary/50 font-mono">
+                                <div className="flex justify-between items-center mt-2.5 pt-2 border-t border-white/8">
+                                  <span className="text-[10px] text-white/25 font-mono">
                                     {notif.time}
                                   </span>
                                   <div className="flex gap-2">
                                     {!notif.read && (
                                       <button
-                                        onClick={() =>
-                                          markNotificationAsRead(notif.id)
-                                        }
-                                        className="text-[9px] uppercase font-bold text-brand-accent hover:underline"
+                                        onClick={() => markNotificationAsRead(notif.id)}
+                                        className="text-[9px] uppercase tracking-wide text-brand-accent hover:underline"
                                       >
                                         Acknowledge
                                       </button>
                                     )}
                                     <button
-                                      onClick={() =>
-                                        clearNotification(notif.id)
-                                      }
-                                      className="text-[9px] uppercase font-bold text-brand-primary/40 hover:text-brand-accent"
+                                      onClick={() => clearNotification(notif.id)}
+                                      className="text-[9px] uppercase tracking-wide text-white/25 hover:text-white/60"
                                     >
                                       Dismiss
                                     </button>
@@ -735,9 +721,9 @@ export default function Dashboard() {
               </div>
 
               {/* Quick Simulator Switch */}
-              <div className="hidden sm:flex p-1 bg-white rounded-xl border border-brand-secondary text-[10px] font-semibold">
-                <span className="px-2 py-1 bg-brand-accent/10 border border-brand-accent/20 text-brand-accent rounded">
-                  SANDBOX STAGE
+              <div className="hidden sm:flex p-1 bg-brand-muted rounded-lg border border-brand-dark text-[10px] font-medium">
+                <span className="px-2 py-1 bg-brand-accent/10 border border-brand-accent/20 text-brand-accent rounded-sm">
+                  Sandbox
                 </span>
               </div>
             </div>
@@ -759,43 +745,42 @@ export default function Dashboard() {
                 {/* 1. Account Snapshot / Total Net Worth Container */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Big Balance Box */}
-                  <div className="bg-linear-to-br from-brand-accent to-brand-success p-6 rounded-3xl border border-white/20 flex flex-col justify-between shadow-lg relative overflow-hidden lg:col-span-2 text-white">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[90px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+                  <div className="bg-brand-secondary p-6 rounded-xl border border-white/8 flex flex-col justify-between relative overflow-hidden lg:col-span-2 text-white">
+                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-accent/40 to-transparent" />
                     <div>
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-xs font-semibold uppercase tracking-widest text-white/90">
-                          Total Combined Assets
+                        <span className="text-[10px] font-medium uppercase tracking-[2.5px] text-white/40">
+                          Total combined assets
                         </span>
-                        <span className="text-[10px] bg-white/15 text-white border border-white/20 px-2 py-0.5 rounded-full font-mono uppercase">
-                          Liquidity Verified
+                        <span className="text-[10px] bg-brand-accent/15 text-brand-accent border border-brand-accent/20 px-2 py-0.5 rounded-sm font-medium uppercase tracking-wider">
+                          Verified
                         </span>
                       </div>
-                      <h3 className="text-4xl sm:text-5xl font-display font-black text-white">
+                      <h3 className="text-4xl sm:text-5xl font-display font-semibold text-white mt-2">
                         ${" "}
                         {totalBalance.toLocaleString("en-US", {
                           minimumFractionDigits: 2,
                         })}
                       </h3>
-                      <p className="text-xs text-white/80 mt-1">
-                        Sum value of cash deposits subtracting outstanding lines
-                        of credit
+                      <p className="text-xs text-white/35 mt-1">
+                        Cash deposits net of outstanding credit lines
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/20 text-center">
+                    <div className="grid grid-cols-3 gap-4 mt-8 pt-5 border-t border-white/8 text-center">
                       <div>
-                        <p className="text-[10px] text-white/70 font-semibold uppercase tracking-wider">
-                          Payroll Income
+                        <p className="text-[10px] text-white/35 uppercase tracking-widest">
+                          Payroll income
                         </p>
-                        <p className="font-bold text-sm text-white font-mono">
+                        <p className="font-medium text-sm text-white font-mono mt-1">
                           +${monthlyDirectIncome.toLocaleString()}
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-white/70 font-semibold uppercase tracking-wider">
-                          M-T-D Expenses
+                        <p className="text-[10px] text-white/35 uppercase tracking-widest">
+                          MTD expenses
                         </p>
-                        <p className="font-bold text-sm text-white/90 font-mono">
+                        <p className="font-medium text-sm text-white/70 font-mono mt-1">
                           -$
                           {monthlyExpensesTotal.toLocaleString("en-US", {
                             maximumFractionDigits: 2,
@@ -803,10 +788,10 @@ export default function Dashboard() {
                         </p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-white/70 font-semibold uppercase tracking-wider">
-                          Savings Capital
+                        <p className="text-[10px] text-white/35 uppercase tracking-widest">
+                          Savings capital
                         </p>
-                        <p className="font-bold text-sm text-white font-mono">
+                        <p className="font-medium text-sm text-white font-mono mt-1">
                           ${accounts[1]?.balance.toLocaleString()}
                         </p>
                       </div>
@@ -814,12 +799,12 @@ export default function Dashboard() {
                   </div>
 
                   {/* Vault Actions and Quick Check deposit */}
-                  <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm flex flex-col justify-between">
+                  <div className="bg-white p-6 rounded-xl border border-brand-dark flex flex-col justify-between">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-widest text-brand-accent mb-3">
                         Instant Check Deposit (Sandbox)
                       </h4>
-                      <p className="text-xs text-[#0369a1]/80 leading-relaxed mb-4">
+                      <p className="text-xs text-brand-primary/80 leading-relaxed mb-4">
                         Simulate scanning a certified cashier check. Declare
                         account destination & currency value to clear instantly.
                       </p>
@@ -835,7 +820,7 @@ export default function Dashboard() {
                               onChange={(e) =>
                                 setSandboxAccount(e.target.value)
                               }
-                              className="w-full text-xs font-mono bg-brand-muted p-2 rounded-lg border border-brand-secondary text-brand-primary focus:outline-none focus:border-brand-accent"
+                              className="w-full text-xs font-mono bg-brand-muted p-2 rounded-lg border border-brand-dark text-brand-primary focus:outline-none focus:border-brand-accent"
                             >
                               {accounts.map((acc) => (
                                 <option key={acc.id} value={acc.id}>
@@ -854,7 +839,7 @@ export default function Dashboard() {
                               title="Check deposit amount"
                               placeholder="5000"
                               onChange={(e) => setSandboxAmount(e.target.value)}
-                              className="w-full text-xs bg-brand-muted p-2 border border-brand-secondary rounded-lg text-brand-primary focus:outline-none focus:border-brand-accent font-mono"
+                              className="w-full text-xs bg-brand-muted p-2 border border-brand-dark rounded-lg text-brand-primary focus:outline-none focus:border-brand-accent font-mono"
                             />
                           </div>
                         </div>
@@ -881,7 +866,7 @@ export default function Dashboard() {
                       return (
                         <div
                           key={acc.id}
-                          className="bg-white p-5 rounded-2xl border border-brand-secondary hover:border-brand-accent transition-all shadow-sm flex flex-col justify-between"
+                          className="bg-white p-5 rounded-lg border border-brand-dark hover:border-brand-accent transition-all shadow-sm flex flex-col justify-between"
                         >
                           <div>
                             <div className="flex justify-between items-start mb-2">
@@ -901,7 +886,7 @@ export default function Dashboard() {
                               Ledger Balance
                             </span>
                             <span
-                              className={`text-lg font-mono font-black ${isMinus ? "text-red-500" : "text-brand-accent"}`}
+                              className={`text-lg font-mono font-semibold ${isMinus ? "text-red-500" : "text-brand-accent"}`}
                             >
                               $
                               {Math.abs(acc.balance).toLocaleString("en-US", {
@@ -916,7 +901,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* 2. ADJUSTABLE INTERACTIVE CHART (HIGH PRIORITY WRITTEN REQUIREMENTS) */}
-                <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm">
+                <div className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
                       <div className="flex items-center gap-2">
@@ -927,13 +912,13 @@ export default function Dashboard() {
                           Cash Expenditure Trend Tracker
                         </h4>
                       </div>
-                      <p className="text-xs text-[#0369a1]/80 mt-1">
+                      <p className="text-xs text-brand-primary/80 mt-1">
                         Adjust the calendar drag pointer to view daily ledger
                         events, net expenditure and balance updates.
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs font-mono bg-brand-muted px-3 py-1.5 rounded-xl border border-brand-secondary">
+                    <div className="flex items-center gap-2 text-xs font-mono bg-brand-muted px-3 py-1.5 rounded-xl border border-brand-dark">
                       <Calendar size={14} className="text-brand-accent" />
                       <span>
                         Viewing Month: <strong>June 2026</strong>
@@ -942,15 +927,15 @@ export default function Dashboard() {
                   </div>
 
                   {/* SVG Line Graph plotted in code */}
-                  <div className="h-64 relative mb-6 border-b border-brand-secondary/30">
+                  <div className="h-64 relative mb-6 border-b border-brand-dark/30">
                     {/* Y-axis grid lines */}
-                    <div className="absolute inset-x-0 top-1/4 border-t border-brand-secondary/20 text-[9px] text-[#0369a1]/60 pt-1">
+                    <div className="absolute inset-x-0 top-1/4 border-t border-brand-dark/20 text-[9px] text-brand-primary/60 pt-1">
                       Balance High: $58K
                     </div>
-                    <div className="absolute inset-x-0 top-1/2 border-t border-brand-secondary/20 text-[9px] text-[#0369a1]/60 pt-1">
+                    <div className="absolute inset-x-0 top-1/2 border-t border-brand-dark/20 text-[9px] text-brand-primary/60 pt-1">
                       Balance Mid: $54K
                     </div>
-                    <div className="absolute inset-x-0 top-3/4 border-t border-brand-secondary/20 text-[9px] text-[#0369a1]/60 pt-1">
+                    <div className="absolute inset-x-0 top-3/4 border-t border-brand-dark/20 text-[9px] text-brand-primary/60 pt-1">
                       Balance Low: $50K
                     </div>
 
@@ -970,12 +955,12 @@ export default function Dashboard() {
                         >
                           <stop
                             offset="0%"
-                            stopColor="#38BDF8"
+                            stopColor="#4a7fa5"
                             stopOpacity="0.3"
                           />
                           <stop
                             offset="100%"
-                            stopColor="#38BDF8"
+                            stopColor="#4a7fa5"
                             stopOpacity="0.0"
                           />
                         </linearGradient>
@@ -1012,7 +997,7 @@ export default function Dashboard() {
                               y1="0"
                               x2={xPercent}
                               y2="220"
-                              stroke="#38BDF8"
+                              stroke="#4a7fa5"
                               strokeWidth="1.5"
                               strokeDasharray="4 4"
                               opacity="0.8"
@@ -1022,7 +1007,7 @@ export default function Dashboard() {
                               cx={xPercent}
                               cy={bulletY}
                               r={8}
-                              fill="#38BDF8"
+                              fill="#4a7fa5"
                               className="animate-pulse"
                             />
                             <circle
@@ -1061,7 +1046,7 @@ export default function Dashboard() {
                         onChange={(e) =>
                           setChartPointerIndex(parseInt(e.target.value))
                         }
-                        className="w-full h-2 bg-brand-muted rounded-lg appearance-none cursor-pointer accent-brand-accent border border-brand-secondary"
+                        className="w-full h-2 bg-brand-muted rounded-lg appearance-none cursor-pointer accent-brand-accent border border-brand-dark"
                       />
                       <div className="flex justify-between text-[10px] text-brand-primary/50 font-mono mt-2">
                         <span>June 1st</span>
@@ -1073,8 +1058,8 @@ export default function Dashboard() {
                     </div>
 
                     {/* Detailed Interactive Indicator Box plotted contextual updates */}
-                    <div className="p-4 rounded-2xl bg-brand-muted border border-brand-secondary grid grid-cols-1 md:grid-cols-4 gap-4">
-                      <div className="border-b md:border-b-0 md:border-r border-brand-secondary/30 pb-2 md:pb-0">
+                    <div className="p-4 rounded-lg bg-brand-muted border border-brand-dark grid grid-cols-1 md:grid-cols-4 gap-4">
+                      <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
                         <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
                           Timeline Date
                         </span>
@@ -1084,7 +1069,7 @@ export default function Dashboard() {
                         </p>
                       </div>
 
-                      <div className="border-b md:border-b-0 md:border-r border-brand-secondary/30 pb-2 md:pb-0">
+                      <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
                         <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
                           Combined Vault Balance
                         </span>
@@ -1096,8 +1081,8 @@ export default function Dashboard() {
                         </p>
                       </div>
 
-                      <div className="border-b md:border-b-0 md:border-r border-brand-secondary/30 pb-2 md:pb-0">
-                        <span className="text-[10px] tracking-widest text-[#0369a1]/60 font-bold uppercase block">
+                      <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
+                        <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
                           Day Net Expenses
                         </span>
                         <p
@@ -1117,7 +1102,7 @@ export default function Dashboard() {
                           <span className="w-1.5 h-1.5 rounded-full bg-brand-accent shrink-0"></span>
                           {selectedChartPoint.event}
                         </p>
-                        <span className="text-[9px] bg-brand-secondary/30 border border-brand-secondary text-brand-primary px-1.5 py-0.5 rounded font-mono mt-1 inline-block uppercase font-bold">
+                        <span className="text-[9px] bg-brand-secondary/30 border border-brand-dark text-brand-primary px-1.5 py-0.5 rounded font-mono mt-1 inline-block uppercase font-bold">
                           {selectedChartPoint.eventCategory}
                         </span>
                       </div>
@@ -1130,7 +1115,7 @@ export default function Dashboard() {
                   {/* Quick Action desks (6 Columns) */}
                   <div className="lg:col-span-5 space-y-6">
                     {/* Goal Progress Tracker widget */}
-                    <div className="bg-white p-5 rounded-3xl border border-brand-secondary shadow-sm">
+                    <div className="bg-white p-5 rounded-xl border border-brand-dark shadow-sm">
                       <div className="flex justify-between items-center mb-3">
                         <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent flex items-center gap-2">
                           <PiggyBank size={15} />
@@ -1143,11 +1128,11 @@ export default function Dashboard() {
                           % Locked
                         </span>
                       </div>
-                      <p className="text-[11px] text-[#0369a1] font-semibold">
+                      <p className="text-[11px] text-brand-primary font-semibold">
                         {savingsGoal.name}
                       </p>
 
-                      <div className="w-full bg-brand-muted h-2.5 rounded-full mt-3 overflow-hidden border border-brand-secondary">
+                      <div className="w-full bg-brand-muted h-2.5 rounded-full mt-3 overflow-hidden border border-brand-dark">
                         <div
                           className={`bg-brand-accent h-full rounded-full transition-all duration-500 ${getSavingsProgressWidthClass(savingsGoal.current, savingsGoal.target)}`}
                         />
@@ -1174,7 +1159,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Quick Transfer panel */}
-                    <div className="bg-white p-5 rounded-3xl border border-brand-secondary shadow-sm space-y-4">
+                    <div className="bg-white p-5 rounded-xl border border-brand-dark shadow-sm space-y-4">
                       <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent flex items-center gap-2">
                         <ArrowRightLeft size={15} />
                         <span>Instant Funds Transfer desk</span>
@@ -1213,7 +1198,7 @@ export default function Dashboard() {
                               id="transferFrom"
                               value={transferFrom}
                               onChange={(e) => setTransferFrom(e.target.value)}
-                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                             >
                               {accounts.map((acc) => (
                                 <option key={acc.id} value={acc.id}>
@@ -1233,7 +1218,7 @@ export default function Dashboard() {
                               id="transferTo"
                               value={transferTo}
                               onChange={(e) => setTransferTo(e.target.value)}
-                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                             >
                               <option value="">-- Choose Recipient --</option>
                               <option value="High-Yield Savings">
@@ -1265,7 +1250,7 @@ export default function Dashboard() {
                               onChange={(e) =>
                                 setTransferAmount(e.target.value)
                               }
-                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-secondary text-xs text-brand-primary font-mono focus:outline-none"
+                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-dark text-xs text-brand-primary font-mono focus:outline-none"
                             />
                           </div>
                           <div>
@@ -1277,7 +1262,7 @@ export default function Dashboard() {
                               placeholder="e.g. rent, groceries"
                               value={transferMemo}
                               onChange={(e) => setTransferMemo(e.target.value)}
-                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                              className="w-full bg-brand-muted p-2 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                             />
                           </div>
                         </div>
@@ -1293,7 +1278,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Recent Transactions List (7 Columns) */}
-                  <div className="lg:col-span-7 bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm flex flex-col justify-between">
+                  <div className="lg:col-span-7 bg-white p-6 rounded-xl border border-brand-dark shadow-sm flex flex-col justify-between">
                     <div>
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                         <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent">
@@ -1310,7 +1295,7 @@ export default function Dashboard() {
                                 className={`px-2.5 py-1 rounded-lg text-[10px] uppercase font-bold tracking-wider transition-all cursor-pointer ${
                                   txFilter === filterVal
                                     ? "bg-brand-accent text-white"
-                                    : "bg-brand-muted text-brand-primary border border-brand-secondary/50 hover:bg-brand-secondary/25"
+                                    : "bg-brand-muted text-brand-primary border border-brand-dark/50 hover:bg-brand-secondary/25"
                                 }`}
                               >
                                 {filterVal}
@@ -1322,7 +1307,7 @@ export default function Dashboard() {
 
                       {/* Search query box */}
                       <div className="relative mb-4">
-                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#0369a1]/70">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-primary/70">
                           <Search size={16} />
                         </span>
                         <input
@@ -1330,7 +1315,7 @@ export default function Dashboard() {
                           placeholder="Search transactions by category or keyword..."
                           value={txSearch}
                           onChange={(e) => setTxSearch(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-muted border border-brand-secondary text-xs text-brand-primary focus:outline-none focus:border-brand-accent/60"
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-muted border border-brand-dark text-xs text-brand-primary focus:outline-none focus:border-brand-accent/60"
                         />
                       </div>
 
@@ -1346,7 +1331,7 @@ export default function Dashboard() {
                             return (
                               <div
                                 key={tx.id}
-                                className="p-3 bg-brand-muted rounded-xl border border-brand-secondary/65 flex justify-between items-center text-xs hover:border-brand-accent/40 transition-all"
+                                className="p-3 bg-brand-muted rounded-xl border border-brand-dark/65 flex justify-between items-center text-xs hover:border-brand-accent/40 transition-all"
                               >
                                 <div className="flex items-center gap-3">
                                   <div
@@ -1397,7 +1382,7 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    <div className="pt-4 border-t border-brand-secondary/40 mt-4 flex justify-between items-center">
+                    <div className="pt-4 border-t border-brand-dark/40 mt-4 flex justify-between items-center">
                       <span className="text-[10px] text-brand-primary/50">
                         Showing {filteredTransactions.length} of{" "}
                         {transactions.length} entries
@@ -1427,10 +1412,10 @@ export default function Dashboard() {
                 className="space-y-6"
               >
                 <div className="space-y-1">
-                  <h3 className="text-xl font-display font-bold uppercase tracking-wider text-brand-accent">
-                    Secure Asset Accounts
+                  <h3 className="text-xl font-display font-semibold text-brand-primary">
+                    Secure asset accounts
                   </h3>
-                  <p className="text-xs text-[#0369a1]/80">
+                  <p className="text-xs text-brand-primary/80">
                     Comprehensive bank audit registers with secure copy routing
                     keys.
                   </p>
@@ -1442,12 +1427,12 @@ export default function Dashboard() {
                     return (
                       <div
                         key={acc.id}
-                        className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm flex flex-col justify-between"
+                        className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm flex flex-col justify-between"
                       >
                         <div>
                           <div className="flex justify-between items-start mb-4">
                             <div>
-                              <span className="text-[10px] bg-brand-muted px-3 py-1 rounded-full border border-brand-secondary text-brand-primary uppercase tracking-widest font-mono font-bold">
+                              <span className="text-[10px] bg-brand-muted px-3 py-1 rounded-full border border-brand-dark text-brand-primary uppercase tracking-widest font-mono font-bold">
                                 {acc.type}
                               </span>
                               <h4 className="text-lg font-bold text-brand-primary mt-2.5">
@@ -1459,8 +1444,8 @@ export default function Dashboard() {
                             </span>
                           </div>
 
-                          <div className="space-y-3 bg-brand-muted p-4 rounded-2xl border border-brand-secondary">
-                            <div className="flex justify-between text-xs py-1.5 border-b border-brand-secondary/50">
+                          <div className="space-y-3 bg-brand-muted p-4 rounded-lg border border-brand-dark">
+                            <div className="flex justify-between text-xs py-1.5 border-b border-brand-dark/50">
                               <span className="text-brand-primary/65">
                                 ABA Routing Transit Number
                               </span>
@@ -1468,7 +1453,7 @@ export default function Dashboard() {
                                 021000021
                               </span>
                             </div>
-                            <div className="flex justify-between text-xs py-1.5 border-b border-brand-secondary/50">
+                            <div className="flex justify-between text-xs py-1.5 border-b border-brand-dark/50">
                               <span className="text-brand-primary/65">
                                 IBAN Ident Key
                               </span>
@@ -1487,13 +1472,13 @@ export default function Dashboard() {
                           </div>
                         </div>
 
-                        <div className="mt-8 flex justify-between items-center pt-4 border-t border-brand-secondary/30">
+                        <div className="mt-8 flex justify-between items-center pt-4 border-t border-brand-dark/30">
                           <div>
                             <p className="text-[10px] text-brand-primary/60 uppercase font-bold tracking-wider">
                               Accounting Ledger Balance
                             </p>
                             <span
-                              className={`text-2xl font-black font-mono ${isMinus ? "text-red-500" : "text-brand-accent"}`}
+                              className={`text-2xl font-semibold font-mono ${isMinus ? "text-red-500" : "text-brand-accent"}`}
                             >
                               $
                               {acc.balance.toLocaleString("en-US", {
@@ -1521,10 +1506,10 @@ export default function Dashboard() {
                 className="space-y-6"
               >
                 <div className="space-y-1">
-                  <h3 className="text-xl font-display font-bold uppercase tracking-wider text-brand-accent">
-                    Transfers & payments Office
+                  <h3 className="text-xl font-display font-semibold text-brand-primary">
+                    Transfers Transfers & payments Office payments
                   </h3>
-                  <p className="text-xs text-[#0369a1]/85">
+                  <p className="text-xs text-brand-primary/85">
                     Wire immediate capital securely or clear monthly utility
                     liabilities.
                   </p>
@@ -1532,7 +1517,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Wire transfer desk */}
-                  <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm">
+                  <div className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-4">
                       Execute Local/Domestic Wire Transfer
                     </h4>
@@ -1560,7 +1545,7 @@ export default function Dashboard() {
                           value={transferFrom}
                           title="Select source account for transfer"
                           onChange={(e) => setTransferFrom(e.target.value)}
-                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                         >
                           {accounts.map((acc) => (
                             <option key={acc.id} value={acc.id}>
@@ -1578,7 +1563,7 @@ export default function Dashboard() {
                           value={transferTo}
                           title="Select target account or recipient"
                           onChange={(e) => setTransferTo(e.target.value)}
-                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                         >
                           <option value="">-- Select Verified Dest --</option>
                           <option value="High-Yield Savings">
@@ -1607,7 +1592,7 @@ export default function Dashboard() {
                             placeholder="0.00"
                             value={transferAmount}
                             onChange={(e) => setTransferAmount(e.target.value)}
-                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary font-mono focus:outline-none"
+                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary font-mono focus:outline-none"
                           />
                         </div>
                         <div>
@@ -1619,7 +1604,7 @@ export default function Dashboard() {
                             placeholder="e.g. loan payout"
                             value={transferMemo}
                             onChange={(e) => setTransferMemo(e.target.value)}
-                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                           />
                         </div>
                       </div>
@@ -1634,7 +1619,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Bill pays desk */}
-                  <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm">
+                  <div className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-4">
                       Secure Utility / Payee Remittance
                     </h4>
@@ -1662,7 +1647,7 @@ export default function Dashboard() {
                           value={billPayee}
                           title="Select service payee"
                           onChange={(e) => setBillPayee(e.target.value)}
-                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                         >
                           <option value="">
                             -- Choose Registered Vendor --
@@ -1691,7 +1676,7 @@ export default function Dashboard() {
                             value={billFromAccount}
                             title="Select source account for bill payment"
                             onChange={(e) => setBillFromAccount(e.target.value)}
-                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                           >
                             {accounts.map((acc) => (
                               <option key={acc.id} value={acc.id}>
@@ -1708,7 +1693,7 @@ export default function Dashboard() {
                             value={billCategory}
                             title="Select bill category"
                             onChange={(e) => setBillCategory(e.target.value)}
-                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary focus:outline-none"
+                            className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary focus:outline-none"
                           >
                             <option value="Utilities">Utilities</option>
                             <option value="Rent">Rent</option>
@@ -1728,7 +1713,7 @@ export default function Dashboard() {
                           placeholder="0.00"
                           value={billAmount}
                           onChange={(e) => setBillAmount(e.target.value)}
-                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary font-mono focus:outline-none"
+                          className="w-full bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary font-mono focus:outline-none"
                         />
                       </div>
 
@@ -1756,10 +1741,10 @@ export default function Dashboard() {
                 className="space-y-6"
               >
                 <div className="space-y-1">
-                  <h3 className="text-xl font-display font-bold uppercase tracking-wider text-brand-accent">
-                    Secure Cards Deck
+                  <h3 className="text-xl font-display font-semibold text-brand-primary">
+                    Card management
                   </h3>
-                  <p className="text-xs text-[#0369a1]/85">
+                  <p className="text-xs text-brand-primary/85">
                     Manage direct credit card parameters, lock statuses, and
                     spending limits instantly.
                   </p>
@@ -1769,18 +1754,18 @@ export default function Dashboard() {
                   {cards.map((card) => (
                     <div
                       key={card.id}
-                      className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm flex flex-col justify-between space-y-8 relative overflow-hidden"
+                      className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm flex flex-col justify-between space-y-8 relative overflow-hidden"
                     >
                       {card.isFrozen && (
                         <div className="absolute inset-0 bg-brand-muted/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center space-y-3">
                           <Lock
                             size={44}
-                            className="text-red-500 animate-pulse"
+                            className="text-red-500"
                           />
-                          <p className="text-sm font-black uppercase text-red-600 tracking-widest">
+                          <p className="text-sm font-semibold uppercase text-red-600 tracking-widest">
                             Card Locked & Frozen
                           </p>
-                          <p className="text-xs text-[#0369a1] px-12 text-center font-bold">
+                          <p className="text-xs text-brand-primary px-12 text-center font-bold">
                             Unfreeze this security parameter below to reactive
                             downstream transacting capabilities.
                           </p>
@@ -1796,7 +1781,7 @@ export default function Dashboard() {
                       {/* Plastic mockup */}
                       <div
                         onClick={() => toggleRevealCard(card.id)}
-                        className="bg-linear-to-tr from-brand-primary via-brand-accent to-[#025a90] p-6 rounded-2xl border border-brand-secondary/50 shadow-xl flex flex-col justify-between min-h-48 relative cursor-pointer group/card select-none group-active/card:scale-95 transition-transform"
+                        className="bg-linear-to-tr from-brand-primary via-brand-accent to-[#025a90] p-6 rounded-lg border border-brand-dark/50 shadow-xl flex flex-col justify-between min-h-48 relative cursor-pointer group/card select-none group-active/card:scale-95 transition-transform"
                         title="Click anywhere to reveal or hide card credentials"
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
@@ -1828,7 +1813,7 @@ export default function Dashboard() {
                         </div>
 
                         <div>
-                          <p className="font-mono text-sm sm:text-lg tracking-wider text-white gap-2 flex items-center font-black">
+                          <p className="font-mono text-sm sm:text-lg tracking-wider text-white gap-2 flex items-center font-semibold">
                             {revealedCards[card.id]
                               ? card.cardNumber
                               : card.cardNumber.replace(
@@ -1869,16 +1854,16 @@ export default function Dashboard() {
 
                       {/* Management Tools */}
                       <div className="space-y-4">
-                        <div className="flex justify-between items-center pb-2 border-b border-brand-secondary/70">
-                          <span className="text-xs font-bold text-[#0369a1]">
+                        <div className="flex justify-between items-center pb-2 border-b border-brand-dark/70">
+                          <span className="text-xs font-bold text-brand-primary">
                             Freeze Security Guard
                           </span>
                           <button
                             onClick={() => toggleCardFreeze(card.id)}
                             className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
                               card.isFrozen
-                                ? "bg-emerald-50 text-emerald-700 border border-emerald-250"
-                                : "bg-red-50 text-red-600 border border-red-250"
+                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                : "bg-red-50 text-red-600 border border-red-200"
                             }`}
                           >
                             {card.isFrozen ? (
@@ -1895,7 +1880,7 @@ export default function Dashboard() {
                         {/* Limit Slider */}
                         <div className="space-y-2">
                           <div className="flex justify-between text-xs font-semibold">
-                            <span className="text-[#0369a1]">
+                            <span className="text-brand-primary">
                               Card Limit Slider
                             </span>
                             <span className="text-brand-accent font-mono">
@@ -1913,9 +1898,9 @@ export default function Dashboard() {
                             onChange={(e) =>
                               updateCardLimit(card.id, parseInt(e.target.value))
                             }
-                            className="w-full accent-brand-accent bg-brand-dark cursor-pointer border border-brand-secondary h-2 rounded-lg"
+                            className="w-full accent-brand-accent bg-brand-dark cursor-pointer border border-brand-dark h-2 rounded-lg"
                           />
-                          <p className="text-[10px] text-[#0369a1]/70">
+                          <p className="text-[10px] text-brand-primary/70">
                             Change this threshold instantly to limit
                             unauthorized online transactions.
                           </p>
@@ -1939,10 +1924,10 @@ export default function Dashboard() {
                 className="space-y-6"
               >
                 <div className="space-y-1">
-                  <h3 className="text-xl font-display font-bold uppercase tracking-wider text-brand-accent">
-                    Wealth management & Goals
+                  <h3 className="text-xl font-display font-semibold text-brand-primary">
+                    Wealth management
                   </h3>
-                  <p className="text-xs text-[#0369a1]/85">
+                  <p className="text-xs text-brand-primary/85">
                     Automated portfolios and sandbox stock ticker evaluation
                     indices.
                   </p>
@@ -1950,7 +1935,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Automated Robo Advisor desk */}
-                  <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm lg:col-span-2 space-y-4">
+                  <div className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm lg:col-span-2 space-y-4">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent flex items-center gap-2">
                       <Compass size={16} />
                       <span>Nova Robo-Advisory Intelligent Portfolio</span>
@@ -1962,9 +1947,9 @@ export default function Dashboard() {
                       portfolio based on macroeconomic fluctuations.
                     </p>
 
-                    <div className="grid grid-cols-3 gap-4 p-4 bg-brand-muted rounded-2xl border border-brand-secondary text-center text-xs">
+                    <div className="grid grid-cols-3 gap-4 p-4 bg-brand-muted rounded-lg border border-brand-dark text-center text-xs">
                       <div>
-                        <p className="text-[#0369a1]/65 uppercase text-[9px] font-bold">
+                        <p className="text-brand-primary/65 uppercase text-[9px] font-bold">
                           Equity Stock Exposure
                         </p>
                         <p className="font-extrabold text-brand-primary mt-1">
@@ -1972,7 +1957,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                       <div>
-                        <p className="text-[#0369a1]/65 uppercase text-[9px] font-bold">
+                        <p className="text-brand-primary/65 uppercase text-[9px] font-bold">
                           Fixed Income Bonds
                         </p>
                         <p className="font-extrabold text-brand-primary mt-1">
@@ -1980,7 +1965,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                       <div>
-                        <p className="text-[#0369a1]/65 uppercase text-[9px] font-bold">
+                        <p className="text-brand-primary/65 uppercase text-[9px] font-bold">
                           Commodities & Cash
                         </p>
                         <p className="font-extrabold text-brand-primary mt-1">
@@ -2002,9 +1987,9 @@ export default function Dashboard() {
                         ].map((stock, i) => (
                           <div
                             key={i}
-                            className="p-2.5 bg-brand-muted border border-brand-secondary rounded-xl"
+                            className="p-2.5 bg-brand-muted border border-brand-dark rounded-xl"
                           >
-                            <p className="font-black text-brand-primary text-[11px]">
+                            <p className="font-semibold text-brand-primary text-[11px]">
                               {stock.symbol}
                             </p>
                             <p className="font-mono text-brand-accent font-bold text-[10px] mt-0.5">
@@ -2022,7 +2007,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Savings Calculator Goals builder */}
-                  <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm">
+                  <div className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-3">
                       Goal target creator
                     </h4>
@@ -2040,12 +2025,12 @@ export default function Dashboard() {
                         <span className="text-[10px] text-brand-primary/65 font-bold uppercase">
                           Target Pool ($USD)
                         </span>
-                        <p className="text-lg font-mono font-black text-brand-accent">
+                        <p className="text-lg font-mono font-semibold text-brand-accent">
                           ${savingsGoal.target.toLocaleString()}
                         </p>
                       </div>
                       <div className="space-y-1.5">
-                        <div className="flex justify-between items-center text-[10px] text-[#0369a1] font-medium">
+                        <div className="flex justify-between items-center text-[10px] text-brand-primary font-medium">
                           <span>Accumulated Cash Assets</span>
                           <span>
                             {Math.round(
@@ -2054,12 +2039,12 @@ export default function Dashboard() {
                             %
                           </span>
                         </div>
-                        <div className="w-full bg-brand-dark h-3 rounded-full overflow-hidden border border-brand-secondary">
+                        <div className="w-full bg-brand-dark h-3 rounded-full overflow-hidden border border-brand-dark">
                           <div
                             className={`bg-brand-accent h-full rounded-full transition-all duration-500 ${getSavingsProgressWidthClass(savingsGoal.current, savingsGoal.target)}`}
                           ></div>
                         </div>
-                        <p className="font-mono text-brand-accent font-black text-center mt-2">
+                        <p className="font-mono text-brand-accent font-semibold text-center mt-2">
                           ${savingsGoal.current.toLocaleString()} / $
                           {savingsGoal.target.toLocaleString()}
                         </p>
@@ -2082,16 +2067,16 @@ export default function Dashboard() {
                 className="space-y-6"
               >
                 <div className="space-y-1">
-                  <h3 className="text-xl font-display font-bold uppercase tracking-wider text-brand-accent">
-                    Statements Ledger
+                  <h3 className="text-xl font-display font-semibold text-brand-primary">
+                    Statements ledger
                   </h3>
-                  <p className="text-xs text-[#0369a1]/75">
+                  <p className="text-xs text-brand-primary/75">
                     Generate and download formal statements from past billing
                     cycles instantly.
                   </p>
                 </div>
 
-                <div className="bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm">
+                <div className="bg-white p-6 rounded-xl border border-brand-dark shadow-sm">
                   <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-4">
                     Request Monthly Official PDF Statements
                   </h4>
@@ -2116,13 +2101,13 @@ export default function Dashboard() {
                     ].map((st, i) => (
                       <div
                         key={i}
-                        className="p-4 bg-brand-muted rounded-2xl border border-brand-secondary flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/50 transition-all text-xs"
+                        className="p-4 bg-brand-muted rounded-lg border border-brand-dark flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/50 transition-all text-xs"
                       >
                         <div className="space-y-1 text-left">
                           <p className="font-bold text-brand-primary text-sm">
                             {st.title}
                           </p>
-                          <p className="text-[#0369a1]/60 font-mono text-[10px] font-bold">
+                          <p className="text-brand-primary/60 font-mono text-[10px] font-bold">
                             {st.period} • Ident: {st.code}
                           </p>
                         </div>
@@ -2132,7 +2117,7 @@ export default function Dashboard() {
                               `Requested download of file statement identifying: ${st.code}. Preparing encrypted package...`,
                             )
                           }
-                          className="px-4 py-2 rounded-xl bg-white hover:bg-brand-accent/25 text-[#0369a1] text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent/40 cursor-pointer"
+                          className="px-4 py-2 rounded-xl bg-white hover:bg-brand-accent/25 text-brand-primary text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent/40 cursor-pointer"
                         >
                           Generate PDF Ledger
                         </button>
@@ -2155,10 +2140,10 @@ export default function Dashboard() {
                 className="space-y-6"
               >
                 <div className="space-y-1">
-                  <h3 className="text-xl font-display font-bold text-brand-primary uppercase tracking-wider">
-                    Secure Help Desk Support
+                  <h3 className="text-xl font-display font-semibold text-brand-primary">
+                    Secure help desk
                   </h3>
-                  <p className="text-xs text-[#0369a1]/75">
+                  <p className="text-xs text-brand-primary/75">
                     Realtime chat support assistant & immediate fraud prevention
                     hotlines.
                   </p>
@@ -2166,7 +2151,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                   {/* Chat interface card */}
-                  <div className="lg:col-span-8 bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm flex flex-col h-112 justify-between">
+                  <div className="lg:col-span-8 bg-white p-6 rounded-xl border border-brand-dark shadow-sm flex flex-col h-[28rem] justify-between">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent mb-4 flex items-center gap-2">
                         <MessageSquare size={16} />
@@ -2182,9 +2167,9 @@ export default function Dashboard() {
                               className={`flex ${isAsst ? "justify-start" : "justify-end"}`}
                             >
                               <div
-                                className={`p-3 rounded-2xl max-w-sm text-xs relative ${
+                                className={`p-3 rounded-lg max-w-sm text-xs relative ${
                                   isAsst
-                                    ? "bg-brand-muted text-brand-primary border border-brand-secondary"
+                                    ? "bg-brand-muted text-brand-primary border border-brand-dark"
                                     : "bg-brand-accent text-white font-medium"
                                 }`}
                               >
@@ -2200,7 +2185,7 @@ export default function Dashboard() {
                         })}
                         {isGeneratingChat && (
                           <div className="flex justify-start">
-                            <div className="p-3 bg-brand-muted text-brand-primary rounded-2xl border border-brand-secondary text-xs flex items-center gap-1">
+                            <div className="p-3 bg-brand-muted text-brand-primary rounded-lg border border-brand-dark text-xs flex items-center gap-1">
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce"></span>
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:200ms]"></span>
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:400ms]"></span>
@@ -2216,7 +2201,7 @@ export default function Dashboard() {
                         placeholder="Write support inquiry (e.g. transfers, card blocks)..."
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
-                        className="grow bg-brand-muted p-3 rounded-xl border border-brand-secondary text-xs text-brand-primary placeholder:text-[#0369a1]/50 focus:outline-none"
+                        className="grow bg-brand-muted p-3 rounded-xl border border-brand-dark text-xs text-brand-primary placeholder:text-brand-primary/50 focus:outline-none"
                       />
                       <button
                         type="submit"
@@ -2229,7 +2214,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Immediate Emergency Action desk */}
-                  <div className="lg:col-span-4 bg-white p-6 rounded-3xl border border-brand-secondary shadow-sm flex flex-col justify-between">
+                  <div className="lg:col-span-4 bg-white p-6 rounded-xl border border-brand-dark shadow-sm flex flex-col justify-between">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-wider text-rose-600 mb-3 flex items-center gap-1">
                         <ShieldAlert size={16} className="text-red-500" />
@@ -2266,8 +2251,8 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    <div className="pt-6 border-t border-brand-secondary text-xs text-center">
-                      <p className="text-[#0369a1] font-semibold">
+                    <div className="pt-6 border-t border-brand-dark text-xs text-center">
+                      <p className="text-brand-primary font-semibold">
                         Registered toll-free helpline
                       </p>
                       <p className="font-bold text-brand-accent text-base mt-1">

@@ -12,17 +12,16 @@ export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Return null if on private dashboard workstation
-  if (location.pathname === '/dashboard') {
-    return null;
-  }
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  if (location.pathname === '/dashboard') return null;
 
   const navLinks = [
     { label: 'Personal', href: '/personal' },
@@ -32,74 +31,80 @@ export default function Navbar() {
     { label: 'Resources', href: '/resources' },
   ];
 
+  const isActive = (href: string) => location.pathname === href;
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex flex-col">
-      {/* Fraud Warning & Trust Banner */}
       <TopBanner />
 
-      {/* Main Bar */}
       <div
         className={`transition-all duration-300 ${
           isScrolled
-            ? 'bg-white/95 border-b border-brand-secondary backdrop-blur-md shadow-sm py-3'
-            : 'bg-brand-muted/70 backdrop-blur-sm border-b border-brand-secondary/30 py-4 sm:py-5'
+            ? 'bg-brand-primary/98 backdrop-blur-md border-b border-white/8 py-3'
+            : 'bg-transparent py-4 sm:py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            
+
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-brand-accent flex items-center justify-center text-white shadow-md transition-transform group-hover:scale-105 border border-brand-secondary">
-                <Landmark size={22} className="text-white" />
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-sm bg-brand-accent flex items-center justify-center">
+                <Landmark size={16} className="text-white" />
               </div>
-              <span className="font-display font-medium text-xl tracking-tight text-brand-primary">
-                Nova<span className="text-brand-accent font-black">Finance</span>
+              <span className="font-display font-semibold text-lg tracking-tight text-white">
+                Nova<span className="text-brand-accent">Finance</span>
               </span>
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
                   to={link.href}
-                  className="text-sm font-semibold transition-colors relative group text-[#0369a1] hover:text-brand-accent"
+                  className={`px-4 py-2 text-sm font-normal tracking-wide transition-colors relative group ${
+                    isActive(link.href)
+                      ? 'text-white'
+                      : 'text-white/50 hover:text-white'
+                  }`}
                 >
                   {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+                  {isActive(link.href) && (
+                    <span className="absolute bottom-0 left-4 right-4 h-px bg-brand-accent" />
+                  )}
                 </Link>
               ))}
             </nav>
 
             {/* Desktop Actions */}
-            <div className="hidden md:flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-1">
               {isLoggedIn ? (
                 <>
                   <Link
                     to="/dashboard"
-                    className="text-sm font-semibold transition-colors text-brand-primary hover:text-brand-accent"
+                    className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors font-normal tracking-wide"
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={logout}
-                    className="px-5 py-2.5 rounded-full bg-brand-accent text-white text-sm font-bold hover:bg-brand-accent/90 transition-all shadow-md cursor-pointer"
+                    className="ml-2 px-5 py-2 rounded-sm bg-white/8 border border-white/12 text-white text-sm font-normal hover:bg-white/14 transition-all cursor-pointer tracking-wide"
                   >
-                    Logout
+                    Log out
                   </button>
                 </>
               ) : (
                 <>
                   <Link
                     to="/login"
-                    className="text-sm font-semibold transition-colors text-brand-primary hover:text-brand-accent"
+                    className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors font-normal tracking-wide"
                   >
-                    Login
+                    Log in
                   </Link>
                   <Link
                     to="/login"
-                    className="px-5 py-2.5 rounded-full bg-brand-accent text-white text-sm font-bold hover:bg-brand-accent/90 transition-all shadow-md cursor-pointer"
+                    className="ml-2 px-5 py-2 rounded-sm bg-brand-accent text-white text-sm font-normal hover:bg-brand-accent/90 transition-all tracking-wide"
                   >
                     Open Account
                   </Link>
@@ -107,13 +112,13 @@ export default function Navbar() {
               )}
             </div>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Toggle */}
             <button
-              className="md:hidden p-2 text-brand-primary"
+              className="md:hidden p-2 text-white/70 hover:text-white transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle Navigation"
+              aria-label="Toggle navigation"
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -125,52 +130,51 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-t border-brand-secondary overflow-hidden mt-3"
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="md:hidden overflow-hidden border-t border-white/8 mt-3 bg-brand-primary"
             >
-              <div className="px-4 pt-4 pb-6 space-y-4 shadow-xl">
+              <div className="px-4 py-4 space-y-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.label}
                     to={link.href}
-                    className="block px-3 py-2 text-base font-bold text-brand-primary hover:text-brand-accent hover:bg-brand-muted rounded-lg transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center px-4 py-3 text-sm rounded-sm transition-colors ${
+                      isActive(link.href)
+                        ? 'text-white bg-white/6 border-l-2 border-brand-accent'
+                        : 'text-white/55 hover:text-white hover:bg-white/4'
+                    }`}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <div className="pt-4 flex flex-col gap-3 border-t border-brand-secondary">
+
+                <div className="pt-3 mt-3 border-t border-white/8 flex flex-col gap-2">
                   {isLoggedIn ? (
                     <>
                       <Link
                         to="/dashboard"
-                        className="px-3 py-2 text-base font-medium text-brand-primary text-center hover:text-brand-accent hover:bg-brand-muted rounded-lg transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
+                        className="px-4 py-3 text-sm text-white/60 hover:text-white transition-colors text-center rounded-sm hover:bg-white/4"
                       >
                         Dashboard
                       </Link>
                       <button
-                        onClick={() => {
-                          logout();
-                          setMobileMenuOpen(false);
-                        }}
-                        className="w-full py-3 rounded-full bg-brand-accent text-white text-center text-base font-bold hover:bg-brand-accent/95 cursor-pointer transition-colors"
+                        onClick={logout}
+                        className="w-full py-3 rounded-sm bg-white/8 border border-white/10 text-white text-sm font-normal hover:bg-white/14 transition-all cursor-pointer"
                       >
-                        Logout
+                        Log out
                       </button>
                     </>
                   ) : (
                     <>
                       <Link
                         to="/login"
-                        className="px-3 py-2 text-base font-medium text-brand-primary text-center hover:text-brand-accent hover:bg-brand-muted rounded-lg transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
+                        className="px-4 py-3 text-sm text-white/60 hover:text-white transition-colors text-center rounded-sm hover:bg-white/4"
                       >
-                        Login
+                        Log in
                       </Link>
                       <Link
                         to="/login"
-                        className="w-full py-3 rounded-full bg-brand-accent text-white text-center text-base font-bold hover:bg-brand-accent/95 cursor-pointer transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full py-3 rounded-sm bg-brand-accent text-white text-sm text-center font-normal hover:bg-brand-accent/90 transition-all"
                       >
                         Open Account
                       </Link>

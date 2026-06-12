@@ -8,7 +8,7 @@ export default function ImageShowcase() {
           <h2 className="text-3xl md:text-5xl font-display font-bold text-brand-primary dark:text-white transition-colors mb-6">
             Banking For <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-primary">Every Stage</span>
           </h2>
-          <p className="text-lg text-brand-secondary/80 max-w-2xl mx-auto">
+          <p className="text-lg text-brand-primary/80 dark:text-white/80 max-w-2xl mx-auto">
             From your first savings account to scaling your global enterprise, we provide the tools and support to help you thrive.
           </p>
         </div>

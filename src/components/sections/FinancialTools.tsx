@@ -39,19 +39,19 @@ export default function FinancialTools() {
   ];
 
   return (
-    <section className="py-24 bg-brand-primary text-white">
+    <section className="py-24 bg-brand-light dark:bg-brand-primary transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-xl">
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-6">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-brand-primary dark:text-white transition-colors mb-6">
               Plan For Tomorrow, <br /> Today
             </h2>
-            <p className="text-brand-light/70 text-lg">
+            <p className="text-brand-primary/70 dark:text-white/70 transition-colors text-lg">
               Use our interactive tools to run the numbers, visualize your
               financial future, and make informed decisions.
             </p>
           </div>
-          <button className="flex items-center gap-2 text-brand-accent hover:text-white transition-colors font-medium">
+          <button className="flex items-center gap-2 text-brand-accent hover:text-brand-accent/80 transition-colors font-medium">
             View All Tools <ChevronRight size={20} />
           </button>
         </div>
@@ -64,7 +64,7 @@ export default function FinancialTools() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-colors flex items-start gap-6 group cursor-pointer"
+              className="bg-white dark:bg-brand-secondary transition-colors backdrop-blur-md rounded-3xl p-8 border border-brand-primary/10 dark:border-white/10 hover:border-brand-primary/20 dark:hover:border-white/20 transition-all flex items-start gap-6 group cursor-pointer"
             >
               <div className="w-16 h-16 shrink-0 rounded-2xl bg-brand-accent/20 flex items-center justify-center text-brand-accent group-hover:scale-110 transition-transform">
                 <tool.icon size={32} />

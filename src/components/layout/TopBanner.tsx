@@ -13,19 +13,19 @@ const WARNINGS_AND_PROMOS = [
     type: 'promo',
     icon: TrendingUp,
     text: 'NOW LIVE: Earn up to 5.25% APY on high-yield Savings Vaults. Standard terms apply.',
-    color: 'text-[#4a7fa5]',
+    color: 'text-brand-accent',
   },
   {
     type: 'security',
     icon: ShieldCheck,
     text: 'STAY SECURE: Enable biometric authentication and instant transaction alerts in your account settings.',
-    color: 'text-[#4a7fa5]',
+    color: 'text-brand-accent',
   },
   {
     type: 'info',
     icon: Info,
     text: 'FDIC INSURED: All deposits are federally insured up to $250,000 per depositor.',
-    color: 'text-[#4a7fa5]',
+    color: 'text-brand-accent',
   }
 ];
 
@@ -43,7 +43,7 @@ export default function TopBanner() {
   const IconComponent = currentItem.icon;
 
   return (
-    <div className="w-full bg-brand-navy border-b border-white/5 text-white py-2 px-4 text-[11px] sm:text-xs font-sans relative z-50 flex items-center justify-between select-none">
+    <div className="w-full bg-brand-navy dark:bg-brand-navy border-b border-white/5 text-white py-2 px-4 text-[11px] sm:text-xs font-sans relative z-50 flex items-center justify-between select-none transition-colors">
 
       {/* Left — FDIC Badge */}
       <div className="flex items-center gap-3">

@@ -3,7 +3,7 @@ import { Target, TrendingUp, Bell, CheckCircle2 } from 'lucide-react';
 
 export default function SmartMoney() {
   return (
-    <section className="py-24 bg-brand-muted dark:bg-[#1a2533] transition-colors overflow-hidden">
+    <section className="py-24 bg-brand-muted dark:bg-brand-surface transition-colors overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           

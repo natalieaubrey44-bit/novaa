@@ -66,7 +66,7 @@ export default function Resources() {
               <h3 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-3 group-hover:text-brand-accent transition-colors">
                 {article.title}
               </h3>
-              <p className="text-brand-secondary/80 text-sm leading-relaxed mb-4 flex-grow">
+              <p className="text-brand-primary/80 dark:text-white/80 text-sm leading-relaxed mb-4 flex-grow">
                 {article.summary}
               </p>
               

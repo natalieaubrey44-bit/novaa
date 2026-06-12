@@ -142,12 +142,12 @@ export default function LiveChatWidget() {
                   <Landmark size={20} className="text-brand-primary dark:text-white transition-colors" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#0369a1] tracking-tight">
+                  <h3 className="font-bold text-sm text-brand-accent tracking-tight">
                     Novaa Live Support
                   </h3>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
-                    <span className="text-[10px] font-semibold text-[#0369a1]">
+                    <span className="text-[10px] font-semibold text-brand-accent">
                       Always Secure
                     </span>
                   </div>
@@ -156,7 +156,7 @@ export default function LiveChatWidget() {
 
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg hover:bg-brand-accent/15 text-[#0369a1] transition-colors"
+                className="p-1.5 rounded-lg hover:bg-brand-accent/15 text-brand-accent transition-colors"
                 aria-label="Close Chat"
               >
                 <X size={20} />
@@ -164,7 +164,7 @@ export default function LiveChatWidget() {
             </div>
 
             {/* Security Notice strip */}
-            <div className="bg-brand-muted dark:bg-[#1a2533] transition-colors px-4 py-2 border-b border-brand-secondary/20 flex items-center gap-2 text-[10px] text-[#0369a1]">
+            <div className="bg-brand-muted dark:bg-brand-surface transition-colors px-4 py-2 border-b border-brand-secondary/20 flex items-center gap-2 text-[10px] text-brand-accent">
               <ShieldCheck size={14} className="text-brand-accent" />
               <span>
                 Answers are encrypted and private. We will never ask for PINs.
@@ -172,7 +172,7 @@ export default function LiveChatWidget() {
             </div>
 
             {/* Messages Stream */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-brand-muted dark:bg-[#1a2533] transition-colors">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-brand-muted dark:bg-brand-surface transition-colors">
               {messages.map((msg) => {
                 const isAsst = msg.sender === "assistant";
                 return (
@@ -183,7 +183,7 @@ export default function LiveChatWidget() {
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-sm border ${
                         isAsst
-                          ? "bg-white dark:bg-brand-secondary transition-colors text-[#0369a1] border-brand-secondary/40 rounded-tl-none"
+                          ? "bg-white dark:bg-brand-secondary transition-colors text-brand-accent border-brand-secondary/40 rounded-tl-none"
                           : "bg-brand-accent text-white border-brand-accent/20 rounded-tr-none"
                       }`}
                     >
@@ -223,7 +223,7 @@ export default function LiveChatWidget() {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Ask our support anything secure..."
-                className="flex-1 px-4 py-2.5 bg-brand-muted dark:bg-[#1a2533] transition-colors border border-brand-secondary/40 rounded-xl text-xs text-[#0369a1] placeholder-brand-primary/30 focus:outline-none focus:border-brand-accent"
+                className="flex-1 px-4 py-2.5 bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-secondary/40 rounded-xl text-xs text-brand-accent placeholder-brand-primary/30 focus:outline-none focus:border-brand-accent"
               />
               <button
                 type="submit"

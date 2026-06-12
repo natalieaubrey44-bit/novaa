@@ -39,7 +39,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-24 bg-brand-muted dark:bg-[#1a2533] transition-colors relative">
+    <section className="py-24 bg-brand-muted dark:bg-brand-surface transition-colors relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center mb-16">

@@ -722,7 +722,7 @@ export default function Dashboard() {
               </div>
 
               {/* Quick Simulator Switch */}
-              <div className="hidden sm:flex p-1 bg-brand-muted dark:bg-[#1a2533] transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-[10px] font-medium">
+              <div className="hidden sm:flex p-1 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-[10px] font-medium">
                 <span className="px-2 py-1 bg-brand-accent/10 border border-brand-accent/20 text-brand-accent rounded-sm">
                   Sandbox
                 </span>
@@ -812,7 +812,7 @@ export default function Dashboard() {
                       <div className="space-y-3">
                         <div className="grid grid-cols-2 gap-2">
                           <div>
-                            <label className="text-[9px] uppercase tracking-widest text-brand-primary/70 block mb-1">
+                            <label className="text-[9px] uppercase tracking-widest text-brand-primary/70 dark:text-white/70 block mb-1">
                               Target
                             </label>
                             <select
@@ -821,7 +821,7 @@ export default function Dashboard() {
                               onChange={(e) =>
                                 setSandboxAccount(e.target.value)
                               }
-                              className="w-full text-xs font-mono bg-brand-muted dark:bg-[#1a2533] transition-colors p-2 rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent"
+                              className="w-full text-xs font-mono bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent"
                             >
                               {accounts.map((acc) => (
                                 <option key={acc.id} value={acc.id}>
@@ -831,7 +831,7 @@ export default function Dashboard() {
                             </select>
                           </div>
                           <div>
-                            <label className="text-[9px] uppercase tracking-widest text-brand-primary/70 block mb-1">
+                            <label className="text-[9px] uppercase tracking-widest text-brand-primary/70 dark:text-white/70 block mb-1">
                               Value ($USD)
                             </label>
                             <input
@@ -840,7 +840,7 @@ export default function Dashboard() {
                               title="Check deposit amount"
                               placeholder="5000"
                               onChange={(e) => setSandboxAmount(e.target.value)}
-                              className="w-full text-xs bg-brand-muted dark:bg-[#1a2533] transition-colors p-2 border border-brand-dark dark:border-white/10 transition-colors rounded-lg text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent font-mono"
+                              className="w-full text-xs bg-brand-muted dark:bg-brand-surface transition-colors p-2 border border-brand-dark dark:border-white/10 transition-colors rounded-lg text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent font-mono"
                             />
                           </div>
                         </div>
@@ -871,7 +871,7 @@ export default function Dashboard() {
                         >
                           <div>
                             <div className="flex justify-between items-start mb-2">
-                              <span className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-wider">
+                              <span className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-wider">
                                 {acc.type}
                               </span>
                               <span className="text-[10px] text-brand-accent font-mono font-medium">
@@ -919,7 +919,7 @@ export default function Dashboard() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs font-mono bg-brand-muted dark:bg-[#1a2533] transition-colors px-3 py-1.5 rounded-xl border border-brand-dark dark:border-white/10 transition-colors">
+                    <div className="flex items-center gap-2 text-xs font-mono bg-brand-muted dark:bg-brand-surface transition-colors px-3 py-1.5 rounded-xl border border-brand-dark dark:border-white/10 transition-colors">
                       <Calendar size={14} className="text-brand-accent" />
                       <span>
                         Viewing Month: <strong>June 2026</strong>
@@ -956,12 +956,12 @@ export default function Dashboard() {
                         >
                           <stop
                             offset="0%"
-                            stopColor="#4a7fa5"
+                            stopColor="#059669"
                             stopOpacity="0.3"
                           />
                           <stop
                             offset="100%"
-                            stopColor="#4a7fa5"
+                            stopColor="#059669"
                             stopOpacity="0.0"
                           />
                         </linearGradient>
@@ -998,7 +998,7 @@ export default function Dashboard() {
                               y1="0"
                               x2={xPercent}
                               y2="220"
-                              stroke="#4a7fa5"
+                              stroke="#059669"
                               strokeWidth="1.5"
                               strokeDasharray="4 4"
                               opacity="0.8"
@@ -1008,7 +1008,7 @@ export default function Dashboard() {
                               cx={xPercent}
                               cy={bulletY}
                               r={8}
-                              fill="#4a7fa5"
+                              fill="#059669"
                               className="animate-pulse"
                             />
                             <circle
@@ -1047,7 +1047,7 @@ export default function Dashboard() {
                         onChange={(e) =>
                           setChartPointerIndex(parseInt(e.target.value))
                         }
-                        className="w-full h-2 bg-brand-muted dark:bg-[#1a2533] transition-colors rounded-lg appearance-none cursor-pointer accent-brand-accent border border-brand-dark dark:border-white/10 transition-colors"
+                        className="w-full h-2 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg appearance-none cursor-pointer accent-brand-accent border border-brand-dark dark:border-white/10 transition-colors"
                       />
                       <div className="flex justify-between text-[10px] text-brand-primary/50 font-mono mt-2">
                         <span>June 1st</span>
@@ -1059,9 +1059,9 @@ export default function Dashboard() {
                     </div>
 
                     {/* Detailed Interactive Indicator Box plotted contextual updates */}
-                    <div className="p-4 rounded-lg bg-brand-muted dark:bg-[#1a2533] transition-colors border border-brand-dark dark:border-white/10 transition-colors grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="p-4 rounded-lg bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 transition-colors grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
-                        <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
+                        <span className="text-[10px] tracking-widest text-brand-primary/60 dark:text-white/60 font-bold uppercase block">
                           Timeline Date
                         </span>
                         <p className="text-lg font-bold text-brand-primary dark:text-white transition-colors mt-1 flex items-center gap-2">
@@ -1071,7 +1071,7 @@ export default function Dashboard() {
                       </div>
 
                       <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
-                        <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
+                        <span className="text-[10px] tracking-widest text-brand-primary/60 dark:text-white/60 font-bold uppercase block">
                           Combined Vault Balance
                         </span>
                         <p className="text-lg font-bold text-brand-accent mt-1 font-mono">
@@ -1083,7 +1083,7 @@ export default function Dashboard() {
                       </div>
 
                       <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
-                        <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
+                        <span className="text-[10px] tracking-widest text-brand-primary/60 dark:text-white/60 font-bold uppercase block">
                           Day Net Expenses
                         </span>
                         <p
@@ -1096,7 +1096,7 @@ export default function Dashboard() {
                       </div>
 
                       <div>
-                        <span className="text-[10px] tracking-widest text-brand-primary/60 font-bold uppercase block">
+                        <span className="text-[10px] tracking-widest text-brand-primary/60 dark:text-white/60 font-bold uppercase block">
                           Calendar Event Activity
                         </span>
                         <p className="text-xs text-brand-primary/80 font-medium truncate mt-1.5 flex items-center gap-1">
@@ -1133,7 +1133,7 @@ export default function Dashboard() {
                         {savingsGoal.name}
                       </p>
 
-                      <div className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors h-2.5 rounded-full mt-3 overflow-hidden border border-brand-dark dark:border-white/10 transition-colors">
+                      <div className="w-full bg-brand-muted dark:bg-brand-surface transition-colors h-2.5 rounded-full mt-3 overflow-hidden border border-brand-dark dark:border-white/10 transition-colors">
                         <div
                           className={`bg-brand-accent h-full rounded-full transition-all duration-500 ${getSavingsProgressWidthClass(savingsGoal.current, savingsGoal.target)}`}
                         />
@@ -1191,7 +1191,7 @@ export default function Dashboard() {
                           <div>
                             <label
                               htmlFor="transferFrom"
-                              className="text-[9px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1"
+                              className="text-[9px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1"
                             >
                               Source Wallet
                             </label>
@@ -1199,7 +1199,7 @@ export default function Dashboard() {
                               id="transferFrom"
                               value={transferFrom}
                               onChange={(e) => setTransferFrom(e.target.value)}
-                              className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                             >
                               {accounts.map((acc) => (
                                 <option key={acc.id} value={acc.id}>
@@ -1211,7 +1211,7 @@ export default function Dashboard() {
                           <div>
                             <label
                               htmlFor="transferTo"
-                              className="text-[9px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1"
+                              className="text-[9px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1"
                             >
                               Target Account / Name
                             </label>
@@ -1219,7 +1219,7 @@ export default function Dashboard() {
                               id="transferTo"
                               value={transferTo}
                               onChange={(e) => setTransferTo(e.target.value)}
-                              className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                             >
                               <option value="">-- Choose Recipient --</option>
                               <option value="High-Yield Savings">
@@ -1240,7 +1240,7 @@ export default function Dashboard() {
 
                         <div className="grid grid-cols-2 gap-2">
                           <div>
-                            <label className="text-[9px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                            <label className="text-[9px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                               Capital Value ($USD)
                             </label>
                             <input
@@ -1251,11 +1251,11 @@ export default function Dashboard() {
                               onChange={(e) =>
                                 setTransferAmount(e.target.value)
                               }
-                              className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
                             />
                           </div>
                           <div>
-                            <label className="text-[9px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                            <label className="text-[9px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                               Brief Description (Memo)
                             </label>
                             <input
@@ -1263,7 +1263,7 @@ export default function Dashboard() {
                               placeholder="e.g. rent, groceries"
                               value={transferMemo}
                               onChange={(e) => setTransferMemo(e.target.value)}
-                              className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                             />
                           </div>
                         </div>
@@ -1296,7 +1296,7 @@ export default function Dashboard() {
                                 className={`px-2.5 py-1 rounded-lg text-[10px] uppercase font-bold tracking-wider transition-all cursor-pointer ${
                                   txFilter === filterVal
                                     ? "bg-brand-accent text-white"
-                                    : "bg-brand-muted dark:bg-[#1a2533] transition-colors text-brand-primary dark:text-white transition-colors border border-brand-dark/50 hover:bg-brand-secondary/25"
+                                    : "bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white transition-colors border border-brand-dark/50 hover:bg-brand-secondary/25"
                                 }`}
                               >
                                 {filterVal}
@@ -1316,7 +1316,7 @@ export default function Dashboard() {
                           placeholder="Search transactions by category or keyword..."
                           value={txSearch}
                           onChange={(e) => setTxSearch(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-muted dark:bg-[#1a2533] transition-colors border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent/60"
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent/60"
                         />
                       </div>
 
@@ -1332,7 +1332,7 @@ export default function Dashboard() {
                             return (
                               <div
                                 key={tx.id}
-                                className="p-3 bg-brand-muted dark:bg-[#1a2533] transition-colors rounded-xl border border-brand-dark/65 flex justify-between items-center text-xs hover:border-brand-accent/40 transition-all"
+                                className="p-3 bg-brand-muted dark:bg-brand-surface transition-colors rounded-xl border border-brand-dark/65 flex justify-between items-center text-xs hover:border-brand-accent/40 transition-all"
                               >
                                 <div className="flex items-center gap-3">
                                   <div
@@ -1433,7 +1433,7 @@ export default function Dashboard() {
                         <div>
                           <div className="flex justify-between items-start mb-4">
                             <div>
-                              <span className="text-[10px] bg-brand-muted dark:bg-[#1a2533] transition-colors px-3 py-1 rounded-full border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors uppercase tracking-widest font-mono font-bold">
+                              <span className="text-[10px] bg-brand-muted dark:bg-brand-surface transition-colors px-3 py-1 rounded-full border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors uppercase tracking-widest font-mono font-bold">
                                 {acc.type}
                               </span>
                               <h4 className="text-lg font-bold text-brand-primary dark:text-white transition-colors mt-2.5">
@@ -1445,7 +1445,7 @@ export default function Dashboard() {
                             </span>
                           </div>
 
-                          <div className="space-y-3 bg-brand-muted dark:bg-[#1a2533] transition-colors p-4 rounded-lg border border-brand-dark dark:border-white/10 transition-colors">
+                          <div className="space-y-3 bg-brand-muted dark:bg-brand-surface transition-colors p-4 rounded-lg border border-brand-dark dark:border-white/10 transition-colors">
                             <div className="flex justify-between text-xs py-1.5 border-b border-brand-dark/50">
                               <span className="text-brand-primary/65">
                                 ABA Routing Transit Number
@@ -1539,14 +1539,14 @@ export default function Dashboard() {
 
                     <form onSubmit={handleTransferSubmit} className="space-y-4">
                       <div>
-                        <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                        <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                           Source Account Wallet
                         </label>
                         <select
                           value={transferFrom}
                           title="Select source account for transfer"
                           onChange={(e) => setTransferFrom(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                         >
                           {accounts.map((acc) => (
                             <option key={acc.id} value={acc.id}>
@@ -1557,14 +1557,14 @@ export default function Dashboard() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                        <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                           Target Account / Name
                         </label>
                         <select
                           value={transferTo}
                           title="Select target account or recipient"
                           onChange={(e) => setTransferTo(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                         >
                           <option value="">-- Select Verified Dest --</option>
                           <option value="High-Yield Savings">
@@ -1584,7 +1584,7 @@ export default function Dashboard() {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                          <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                             Capital Value ($USD)
                           </label>
                           <input
@@ -1593,11 +1593,11 @@ export default function Dashboard() {
                             placeholder="0.00"
                             value={transferAmount}
                             onChange={(e) => setTransferAmount(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                          <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                             Private Memo Key
                           </label>
                           <input
@@ -1605,7 +1605,7 @@ export default function Dashboard() {
                             placeholder="e.g. loan payout"
                             value={transferMemo}
                             onChange={(e) => setTransferMemo(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                           />
                         </div>
                       </div>
@@ -1641,14 +1641,14 @@ export default function Dashboard() {
 
                     <form onSubmit={handleBillPaySubmit} className="space-y-4">
                       <div>
-                        <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                        <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                           Select Service Payee
                         </label>
                         <select
                           value={billPayee}
                           title="Select service payee"
                           onChange={(e) => setBillPayee(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                         >
                           <option value="">
                             -- Choose Registered Vendor --
@@ -1670,14 +1670,14 @@ export default function Dashboard() {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                          <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                             Fund Source
                           </label>
                           <select
                             value={billFromAccount}
                             title="Select source account for bill payment"
                             onChange={(e) => setBillFromAccount(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                           >
                             {accounts.map((acc) => (
                               <option key={acc.id} value={acc.id}>
@@ -1687,14 +1687,14 @@ export default function Dashboard() {
                           </select>
                         </div>
                         <div>
-                          <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                          <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                             Bill Category
                           </label>
                           <select
                             value={billCategory}
                             title="Select bill category"
                             onChange={(e) => setBillCategory(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
                           >
                             <option value="Utilities">Utilities</option>
                             <option value="Rent">Rent</option>
@@ -1705,7 +1705,7 @@ export default function Dashboard() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] text-brand-primary/60 font-bold uppercase tracking-widest block mb-1">
+                        <label className="text-[10px] text-brand-primary/60 dark:text-white/60 font-bold uppercase tracking-widest block mb-1">
                           Remittance Capital ($USD)
                         </label>
                         <input
@@ -1714,7 +1714,7 @@ export default function Dashboard() {
                           placeholder="0.00"
                           value={billAmount}
                           onChange={(e) => setBillAmount(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
                         />
                       </div>
 
@@ -1948,7 +1948,7 @@ export default function Dashboard() {
                       portfolio based on macroeconomic fluctuations.
                     </p>
 
-                    <div className="grid grid-cols-3 gap-4 p-4 bg-brand-muted dark:bg-[#1a2533] transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-center text-xs">
+                    <div className="grid grid-cols-3 gap-4 p-4 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-center text-xs">
                       <div>
                         <p className="text-brand-primary/65 uppercase text-[9px] font-bold">
                           Equity Stock Exposure
@@ -1988,7 +1988,7 @@ export default function Dashboard() {
                         ].map((stock, i) => (
                           <div
                             key={i}
-                            className="p-2.5 bg-brand-muted dark:bg-[#1a2533] transition-colors border border-brand-dark dark:border-white/10 transition-colors rounded-xl"
+                            className="p-2.5 bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 transition-colors rounded-xl"
                           >
                             <p className="font-semibold text-brand-primary dark:text-white transition-colors text-[11px]">
                               {stock.symbol}
@@ -2102,7 +2102,7 @@ export default function Dashboard() {
                     ].map((st, i) => (
                       <div
                         key={i}
-                        className="p-4 bg-brand-muted dark:bg-[#1a2533] transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/50 transition-all text-xs"
+                        className="p-4 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/50 transition-all text-xs"
                       >
                         <div className="space-y-1 text-left">
                           <p className="font-bold text-brand-primary dark:text-white transition-colors text-sm">
@@ -2170,7 +2170,7 @@ export default function Dashboard() {
                               <div
                                 className={`p-3 rounded-lg max-w-sm text-xs relative ${
                                   isAsst
-                                    ? "bg-brand-muted dark:bg-[#1a2533] transition-colors text-brand-primary dark:text-white transition-colors border border-brand-dark dark:border-white/10 transition-colors"
+                                    ? "bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white transition-colors border border-brand-dark dark:border-white/10 transition-colors"
                                     : "bg-brand-accent text-white font-medium"
                                 }`}
                               >
@@ -2186,7 +2186,7 @@ export default function Dashboard() {
                         })}
                         {isGeneratingChat && (
                           <div className="flex justify-start">
-                            <div className="p-3 bg-brand-muted dark:bg-[#1a2533] transition-colors text-brand-primary dark:text-white transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-xs flex items-center gap-1">
+                            <div className="p-3 bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-xs flex items-center gap-1">
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce"></span>
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:200ms]"></span>
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:400ms]"></span>
@@ -2202,7 +2202,7 @@ export default function Dashboard() {
                         placeholder="Write support inquiry (e.g. transfers, card blocks)..."
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
-                        className="grow bg-brand-muted dark:bg-[#1a2533] transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors placeholder:text-brand-primary/50 focus:outline-none"
+                        className="grow bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors placeholder:text-brand-primary/50 focus:outline-none"
                       />
                       <button
                         type="submit"

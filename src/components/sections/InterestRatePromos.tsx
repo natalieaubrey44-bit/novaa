@@ -92,7 +92,7 @@ export default function InterestRatePromos() {
                   step="5000"
                   value={depositAmount}
                   onChange={(e) => setDepositAmount(Number(e.target.value))}
-                  className="w-full h-2 bg-brand-muted dark:bg-[#1a2533] transition-colors rounded-lg appearance-none cursor-ew-resize accent-brand-accent"
+                  className="w-full h-2 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg appearance-none cursor-ew-resize accent-brand-accent"
                   aria-label="Estimated deposit amount slider"
                   title="Deposit amount"
                 />
@@ -163,7 +163,7 @@ export default function InterestRatePromos() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   onClick={() => setIsUnlocked(true)}
-                  className="bg-linear-to-br from-[#0c1f3d] to-[#040e1c] text-white p-8 sm:p-10 rounded-[2.5rem] border border-[#1e3a63] shadow-2xl flex flex-col justify-between items-center text-center min-h-88 cursor-pointer group hover:border-brand-accent transition-all duration-300 relative overflow-hidden"
+                  className="bg-gradient-to-br from-brand-navy via-brand-primary to-brand-navy text-white p-8 sm:p-10 rounded-[2.5rem] border border-brand-accent/20 dark:border-brand-accent/30 shadow-2xl flex flex-col justify-between items-center text-center min-h-88 cursor-pointer group hover:border-brand-accent transition-all duration-300 relative overflow-hidden"
                 >
                   {/* Holographic backdrop glow */}
                   <div className="absolute -top-24 -left-2a w-52 h-52 bg-brand-accent/10 rounded-full blur-3xl group-hover:bg-brand-accent/20 transition-all"></div>

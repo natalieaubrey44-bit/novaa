@@ -52,8 +52,9 @@ body {
   color: #F8FAFC;
 }
 
-/* Smooth transitions on all interactive elements */
-*, *::before, *::after {
+/* Smooth transitions on interactive and theme-aware elements only */
+button, a, input, textarea, select,
+[class*="transition-"] {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: ease;
   transition-duration: 200ms;
@@ -62,6 +63,17 @@ body {
 /* Override for motion/animation elements — don't inherit transition-all on transforms */
 [class*="motion"] {
   transition-property: opacity, transform;
+}
+
+/* Respect prefers-reduced-motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Dark accent glow */

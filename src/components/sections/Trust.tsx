@@ -34,7 +34,7 @@ export default function Trust() {
   ];
 
   return (
-    <section className="py-16 bg-brand-primary text-white relative border-t border-white/5">
+    <section className="py-16 bg-brand-navy text-white relative border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
           {stats.map((stat, i) => (

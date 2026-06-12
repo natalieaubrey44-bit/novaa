@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import TopBanner from './TopBanner';
 import NovaaLogo from '../NovaaLogo';
 import ThemeToggle from '../ThemeToggle';
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { isLoggedIn, logout } = useAuth();
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -24,6 +26,19 @@ export default function Navbar() {
   }, [location.pathname]);
 
   if (location.pathname === '/dashboard') return null;
+
+  // Pages with light backgrounds that need light navbar
+  const lightPages = ['/personal', '/business', '/loans', '/investments', '/resources'];
+  const isLightPage = lightPages.includes(location.pathname);
+  
+  // Determine navbar styling based on page context and theme
+  const shouldUseLightNavbar = isLightPage && theme === 'light' && !isScrolled;
+  const textColorClass = shouldUseLightNavbar ? 'text-brand-primary' : 'text-white';
+  const textMutedClass = shouldUseLightNavbar ? 'text-brand-primary/60' : 'text-white/50';
+  const borderColorClass = shouldUseLightNavbar ? 'border-brand-secondary/10' : 'border-white/8';
+  const bgColorClass = isScrolled 
+    ? (isLightPage && theme === 'light' ? 'bg-brand-light' : 'bg-brand-primary/98')
+    : 'bg-transparent';
 
   const navLinks = [
     { label: 'Personal', href: '/personal' },
@@ -40,10 +55,8 @@ export default function Navbar() {
       <TopBanner />
 
       <div
-        className={`transition-all duration-300 ${
-          isScrolled
-            ? 'bg-brand-primary/98 backdrop-blur-md border-b border-white/8 py-3'
-            : 'bg-transparent py-4 sm:py-5'
+        className={`transition-all duration-300 ${bgColorClass} backdrop-blur-md border-b ${borderColorClass} ${
+          isScrolled ? 'py-3' : 'py-4 sm:py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +64,10 @@ export default function Navbar() {
 
             {/* Logo */}
             <Link to="/" className="flex items-center group">
-              <NovaaLogo className="text-xl text-white" iconSize={24} />
+              <NovaaLogo 
+                className={`text-xl ${shouldUseLightNavbar ? 'text-brand-primary' : 'text-white'}`}
+                iconSize={24} 
+              />
             </Link>
 
             {/* Desktop Nav */}
@@ -62,8 +78,8 @@ export default function Navbar() {
                   to={link.href}
                   className={`px-4 py-2 text-sm font-normal tracking-wide transition-colors relative group ${
                     isActive(link.href)
-                      ? 'text-white'
-                      : 'text-white/50 hover:text-white'
+                      ? textColorClass
+                      : `${textMutedClass} hover:${textColorClass}`
                   }`}
                 >
                   {link.label}
@@ -80,13 +96,17 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/dashboard"
-                    className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors font-normal tracking-wide"
+                    className={`px-4 py-2 text-sm ${textMutedClass} hover:${textColorClass} transition-colors font-normal tracking-wide`}
                   >
                     Dashboard
                   </Link>
                   <button
                     onClick={logout}
-                    className="ml-2 px-5 py-2 rounded-sm bg-white/8 border border-white/12 text-white text-sm font-normal hover:bg-white/14 transition-all cursor-pointer tracking-wide"
+                    className={`ml-2 px-5 py-2 rounded-sm ${
+                      shouldUseLightNavbar
+                        ? 'bg-brand-primary/8 border border-brand-primary/12 text-brand-primary hover:bg-brand-primary/14'
+                        : 'bg-white/8 border border-white/12 text-white hover:bg-white/14'
+                    } text-sm font-normal transition-all cursor-pointer tracking-wide`}
                   >
                     Log out
                   </button>
@@ -95,28 +115,32 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/login"
-                    className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors font-normal tracking-wide"
+                    className={`px-4 py-2 text-sm ${textMutedClass} hover:${textColorClass} transition-colors font-normal tracking-wide`}
                   >
                     Log in
                   </Link>
                   <Link
                     to="/login"
-                    className="ml-2 px-5 py-2 rounded-sm bg-brand-accent text-white text-sm font-normal hover:bg-brand-accent/90 transition-all tracking-wide"
+                    className={`ml-2 px-5 py-2 rounded-sm ${
+                      shouldUseLightNavbar
+                        ? 'bg-brand-accent text-white hover:bg-brand-accent/90'
+                        : 'bg-brand-accent text-white hover:bg-brand-accent/90'
+                    } text-sm font-normal transition-all tracking-wide`}
                   >
                     Open Account
                   </Link>
                 </>
               )}
-              <div className="ml-2 pl-2 border-l border-white/10 flex items-center">
-                <ThemeToggle className="text-white hover:bg-white/10" />
+              <div className={`ml-2 pl-2 ${shouldUseLightNavbar ? 'border-l border-brand-primary/10' : 'border-l border-white/10'} flex items-center`}>
+                <ThemeToggle className={shouldUseLightNavbar ? 'text-brand-primary hover:bg-brand-primary/10' : 'text-white hover:bg-white/10'} />
               </div>
             </div>
 
             {/* Mobile Toggle & Theme */}
             <div className="md:hidden flex items-center gap-2">
-              <ThemeToggle className="text-white hover:bg-white/10" />
+              <ThemeToggle className={shouldUseLightNavbar ? 'text-brand-primary hover:bg-brand-primary/10' : 'text-white hover:bg-white/10'} />
               <button
-              className="md:hidden p-2 text-white/70 hover:text-white transition-colors"
+              className={`md:hidden p-2 ${textMutedClass} hover:${textColorClass} transition-colors`}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle navigation"
             >
@@ -134,7 +158,9 @@ export default function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="md:hidden overflow-hidden border-t border-white/8 mt-3 bg-brand-primary"
+              className={`md:hidden overflow-hidden border-t ${borderColorClass} mt-3 ${
+                isLightPage && theme === 'light' ? 'bg-brand-light' : 'bg-brand-primary'
+              }`}
             >
               <div className="px-4 py-4 space-y-1">
                 {navLinks.map((link) => (
@@ -143,47 +169,13 @@ export default function Navbar() {
                     to={link.href}
                     className={`flex items-center px-4 py-3 text-sm rounded-sm transition-colors ${
                       isActive(link.href)
-                        ? 'text-white bg-white/6 border-l-2 border-brand-accent'
-                        : 'text-white/55 hover:text-white hover:bg-white/4'
+                        ? `${shouldUseLightNavbar ? 'text-brand-primary bg-brand-primary/6' : 'text-white bg-white/6'} ${shouldUseLightNavbar ? 'border-l-2 border-brand-accent' : 'border-l-2 border-brand-accent'}`
+                        : `${shouldUseLightNavbar ? 'text-brand-primary/55 hover:text-brand-primary hover:bg-brand-primary/4' : 'text-white/55 hover:text-white hover:bg-white/4'}`
                     }`}
                   >
                     {link.label}
                   </Link>
                 ))}
-
-                <div className="pt-3 mt-3 border-t border-white/8 flex flex-col gap-2">
-                  {isLoggedIn ? (
-                    <>
-                      <Link
-                        to="/dashboard"
-                        className="px-4 py-3 text-sm text-white/60 hover:text-white transition-colors text-center rounded-sm hover:bg-white/4"
-                      >
-                        Dashboard
-                      </Link>
-                      <button
-                        onClick={logout}
-                        className="w-full py-3 rounded-sm bg-white/8 border border-white/10 text-white text-sm font-normal hover:bg-white/14 transition-all cursor-pointer"
-                      >
-                        Log out
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <Link
-                        to="/login"
-                        className="px-4 py-3 text-sm text-white/60 hover:text-white transition-colors text-center rounded-sm hover:bg-white/4"
-                      >
-                        Log in
-                      </Link>
-                      <Link
-                        to="/login"
-                        className="w-full py-3 rounded-sm bg-brand-accent text-white text-sm text-center font-normal hover:bg-brand-accent/90 transition-all"
-                      >
-                        Open Account
-                      </Link>
-                    </>
-                  )}
-                </div>
               </div>
             </motion.div>
           )}

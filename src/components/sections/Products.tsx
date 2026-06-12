@@ -42,7 +42,7 @@ export default function Products() {
             <h2 className="text-3xl md:text-5xl font-display font-bold text-brand-primary dark:text-white transition-colors mb-6">
               Everything You Need To <br /> Manage Your Money
             </h2>
-            <p className="text-lg text-brand-secondary/80">
+            <p className="text-lg text-brand-primary/80 dark:text-white/80">
               A complete ecosystem of financial products designed to work together seamlessly, helping you achieve your goals faster.
             </p>
           </motion.div>
@@ -74,7 +74,7 @@ export default function Products() {
                 <h3 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-3">
                   {product.title}
                 </h3>
-                <p className="text-sm text-brand-secondary/70 mb-8 leading-relaxed">
+                <p className="text-sm text-brand-primary/70 dark:text-white/70 mb-8 leading-relaxed">
                   {product.description}
                 </p>
                 

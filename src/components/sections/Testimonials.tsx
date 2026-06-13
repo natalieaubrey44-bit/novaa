@@ -77,7 +77,7 @@ export default function Testimonials() {
                  />
                  <div className="text-left">
                    <h4 className="font-bold text-brand-primary dark:text-white transition-colors">{testimonials[currentIndex].name}</h4>
-                   <p className="text-sm text-brand-secondary/70">{testimonials[currentIndex].role}</p>
+                   <p className="text-sm text-brand-primary/80">{testimonials[currentIndex].role}</p>
                  </div>
                </div>
             </motion.div>
@@ -85,10 +85,10 @@ export default function Testimonials() {
         </div>
 
         <div className="flex justify-center gap-4 mt-12">
-          <button onClick={prev} aria-label="Previous testimonial" className="w-12 h-12 rounded-full bg-white dark:bg-brand-secondary transition-colors shadow-sm flex items-center justify-center text-brand-primary dark:text-white transition-colors hover:bg-brand-primary hover:text-white transition-colors border border-brand-primary/10">
+          <button onClick={prev} aria-label="Previous testimonial" className="w-12 h-12 rounded-full bg-white dark:bg-brand-secondary transition-colors shadow-sm flex items-center justify-center text-brand-primary dark:text-white hover:bg-brand-primary hover:text-white border border-brand-primary/10">
             <ChevronLeft size={24} />
           </button>
-          <button onClick={next} aria-label="Next testimonial" className="w-12 h-12 rounded-full bg-white dark:bg-brand-secondary transition-colors shadow-sm flex items-center justify-center text-brand-primary dark:text-white transition-colors hover:bg-brand-primary hover:text-white transition-colors border border-brand-primary/10">
+          <button onClick={next} aria-label="Next testimonial" className="w-12 h-12 rounded-full bg-white dark:bg-brand-secondary transition-colors shadow-sm flex items-center justify-center text-brand-primary dark:text-white hover:bg-brand-primary hover:text-white border border-brand-primary/10">
             <ChevronRight size={24} />
           </button>
         </div>

@@ -32,11 +32,11 @@ export default function MobileBanking() {
               <div className="h-full w-full bg-brand-light dark:bg-brand-primary transition-colors p-6 pt-12 flex flex-col">
                 <div className="flex justify-between items-center mb-8">
                   <div className="w-10 h-10 rounded-full bg-brand-primary flex items-center justify-center text-white text-xs">JD</div>
-                  <BellRing size={20} className="text-brand-secondary dark:text-brand-light transition-colors" />
+                  <BellRing size={20} className="text-brand-primary/70 dark:text-brand-light transition-colors" />
                 </div>
                 
                 <h4 className="text-brand-primary dark:text-white transition-colors font-display font-medium text-lg mb-2">Total Balance</h4>
-                <h2 className="text-3xl font-display font-bold text-brand-primary dark:text-white transition-colors tracking-tight mb-8">$42,850<span className="text-brand-secondary/60 text-xl">.00</span></h2>
+                <h2 className="text-3xl font-display font-bold text-brand-primary dark:text-white transition-colors tracking-tight mb-8">$42,850<span className="text-brand-primary/70 text-xl">.00</span></h2>
                 
                 <div className="bg-brand-primary rounded-2xl p-5 text-white mb-6 shadow-lg relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-bl-full"></div>
@@ -53,7 +53,7 @@ export default function MobileBanking() {
                   <div className="grid grid-cols-4 gap-2">
                     {[Zap, Plane, Fingerprint, Lock].map((Icon, i) => (
                       <div key={i} className="flex flex-col items-center gap-2">
-                        <div className="w-12 h-12 bg-white dark:bg-brand-secondary transition-colors rounded-xl shadow-sm flex items-center justify-center text-brand-primary dark:text-white transition-colors border border-brand-primary/5">
+                        <div className="w-12 h-12 bg-white dark:bg-brand-secondary transition-colors rounded-xl shadow-sm flex items-center justify-center text-brand-primary dark:text-white border border-brand-primary/5">
                           <Icon size={18} />
                         </div>
                       </div>
@@ -110,10 +110,10 @@ export default function MobileBanking() {
               </div>
 
               <div className="flex gap-4">
-                <button className="flex items-center gap-3 bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white transition-colors px-6 py-3 rounded-xl hover:bg-brand-light transition-colors font-medium border border-transparent shadow-lg">
+                <button className="flex items-center gap-3 bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white px-6 py-3 rounded-xl hover:bg-brand-light font-medium border border-transparent shadow-lg">
                   <Smartphone size={24} />
                   <div className="text-left">
-                    <span className="block text-[10px] leading-tight text-brand-secondary/70">Download on the</span>
+                    <span className="block text-[10px] leading-tight text-brand-primary/70 dark:text-brand-light/70">Download on the</span>
                     <span className="block text-sm">App Store</span>
                   </div>
                 </button>

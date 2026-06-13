@@ -34,7 +34,7 @@ export default function Resources() {
             </div>
             <h2 className="text-3xl md:text-5xl font-display font-bold text-brand-primary dark:text-white transition-colors">Latest Resources</h2>
           </div>
-          <button className="text-brand-primary dark:text-white transition-colors font-medium hover:text-brand-accent transition-colors flex items-center gap-2 pb-2">
+          <button className="text-brand-primary dark:text-white transition-colors font-medium hover:text-brand-accent flex items-center gap-2 pb-2">
             View All Articles <ArrowRight size={18} />
           </button>
         </div>
@@ -63,7 +63,7 @@ export default function Resources() {
                 </div>
               </div>
               
-              <h3 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-3 group-hover:text-brand-accent transition-colors">
+              <h3 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-3 group-hover:text-brand-accent">
                 {article.title}
               </h3>
               <p className="text-brand-primary/80 dark:text-white/80 text-sm leading-relaxed mb-4 flex-grow">

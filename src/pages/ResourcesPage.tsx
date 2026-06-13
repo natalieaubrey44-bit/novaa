@@ -34,12 +34,12 @@ export default function ResourcesPage() {
 
       <ResourcesSection />
 
-      <section className="py-24 bg-brand-muted dark:bg-[#1a2533] transition-colors">
+      <section className="py-24 bg-brand-muted dark:bg-brand-surface transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-display font-bold text-brand-primary dark:text-white transition-colors mb-12">Search by Topic</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {["Market Outlook", "Retirement Planning", "Tax Strategies", "Real Estate", "Crypto & Web3", "Personal Budgeting", "Business Financing"].map((topic, i) => (
-              <span key={i} className="px-6 py-3 rounded-full bg-white dark:bg-brand-secondary transition-colors border border-brand-primary/10 text-brand-primary dark:text-white transition-colors font-medium hover:bg-brand-primary hover:text-white transition-colors cursor-pointer shadow-sm">
+              <span key={i} className="px-6 py-3 rounded-full bg-white dark:bg-brand-secondary transition-colors border border-brand-primary/10 text-brand-primary dark:text-white font-medium hover:bg-brand-primary hover:text-white cursor-pointer shadow-sm">
                 {topic}
               </span>
             ))}

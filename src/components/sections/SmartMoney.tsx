@@ -16,7 +16,7 @@ export default function SmartMoney() {
               transition={{ duration: 0.8 }}
               className="relative p-8 md:p-12 bg-white dark:bg-brand-secondary transition-colors rounded-[3rem] border border-brand-primary/5 shadow-inner"
             >
-              <h3 className="text-center font-display font-medium text-brand-secondary/60 mb-8 text-sm tracking-widest uppercase">Monthly Cash Flow</h3>
+              <h3 className="text-center font-display font-medium text-brand-primary/60 mb-8 text-sm tracking-widest uppercase">Monthly Cash Flow</h3>
               
               <div className="flex flex-col gap-6">
                 {/* Income block */}
@@ -42,7 +42,7 @@ export default function SmartMoney() {
                   {/* Nodes */}
                   <div className="col-span-2 bg-white dark:bg-brand-secondary transition-colors p-4 rounded-xl shadow-sm border border-brand-primary/5 flex items-center justify-between">
                      <span className="font-medium text-sm text-brand-primary dark:text-white transition-colors flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-brand-primary"></div> Housing & Utilities</span>
-                     <span className="font-semibold text-brand-secondary dark:text-brand-light transition-colors text-sm">$2,800</span>
+                     <span className="font-semibold text-brand-primary dark:text-brand-light transition-colors text-sm">$2,800</span>
                   </div>
 
                   <div className="col-span-2 bg-white dark:bg-brand-secondary transition-colors p-4 rounded-xl shadow-sm border border-brand-accent/20 flex items-center justify-between">
@@ -57,7 +57,7 @@ export default function SmartMoney() {
 
                   <div className="col-span-2 ml-8 bg-white dark:bg-brand-secondary transition-colors p-4 rounded-xl shadow-sm border border-brand-primary/5 flex items-center justify-between">
                      <span className="font-medium text-sm text-brand-primary dark:text-white transition-colors flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-brand-secondary"></div> Daily Spending</span>
-                     <span className="font-semibold text-brand-secondary dark:text-brand-light transition-colors text-sm">$3,150</span>
+                     <span className="font-semibold text-brand-primary dark:text-brand-light transition-colors text-sm">$3,150</span>
                   </div>
                 </div>
               </div>
@@ -76,7 +76,7 @@ export default function SmartMoney() {
                 Automate Your <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-primary">Financial Success</span>
               </h2>
-              <p className="text-brand-secondary/80 text-lg mb-8 leading-relaxed">
+              <p className="text-brand-primary/80 text-lg mb-8 leading-relaxed">
                 Take the guesswork out of saving and investing. Set your goals, define your rules, and let our smart algorithms handle the rest while you focus on living.
               </p>
 
@@ -92,7 +92,7 @@ export default function SmartMoney() {
                     </div>
                     <div>
                       <h4 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-1">{feature.title}</h4>
-                      <p className="text-brand-secondary/70 text-sm leading-relaxed">{feature.desc}</p>
+                      <p className="text-brand-primary/80 text-sm leading-relaxed">{feature.desc}</p>
                     </div>
                   </div>
                 ))}

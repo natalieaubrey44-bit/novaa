@@ -453,7 +453,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-light dark:bg-brand-primary transition-colors text-brand-primary dark:text-white transition-colors flex flex-col">
+    <div className="min-h-screen bg-brand-light dark:bg-brand-primary transition-colors text-brand-primary dark:text-white flex flex-col">
       {/* Dynamic Sub-header Info Alert Strip */}
       <div className="bg-brand-primary border-b border-white/8 px-4 py-2 text-xs flex flex-wrap justify-between items-center gap-2 relative z-20">
         <div className="flex items-center gap-2">
@@ -620,7 +620,7 @@ export default function Dashboard() {
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="p-2.5 bg-white dark:bg-brand-secondary transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors hover:bg-brand-muted transition-all relative"
+                  className="p-2.5 bg-white dark:bg-brand-secondary transition-colors rounded-lg border border-brand-dark dark:border-white/10 hover:bg-brand-muted transition-all relative"
                 >
                   <Bell size={18} className="text-brand-primary/60" />
                   {unreadCount > 0 && (
@@ -722,7 +722,7 @@ export default function Dashboard() {
               </div>
 
               {/* Quick Simulator Switch */}
-              <div className="hidden sm:flex p-1 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-[10px] font-medium">
+              <div className="hidden sm:flex p-1 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 text-[10px] font-medium">
                 <span className="px-2 py-1 bg-brand-accent/10 border border-brand-accent/20 text-brand-accent rounded-sm">
                   Sandbox
                 </span>
@@ -800,7 +800,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Vault Actions and Quick Check deposit */}
-                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors flex flex-col justify-between">
+                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 flex flex-col justify-between">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-widest text-brand-accent mb-3">
                         Instant Check Deposit (Sandbox)
@@ -821,7 +821,7 @@ export default function Dashboard() {
                               onChange={(e) =>
                                 setSandboxAccount(e.target.value)
                               }
-                              className="w-full text-xs font-mono bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent"
+                              className="w-full text-xs font-mono bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-lg border border-brand-dark dark:border-white/10 text-brand-primary dark:text-white focus:outline-none focus:border-brand-accent"
                             >
                               {accounts.map((acc) => (
                                 <option key={acc.id} value={acc.id}>
@@ -840,7 +840,7 @@ export default function Dashboard() {
                               title="Check deposit amount"
                               placeholder="5000"
                               onChange={(e) => setSandboxAmount(e.target.value)}
-                              className="w-full text-xs bg-brand-muted dark:bg-brand-surface transition-colors p-2 border border-brand-dark dark:border-white/10 transition-colors rounded-lg text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent font-mono"
+                              className="w-full text-xs bg-brand-muted dark:bg-brand-surface transition-colors p-2 border border-brand-dark dark:border-white/10 rounded-lg text-brand-primary dark:text-white focus:outline-none focus:border-brand-accent font-mono"
                             />
                           </div>
                         </div>
@@ -867,7 +867,7 @@ export default function Dashboard() {
                       return (
                         <div
                           key={acc.id}
-                          className="bg-white dark:bg-brand-secondary transition-colors p-5 rounded-lg border border-brand-dark dark:border-white/10 transition-colors hover:border-brand-accent transition-all shadow-sm flex flex-col justify-between"
+                          className="bg-white dark:bg-brand-secondary transition-colors p-5 rounded-lg border border-brand-dark dark:border-white/10 hover:border-brand-accent transition-all shadow-sm flex flex-col justify-between"
                         >
                           <div>
                             <div className="flex justify-between items-start mb-2">
@@ -902,7 +902,7 @@ export default function Dashboard() {
                 </div>
 
                 {/* 2. ADJUSTABLE INTERACTIVE CHART (HIGH PRIORITY WRITTEN REQUIREMENTS) */}
-                <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm">
+                <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
                       <div className="flex items-center gap-2">
@@ -919,7 +919,7 @@ export default function Dashboard() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs font-mono bg-brand-muted dark:bg-brand-surface transition-colors px-3 py-1.5 rounded-xl border border-brand-dark dark:border-white/10 transition-colors">
+                    <div className="flex items-center gap-2 text-xs font-mono bg-brand-muted dark:bg-brand-surface transition-colors px-3 py-1.5 rounded-xl border border-brand-dark dark:border-white/10">
                       <Calendar size={14} className="text-brand-accent" />
                       <span>
                         Viewing Month: <strong>June 2026</strong>
@@ -1047,7 +1047,7 @@ export default function Dashboard() {
                         onChange={(e) =>
                           setChartPointerIndex(parseInt(e.target.value))
                         }
-                        className="w-full h-2 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg appearance-none cursor-pointer accent-brand-accent border border-brand-dark dark:border-white/10 transition-colors"
+                        className="w-full h-2 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg appearance-none cursor-pointer accent-brand-accent border border-brand-dark dark:border-white/10"
                       />
                       <div className="flex justify-between text-[10px] text-brand-primary/50 font-mono mt-2">
                         <span>June 1st</span>
@@ -1059,7 +1059,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Detailed Interactive Indicator Box plotted contextual updates */}
-                    <div className="p-4 rounded-lg bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 transition-colors grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="p-4 rounded-lg bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 grid grid-cols-1 md:grid-cols-4 gap-4">
                       <div className="border-b md:border-b-0 md:border-r border-brand-dark/30 pb-2 md:pb-0">
                         <span className="text-[10px] tracking-widest text-brand-primary/60 dark:text-white/60 font-bold uppercase block">
                           Timeline Date
@@ -1103,7 +1103,7 @@ export default function Dashboard() {
                           <span className="w-1.5 h-1.5 rounded-full bg-brand-accent shrink-0"></span>
                           {selectedChartPoint.event}
                         </p>
-                        <span className="text-[9px] bg-brand-secondary/30 border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors px-1.5 py-0.5 rounded font-mono mt-1 inline-block uppercase font-bold">
+                        <span className="text-[9px] bg-brand-secondary/30 border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white px-1.5 py-0.5 rounded font-mono mt-1 inline-block uppercase font-bold">
                           {selectedChartPoint.eventCategory}
                         </span>
                       </div>
@@ -1116,7 +1116,7 @@ export default function Dashboard() {
                   {/* Quick Action desks (6 Columns) */}
                   <div className="lg:col-span-5 space-y-6">
                     {/* Goal Progress Tracker widget */}
-                    <div className="bg-white dark:bg-brand-secondary transition-colors p-5 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm">
+                    <div className="bg-white dark:bg-brand-secondary transition-colors p-5 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm">
                       <div className="flex justify-between items-center mb-3">
                         <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent flex items-center gap-2">
                           <PiggyBank size={15} />
@@ -1133,7 +1133,7 @@ export default function Dashboard() {
                         {savingsGoal.name}
                       </p>
 
-                      <div className="w-full bg-brand-muted dark:bg-brand-surface transition-colors h-2.5 rounded-full mt-3 overflow-hidden border border-brand-dark dark:border-white/10 transition-colors">
+                      <div className="w-full bg-brand-muted dark:bg-brand-surface transition-colors h-2.5 rounded-full mt-3 overflow-hidden border border-brand-dark dark:border-white/10">
                         <div
                           className={`bg-brand-accent h-full rounded-full transition-all duration-500 ${getSavingsProgressWidthClass(savingsGoal.current, savingsGoal.target)}`}
                         />
@@ -1160,7 +1160,7 @@ export default function Dashboard() {
                     </div>
 
                     {/* Quick Transfer panel */}
-                    <div className="bg-white dark:bg-brand-secondary transition-colors p-5 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm space-y-4">
+                    <div className="bg-white dark:bg-brand-secondary transition-colors p-5 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm space-y-4">
                       <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent flex items-center gap-2">
                         <ArrowRightLeft size={15} />
                         <span>Instant Funds Transfer desk</span>
@@ -1199,7 +1199,7 @@ export default function Dashboard() {
                               id="transferFrom"
                               value={transferFrom}
                               onChange={(e) => setTransferFrom(e.target.value)}
-                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                             >
                               {accounts.map((acc) => (
                                 <option key={acc.id} value={acc.id}>
@@ -1219,7 +1219,7 @@ export default function Dashboard() {
                               id="transferTo"
                               value={transferTo}
                               onChange={(e) => setTransferTo(e.target.value)}
-                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                             >
                               <option value="">-- Choose Recipient --</option>
                               <option value="High-Yield Savings">
@@ -1251,7 +1251,7 @@ export default function Dashboard() {
                               onChange={(e) =>
                                 setTransferAmount(e.target.value)
                               }
-                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white font-mono focus:outline-none"
                             />
                           </div>
                           <div>
@@ -1263,7 +1263,7 @@ export default function Dashboard() {
                               placeholder="e.g. rent, groceries"
                               value={transferMemo}
                               onChange={(e) => setTransferMemo(e.target.value)}
-                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                              className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-2 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                             />
                           </div>
                         </div>
@@ -1279,7 +1279,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Recent Transactions List (7 Columns) */}
-                  <div className="lg:col-span-7 bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm flex flex-col justify-between">
+                  <div className="lg:col-span-7 bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm flex flex-col justify-between">
                     <div>
                       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                         <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent">
@@ -1296,7 +1296,7 @@ export default function Dashboard() {
                                 className={`px-2.5 py-1 rounded-lg text-[10px] uppercase font-bold tracking-wider transition-all cursor-pointer ${
                                   txFilter === filterVal
                                     ? "bg-brand-accent text-white"
-                                    : "bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white transition-colors border border-brand-dark/50 hover:bg-brand-secondary/25"
+                                    : "bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white border border-brand-dark/50 hover:bg-brand-secondary/25"
                                 }`}
                               >
                                 {filterVal}
@@ -1316,7 +1316,7 @@ export default function Dashboard() {
                           placeholder="Search transactions by category or keyword..."
                           value={txSearch}
                           onChange={(e) => setTxSearch(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none focus:border-brand-accent/60"
+                          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none focus:border-brand-accent/60"
                         />
                       </div>
 
@@ -1354,7 +1354,7 @@ export default function Dashboard() {
                                         {tx.description}
                                       </p>
                                       {tx.status === "pending" && (
-                                        <span className="text-[9px] bg-amber-100 text-[#b45309] border border-amber-200 px-1 py-0.5 rounded font-mono font-bold">
+                                        <span className="text-[9px] bg-amber-100 text-brand-accent border border-amber-200 px-1 py-0.5 rounded font-mono font-bold">
                                           PENDING
                                         </span>
                                       )}
@@ -1428,12 +1428,12 @@ export default function Dashboard() {
                     return (
                       <div
                         key={acc.id}
-                        className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm flex flex-col justify-between"
+                        className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm flex flex-col justify-between"
                       >
                         <div>
                           <div className="flex justify-between items-start mb-4">
                             <div>
-                              <span className="text-[10px] bg-brand-muted dark:bg-brand-surface transition-colors px-3 py-1 rounded-full border border-brand-dark dark:border-white/10 transition-colors text-brand-primary dark:text-white transition-colors uppercase tracking-widest font-mono font-bold">
+                              <span className="text-[10px] bg-brand-muted dark:bg-brand-surface transition-colors px-3 py-1 rounded-full border border-brand-dark dark:border-white/10 text-brand-primary dark:text-white uppercase tracking-widest font-mono font-bold">
                                 {acc.type}
                               </span>
                               <h4 className="text-lg font-bold text-brand-primary dark:text-white transition-colors mt-2.5">
@@ -1445,7 +1445,7 @@ export default function Dashboard() {
                             </span>
                           </div>
 
-                          <div className="space-y-3 bg-brand-muted dark:bg-brand-surface transition-colors p-4 rounded-lg border border-brand-dark dark:border-white/10 transition-colors">
+                          <div className="space-y-3 bg-brand-muted dark:bg-brand-surface transition-colors p-4 rounded-lg border border-brand-dark dark:border-white/10">
                             <div className="flex justify-between text-xs py-1.5 border-b border-brand-dark/50">
                               <span className="text-brand-primary/65">
                                 ABA Routing Transit Number
@@ -1518,7 +1518,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {/* Wire transfer desk */}
-                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm">
+                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-4">
                       Execute Local/Domestic Wire Transfer
                     </h4>
@@ -1546,7 +1546,7 @@ export default function Dashboard() {
                           value={transferFrom}
                           title="Select source account for transfer"
                           onChange={(e) => setTransferFrom(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                         >
                           {accounts.map((acc) => (
                             <option key={acc.id} value={acc.id}>
@@ -1564,7 +1564,7 @@ export default function Dashboard() {
                           value={transferTo}
                           title="Select target account or recipient"
                           onChange={(e) => setTransferTo(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                         >
                           <option value="">-- Select Verified Dest --</option>
                           <option value="High-Yield Savings">
@@ -1593,7 +1593,7 @@ export default function Dashboard() {
                             placeholder="0.00"
                             value={transferAmount}
                             onChange={(e) => setTransferAmount(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white font-mono focus:outline-none"
                           />
                         </div>
                         <div>
@@ -1605,7 +1605,7 @@ export default function Dashboard() {
                             placeholder="e.g. loan payout"
                             value={transferMemo}
                             onChange={(e) => setTransferMemo(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                           />
                         </div>
                       </div>
@@ -1620,7 +1620,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Bill pays desk */}
-                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm">
+                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-4">
                       Secure Utility / Payee Remittance
                     </h4>
@@ -1648,7 +1648,7 @@ export default function Dashboard() {
                           value={billPayee}
                           title="Select service payee"
                           onChange={(e) => setBillPayee(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                         >
                           <option value="">
                             -- Choose Registered Vendor --
@@ -1677,7 +1677,7 @@ export default function Dashboard() {
                             value={billFromAccount}
                             title="Select source account for bill payment"
                             onChange={(e) => setBillFromAccount(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                           >
                             {accounts.map((acc) => (
                               <option key={acc.id} value={acc.id}>
@@ -1694,7 +1694,7 @@ export default function Dashboard() {
                             value={billCategory}
                             title="Select bill category"
                             onChange={(e) => setBillCategory(e.target.value)}
-                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors focus:outline-none"
+                            className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white focus:outline-none"
                           >
                             <option value="Utilities">Utilities</option>
                             <option value="Rent">Rent</option>
@@ -1714,7 +1714,7 @@ export default function Dashboard() {
                           placeholder="0.00"
                           value={billAmount}
                           onChange={(e) => setBillAmount(e.target.value)}
-                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors font-mono focus:outline-none"
+                          className="w-full bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white font-mono focus:outline-none"
                         />
                       </div>
 
@@ -1755,7 +1755,7 @@ export default function Dashboard() {
                   {cards.map((card) => (
                     <div
                       key={card.id}
-                      className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm flex flex-col justify-between space-y-8 relative overflow-hidden"
+                      className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm flex flex-col justify-between space-y-8 relative overflow-hidden"
                     >
                       {card.isFrozen && (
                         <div className="absolute inset-0 bg-brand-muted/95 backdrop-blur-sm z-10 flex flex-col items-center justify-center space-y-3">
@@ -1782,7 +1782,7 @@ export default function Dashboard() {
                       {/* Plastic mockup */}
                       <div
                         onClick={() => toggleRevealCard(card.id)}
-                        className="bg-linear-to-tr from-brand-primary via-brand-accent to-[#025a90] p-6 rounded-lg border border-brand-dark/50 shadow-xl flex flex-col justify-between min-h-48 relative cursor-pointer group/card select-none group-active/card:scale-95 transition-transform"
+                        className="bg-linear-to-tr from-brand-primary via-brand-accent to-brand-primary p-6 rounded-lg border border-brand-dark/50 shadow-xl flex flex-col justify-between min-h-48 relative cursor-pointer group/card select-none group-active/card:scale-95 transition-transform"
                         title="Click anywhere to reveal or hide card credentials"
                       >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
@@ -1936,7 +1936,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Automated Robo Advisor desk */}
-                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm lg:col-span-2 space-y-4">
+                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm lg:col-span-2 space-y-4">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent flex items-center gap-2">
                       <Compass size={16} />
                       <span>Novaa Robo-Advisory Intelligent Portfolio</span>
@@ -1948,7 +1948,7 @@ export default function Dashboard() {
                       portfolio based on macroeconomic fluctuations.
                     </p>
 
-                    <div className="grid grid-cols-3 gap-4 p-4 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-center text-xs">
+                    <div className="grid grid-cols-3 gap-4 p-4 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 text-center text-xs">
                       <div>
                         <p className="text-brand-primary/65 uppercase text-[9px] font-bold">
                           Equity Stock Exposure
@@ -1988,7 +1988,7 @@ export default function Dashboard() {
                         ].map((stock, i) => (
                           <div
                             key={i}
-                            className="p-2.5 bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 transition-colors rounded-xl"
+                            className="p-2.5 bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-dark dark:border-white/10 rounded-xl"
                           >
                             <p className="font-semibold text-brand-primary dark:text-white transition-colors text-[11px]">
                               {stock.symbol}
@@ -2008,7 +2008,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Savings Calculator Goals builder */}
-                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm">
+                  <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm">
                     <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-3">
                       Goal target creator
                     </h4>
@@ -2077,7 +2077,7 @@ export default function Dashboard() {
                   </p>
                 </div>
 
-                <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm">
+                <div className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm">
                   <h4 className="font-bold text-sm uppercase tracking-wider text-brand-accent mb-4">
                     Request Monthly Official PDF Statements
                   </h4>
@@ -2102,7 +2102,7 @@ export default function Dashboard() {
                     ].map((st, i) => (
                       <div
                         key={i}
-                        className="p-4 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/50 transition-all text-xs"
+                        className="p-4 bg-brand-muted dark:bg-brand-surface transition-colors rounded-lg border border-brand-dark dark:border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/50 transition-all text-xs"
                       >
                         <div className="space-y-1 text-left">
                           <p className="font-bold text-brand-primary dark:text-white transition-colors text-sm">
@@ -2118,7 +2118,7 @@ export default function Dashboard() {
                               `Requested download of file statement identifying: ${st.code}. Preparing encrypted package...`,
                             )
                           }
-                          className="px-4 py-2 rounded-xl bg-white dark:bg-brand-secondary transition-colors hover:bg-brand-accent/25 text-brand-primary dark:text-white transition-colors text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent/40 cursor-pointer"
+                          className="px-4 py-2 rounded-xl bg-white dark:bg-brand-secondary transition-colors hover:bg-brand-accent/25 text-brand-primary dark:text-white text-xs font-bold uppercase tracking-wider transition-all border border-brand-accent/40 cursor-pointer"
                         >
                           Generate PDF Ledger
                         </button>
@@ -2152,7 +2152,7 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                   {/* Chat interface card */}
-                  <div className="lg:col-span-8 bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm flex flex-col h-[28rem] justify-between">
+                  <div className="lg:col-span-8 bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm flex flex-col h-[28rem] justify-between">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-wider text-brand-accent mb-4 flex items-center gap-2">
                         <MessageSquare size={16} />
@@ -2170,7 +2170,7 @@ export default function Dashboard() {
                               <div
                                 className={`p-3 rounded-lg max-w-sm text-xs relative ${
                                   isAsst
-                                    ? "bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white transition-colors border border-brand-dark dark:border-white/10 transition-colors"
+                                    ? "bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white border border-brand-dark dark:border-white/10"
                                     : "bg-brand-accent text-white font-medium"
                                 }`}
                               >
@@ -2186,7 +2186,7 @@ export default function Dashboard() {
                         })}
                         {isGeneratingChat && (
                           <div className="flex justify-start">
-                            <div className="p-3 bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white transition-colors rounded-lg border border-brand-dark dark:border-white/10 transition-colors text-xs flex items-center gap-1">
+                            <div className="p-3 bg-brand-muted dark:bg-brand-surface transition-colors text-brand-primary dark:text-white rounded-lg border border-brand-dark dark:border-white/10 text-xs flex items-center gap-1">
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce"></span>
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:200ms]"></span>
                               <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:400ms]"></span>
@@ -2202,7 +2202,7 @@ export default function Dashboard() {
                         placeholder="Write support inquiry (e.g. transfers, card blocks)..."
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
-                        className="grow bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 transition-colors text-xs text-brand-primary dark:text-white transition-colors placeholder:text-brand-primary/50 focus:outline-none"
+                        className="grow bg-brand-muted dark:bg-brand-surface transition-colors p-3 rounded-xl border border-brand-dark dark:border-white/10 text-xs text-brand-primary dark:text-white placeholder:text-brand-primary/50 focus:outline-none"
                       />
                       <button
                         type="submit"
@@ -2215,7 +2215,7 @@ export default function Dashboard() {
                   </div>
 
                   {/* Immediate Emergency Action desk */}
-                  <div className="lg:col-span-4 bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 transition-colors shadow-sm flex flex-col justify-between">
+                  <div className="lg:col-span-4 bg-white dark:bg-brand-secondary transition-colors p-6 rounded-xl border border-brand-dark dark:border-white/10 shadow-sm flex flex-col justify-between">
                     <div>
                       <h4 className="font-bold text-xs uppercase tracking-wider text-rose-600 mb-3 flex items-center gap-1">
                         <ShieldAlert size={16} className="text-red-500" />

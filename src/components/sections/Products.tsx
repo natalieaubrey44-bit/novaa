@@ -63,7 +63,7 @@ export default function Products() {
               
               <div className="relative z-10">
                 <div className="flex justify-between items-start mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-brand-primary/5 flex items-center justify-center text-brand-primary dark:text-white transition-colors group-hover:bg-brand-accent group-hover:text-white transition-colors duration-300">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-primary/5 flex items-center justify-center text-brand-primary dark:text-white transition-colors group-hover:bg-brand-accent group-hover:text-white duration-300">
                     <product.icon size={28} />
                   </div>
                   <span className="text-xs font-semibold text-brand-accent bg-brand-accent/10 px-3 py-1 rounded-full">
@@ -78,7 +78,7 @@ export default function Products() {
                   {product.description}
                 </p>
                 
-                <a href="#" className="flex items-center gap-2 text-brand-primary dark:text-white transition-colors font-medium text-sm group-hover:text-brand-accent transition-colors">
+                <a href="#" className="flex items-center gap-2 text-brand-primary dark:text-white transition-colors font-medium text-sm group-hover:text-brand-accent">
                   Learn more <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>

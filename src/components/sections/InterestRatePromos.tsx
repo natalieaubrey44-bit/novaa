@@ -257,7 +257,7 @@ export default function InterestRatePromos() {
                   <div className="mt-6 pt-4 border-t border-brand-secondary flex gap-3">
                     <button
                       onClick={() => setIsUnlocked(false)}
-                      className="px-4 py-3 rounded-full border border-brand-secondary text-brand-primary dark:text-white transition-colors text-xs font-bold uppercase hover:bg-brand-muted transition-colors cursor-pointer"
+                      className="px-4 py-3 rounded-full border border-brand-secondary text-brand-primary dark:text-white transition-colors text-xs font-bold uppercase hover:bg-brand-muted cursor-pointer"
                     >
                       Reset Seal
                     </button>

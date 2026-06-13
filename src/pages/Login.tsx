@@ -62,7 +62,7 @@ export default function Login() {
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-12 bg-brand-dark overflow-hidden pt-20">
       
       {/* Visual / Marketing Side (Left Column) */}
-      <div className="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-12 bg-brand-navy text-white overflow-hidden border-r border-[#0f2d52]">
+      <div className="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-12 bg-brand-navy text-white overflow-hidden border-r border-brand-navy">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1200&auto=format&fit=crop" 

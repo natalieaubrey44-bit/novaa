@@ -43,7 +43,7 @@ export default function Business() {
             ].map((feature, i) => (
               <div key={i} className="bg-white dark:bg-brand-secondary transition-colors p-8 rounded-2xl shadow-sm border border-brand-primary/5">
                 <h3 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-3">{feature.title}</h3>
-                <p className="text-brand-secondary/80">{feature.desc}</p>
+                <p className="text-brand-primary/80">{feature.desc}</p>
               </div>
             ))}
           </div>

@@ -138,7 +138,7 @@ export default function LiveChatWidget() {
             {/* Header Unit */}
             <div className="bg-brand-secondary py-4 px-5 flex items-center justify-between border-b border-brand-secondary/30">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white dark:bg-brand-secondary transition-colors flex items-center justify-center text-brand-primary dark:text-white transition-colors shadow-sm border border-brand-secondary/40">
+                <div className="w-10 h-10 rounded-xl bg-white dark:bg-brand-secondary transition-colors flex items-center justify-center text-brand-primary dark:text-white shadow-sm border border-brand-secondary/40">
                   <Landmark size={20} className="text-brand-primary dark:text-white transition-colors" />
                 </div>
                 <div>
@@ -200,7 +200,7 @@ export default function LiveChatWidget() {
 
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white transition-colors border border-brand-secondary/40 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm">
+                  <div className="bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white border border-brand-secondary/40 rounded-2xl rounded-tl-none px-4 py-3 shadow-sm">
                     <div className="flex gap-1 items-center py-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:0ms]"></span>
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-bounce [animation-delay:150ms]"></span>

@@ -34,16 +34,16 @@ export default function Investments() {
       <section className="py-24 bg-brand-light dark:bg-brand-primary transition-colors text-center">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-display font-bold text-brand-primary dark:text-white transition-colors mb-6">Investment Portfolios</h2>
-          <p className="text-lg text-brand-secondary/80 mb-12">Choose from our automated robo-advisory funds or take control with custom asset allocation strategies.</p>
+          <p className="text-lg text-brand-primary/80 mb-12">Choose from our automated robo-advisory funds or take control with custom asset allocation strategies.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
             <div className="bg-white dark:bg-brand-secondary transition-colors rounded-3xl p-8 border border-brand-primary/10 shadow-sm">
               <h3 className="text-2xl font-bold text-brand-primary dark:text-white transition-colors mb-2">Automated Investing</h3>
               <p className="text-brand-accent font-semibold mb-6">0.25% Advisory Fee</p>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-2 text-sm text-brand-secondary/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30"></div> Algorithmically driven</li>
-                <li className="flex items-center gap-2 text-sm text-brand-secondary/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30"></div> Automatic rebalancing</li>
-                <li className="flex items-center gap-2 text-sm text-brand-secondary/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30"></div> Tax-loss harvesting</li>
+                <li className="flex items-center gap-2 text-sm text-brand-primary/80 dark:text-brand-light/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30"></div> Algorithmically driven</li>
+                <li className="flex items-center gap-2 text-sm text-brand-primary/80 dark:text-brand-light/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30"></div> Automatic rebalancing</li>
+                <li className="flex items-center gap-2 text-sm text-brand-primary/80 dark:text-brand-light/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-primary/30"></div> Tax-loss harvesting</li>
               </ul>
               <button className="w-full py-3 rounded-xl bg-brand-primary text-white font-medium hover:bg-brand-secondary transition-colors">Start Automated</button>
             </div>
@@ -55,7 +55,7 @@ export default function Investments() {
                 <li className="flex items-center gap-2 text-sm text-brand-light/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-accent"></div> Advanced research tools</li>
                 <li className="flex items-center gap-2 text-sm text-brand-light/80"><div className="w-1.5 h-1.5 rounded-full bg-brand-accent"></div> Real-time market data</li>
               </ul>
-              <button className="w-full py-3 rounded-xl bg-brand-accent text-brand-primary dark:text-white transition-colors font-bold hover:bg-brand-accent/90 transition-colors">Open Brokerage</button>
+              <button className="w-full py-3 rounded-xl bg-brand-accent text-brand-primary dark:text-white transition-colors font-bold hover:bg-brand-accent/90">Open Brokerage</button>
             </div>
           </div>
         </div>

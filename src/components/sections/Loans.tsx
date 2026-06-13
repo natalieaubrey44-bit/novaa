@@ -55,9 +55,9 @@ export default function Loans() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="bg-white dark:bg-brand-secondary transition-colors rounded-3xl p-8 border border-transparent hover:border-brand-primary/10 transition-colors group flex flex-col shadow-sm hover:shadow-md"
+              className="bg-white dark:bg-brand-secondary transition-colors rounded-3xl p-8 border border-transparent hover:border-brand-primary/10 group flex flex-col shadow-sm hover:shadow-md"
             >
-              <div className="w-16 h-16 rounded-2xl bg-brand-muted dark:bg-brand-surface transition-colors shadow-sm flex items-center justify-center text-brand-primary dark:text-white transition-colors mb-6">
+              <div className="w-16 h-16 rounded-2xl bg-brand-muted dark:bg-brand-surface transition-colors shadow-sm flex items-center justify-center text-brand-primary dark:text-white mb-6">
                 <loan.icon size={32} />
               </div>
               <h3 className="text-xl font-bold text-brand-primary dark:text-white transition-colors mb-2">
@@ -76,7 +76,7 @@ export default function Loans() {
                 ))}
               </ul>
               
-              <button className="w-full py-3 rounded-xl bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white transition-colors border border-brand-primary/10 font-medium hover:bg-brand-primary hover:text-white transition-colors flex justify-center items-center gap-2">
+              <button className="w-full py-3 rounded-xl bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white border border-brand-primary/10 font-medium hover:bg-brand-primary hover:text-white flex justify-center items-center gap-2">
                 Apply Now <ArrowRight size={16} />
               </button>
             </motion.div>

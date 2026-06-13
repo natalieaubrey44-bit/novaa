@@ -29,7 +29,7 @@ export default function Security() {
                  </div>
                  <div>
                    <p className="text-sm font-bold text-brand-primary dark:text-white transition-colors">Bank-Grade</p>
-                   <p className="text-xs text-brand-secondary dark:text-brand-light transition-colors">256-bit Encryption</p>
+                   <p className="text-xs text-brand-primary/70 dark:text-brand-light transition-colors">256-bit Encryption</p>
                  </div>
               </div>
             </motion.div>
@@ -62,7 +62,7 @@ export default function Security() {
                     whileHover={{ scale: 1.02 }}
                     className="bg-white dark:bg-brand-secondary transition-colors p-6 rounded-2xl shadow-sm border border-brand-primary/5"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-brand-light dark:bg-brand-primary transition-colors flex items-center justify-center text-brand-primary dark:text-white transition-colors mb-4">
+                    <div className="w-12 h-12 rounded-xl bg-brand-light dark:bg-brand-primary transition-colors flex items-center justify-center text-brand-primary dark:text-white mb-4">
                       <item.icon size={24} />
                     </div>
                     <h4 className="text-lg font-bold text-brand-primary dark:text-white transition-colors mb-2">{item.title}</h4>

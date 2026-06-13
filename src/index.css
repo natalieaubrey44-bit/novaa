@@ -3,37 +3,37 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ======================================================
-   NOVAA DESIGN TOKENS — Palette D: Deep Space & Emerald
+   NOVAA DESIGN TOKENS — Navy & Platinum
 
    LIGHT MODE:
-     background  → brand-light  (#F8FAFC)
-     surfaces    → white / brand-muted (#F1F5F9)
-     headings    → brand-primary (#0D1117)
+     background  → brand-light  (#F5F6F8)
+     surfaces    → white / brand-muted (#F1F3F6)
+     headings    → brand-primary (#0F172A)
      body text   → brand-secondary (#374151)
      borders     → brand-dark (#CBD5E1)
-     accent      → brand-accent (#059669)
+     accent      → brand-accent (#5B6B85)
 
    DARK MODE (via dark: utilities):
-     background  → brand-navy (#0B0E14)
-     surfaces    → brand-primary (#0D1117) / brand-secondary (#161B22)
+     background  → brand-navy (#0A0F1C)
+     surfaces    → brand-primary (#0F172A) / brand-secondary (#161B22)
      headings    → white
      body text   → white/70
      borders     → white/10
-     accent      → #00E676 (electric emerald, brighter for contrast)
+     accent      → #A8AFBC (platinum, brighter for dark contrast)
    ====================================================== */
 
 @theme {
   --font-sans:    "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-primary:   #0D1117;
+  --color-brand-primary:   #0F172A;
   --color-brand-secondary: #374151;
-  --color-brand-accent:    #059669;
-  --color-brand-navy:      #0B0E14;
-  --color-brand-light:     #F8FAFC;
-  --color-brand-muted:     #F1F5F9;
+  --color-brand-accent:    #5B6B85;
+  --color-brand-navy:      #0A0F1C;
+  --color-brand-light:     #F5F6F8;
+  --color-brand-muted:     #F1F3F6;
   --color-brand-dark:      #CBD5E1;
-  --color-brand-success:   #059669;
+  --color-brand-success:   #1D9E75;
   --color-brand-surface:   #161B22;
 }
 
@@ -49,7 +49,7 @@ body {
 /* Dark mode body override */
 .dark body {
   background-color: var(--color-brand-navy);
-  color: #F8FAFC;
+  color: #F5F6F8;
 }
 
 /* Smooth transitions on interactive and theme-aware elements only */
@@ -78,5 +78,5 @@ button, a, input, textarea, select,
 
 /* Dark accent glow */
 .dark .glow-accent {
-  box-shadow: 0 0 24px rgba(0, 230, 118, 0.18);
+  box-shadow: 0 0 24px rgba(168, 175, 188, 0.18);
 }

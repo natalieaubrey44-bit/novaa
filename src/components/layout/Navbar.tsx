@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
-import TopBanner from './TopBanner';
 import NovaaLogo from '../NovaaLogo';
 import ThemeToggle from '../ThemeToggle';
 
@@ -41,6 +40,7 @@ export default function Navbar() {
     : 'bg-transparent';
 
   const navLinks = [
+    { label: 'Home', href: '/' },
     { label: 'Personal', href: '/personal' },
     { label: 'Business', href: '/business' },
     { label: 'Loans', href: '/loans' },
@@ -52,8 +52,6 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex flex-col">
-      <TopBanner />
-
       <div
         className={`transition-all duration-300 ${bgColorClass} backdrop-blur-md border-b ${borderColorClass} ${
           isScrolled ? 'py-3' : 'py-4 sm:py-5'

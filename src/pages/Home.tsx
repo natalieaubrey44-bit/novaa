@@ -1,5 +1,4 @@
 import Hero from '../components/sections/Hero';
-import Trust from '../components/sections/Trust';
 import Products from '../components/sections/Products';
 import InterestRatePromos from '../components/sections/InterestRatePromos';
 import SmartMoney from '../components/sections/SmartMoney';
@@ -16,7 +15,6 @@ export default function Home() {
   return (
     <div className="w-full relative">
       <Hero />
-      <Trust />
       <Products />
       <InterestRatePromos />
       <SmartMoney />

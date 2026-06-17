@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
 import { ShieldCheck, Lock, Mail, User, Landmark, HelpCircle, Check, AlertCircle, UserCheck } from 'lucide-react';
 import NovaaLogo from '../components/NovaaLogo';
+import { imageSources } from '../data/imageSources';
 
 export default function Login() {
   const { login, isLoggedIn } = useAuth();
@@ -40,7 +41,7 @@ export default function Login() {
     }, 1200);
   };
 
-  const handleQuickDemo = (demoType: 'alex' | 'marcus') => {
+  const handleQuickDemo = (demoType: 'alex' | 'marcus' | 'admin') => {
     setError('');
     setIsLoading(true);
     setTimeout(() => {
@@ -48,13 +49,19 @@ export default function Login() {
         setEmail('alex.carter@nova.com');
         setName('Alex Carter');
         login('alex.carter@nova.com', 'Alex Carter');
-      } else {
+        navigate('/dashboard');
+      } else if (demoType === 'marcus') {
         setEmail('mfredebel@gmail.com');
         setName('Marcus Fredebel');
         login('mfredebel@gmail.com', 'Marcus Fredebel');
+        navigate('/dashboard');
+      } else {
+        setEmail('admin@novaa.com');
+        setName('Nova Admin');
+        login('admin@novaa.com', 'Nova Admin', 'admin');
+        navigate('/admin');
       }
       setIsLoading(false);
-      navigate('/dashboard');
     }, 800);
   };
 
@@ -65,7 +72,7 @@ export default function Login() {
       <div className="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-12 bg-brand-navy text-white overflow-hidden border-r border-brand-navy">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?q=80&w=1200&auto=format&fit=crop" 
+            src={imageSources.loginHero} 
             alt="Novaa Security Base" 
             className="w-full h-full object-cover mix-blend-overlay opacity-20 grayscale"
           />
@@ -252,7 +259,7 @@ export default function Login() {
           </div>
 
           {/* Grid of demo profile cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <button
               onClick={() => handleQuickDemo('alex')}
               className="p-4 rounded-2xl bg-brand-primary/40 text-left border border-brand-secondary/60 hover:bg-brand-primary/80 hover:border-brand-accent/30 transition-all group"
@@ -282,6 +289,22 @@ export default function Login() {
               <p className="text-xs text-brand-light/60">Email: mfredebel@gmail.com</p>
               <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
                 <Check size={12} className="text-green-400" /> Presets loaded
+              </p>
+            </button>
+
+            <button
+              onClick={() => handleQuickDemo('admin')}
+              className="p-4 rounded-2xl bg-slate-900/80 text-left border border-white/10 hover:bg-slate-800 hover:border-brand-accent/40 transition-all group"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Admin Console</p>
+                <span className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono">
+                  Role: Admin
+                </span>
+              </div>
+              <p className="text-xs text-brand-light/60">Email: admin@novaa.com</p>
+              <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
+                <Check size={12} className="text-green-400" /> Admin route enabled
               </p>
             </button>
           </div>

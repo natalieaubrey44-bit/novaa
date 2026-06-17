@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion, animate } from 'motion/react';
 import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import { imageSources } from '../../data/imageSources';
 
 function StatValue({ from, to, formatter, duration = 1.4 }: {
   from: number;
@@ -36,11 +37,12 @@ export default function Hero() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/hero-bg.webp"
+          src={imageSources.heroBg}
           alt=""
           aria-hidden="true"
           className="h-full w-full object-cover object-center select-none"
         />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950/90 via-slate-950/70 to-slate-950/40" />
       </div>
 
       {/* Content */}
@@ -53,14 +55,14 @@ export default function Hero() {
         >
 
           {/* Headline */}
-          <h1 className="mb-3 text-3xl font-display font-semibold leading-[1.04] tracking-tight sm:mb-4 sm:text-4xl lg:text-[3.2rem] text-white">
+          <h1 className="mb-3 text-3xl font-display font-semibold leading-[1.04] tracking-tight sm:mb-4 sm:text-4xl lg:text-[3.2rem] text-white drop-shadow-[0_25px_45px_rgba(0,0,0,0.45)]">
             Save more.<br />
             Pay nothing.<br />
             <span className="text-brand-accent">Bank with confidence.</span>
           </h1>
 
           {/* Subhead */}
-          <p className="mb-5 max-w-md text-sm leading-relaxed font-light sm:mb-6 sm:text-[1rem] text-white/60">
+          <p className="mb-5 max-w-md text-sm leading-relaxed font-light sm:mb-6 sm:text-[1rem] text-slate-100/90 drop-shadow-[0_18px_35px_rgba(0,0,0,0.32)]">
             Earn 5.25% APY on savings with zero monthly fees, zero minimums, and FDIC insurance up to $250,000.
           </p>
 

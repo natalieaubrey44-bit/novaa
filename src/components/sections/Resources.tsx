@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight, BookOpen } from 'lucide-react';
+import { imageSources } from '../../data/imageSources';
 
 export default function Resources() {
   const articles = [
@@ -7,19 +8,19 @@ export default function Resources() {
       category: "Investing",
       title: "How to Build a Diversified Portfolio in 2024",
       summary: "Understand the core components of asset allocation to weather market volatility.",
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop",
+      image: imageSources.articles.investing,
     },
     {
       category: "Real Estate",
       title: "First-Time Homebuyer's Complete Guide",
       summary: "Everything you need to know from pre-approval to the final closing signature.",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=800&auto=format&fit=crop",
+      image: imageSources.articles.realEstate,
     },
     {
       category: "Small Business",
       title: "Optimizing Cash Flow for Seasonal Operations",
       summary: "Strategic approaches to managing inventory and payroll during off-peak months.",
-      image: "https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=800&auto=format&fit=crop",
+      image: imageSources.articles.smallBusiness,
     }
   ];
 

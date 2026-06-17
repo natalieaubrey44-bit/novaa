@@ -14,10 +14,24 @@ import ResourcesPage from './pages/ResourcesPage';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import LiveChatWidget from './components/LiveChatWidget';
+import AdminShell from './admin/layout/AdminShell';
+import AdminDashboard from './admin/pages/AdminDashboard';
+import UsersPage from './admin/pages/UsersPage';
+import AccountsPage from './admin/pages/AccountsPage';
+import TransactionsPage from './admin/pages/TransactionsPage';
+import ReportsPage from './admin/pages/ReportsPage';
+import SettingsPage from './admin/pages/SettingsPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isLoggedIn } = useAuth();
   if (!isLoggedIn) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+}
+
+function ProtectedAdminRoute({ children }: { children: React.ReactNode }) {
+  const { isLoggedIn, isAdmin } = useAuth();
+  if (!isLoggedIn) return <Navigate to="/login" replace />;
+  if (!isAdmin) return <Navigate to="/dashboard" replace />;
   return <>{children}</>;
 }
 
@@ -50,6 +64,21 @@ function AppShell() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/*"
+            element={
+              <ProtectedAdminRoute>
+                <AdminShell />
+              </ProtectedAdminRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="accounts" element={<AccountsPage />} />
+            <Route path="transactions" element={<TransactionsPage />} />
+            <Route path="reports" element={<ReportsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>

@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Lock, Eye, Fingerprint, Bell } from 'lucide-react';
+import { imageSources } from '../../data/imageSources';
 
 export default function Security() {
   return (
@@ -18,7 +19,7 @@ export default function Security() {
             >
               <div className="absolute inset-0 bg-brand-primary/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
               <img 
-                src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=2000&auto=format&fit=crop" 
+                src={imageSources.securityHero} 
                 alt="Cybersecurity and data protection" 
                 className="w-full h-[600px] object-cover transform group-hover:scale-105 transition-transform duration-700"
               />

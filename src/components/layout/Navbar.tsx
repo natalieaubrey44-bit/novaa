@@ -24,9 +24,9 @@ export default function Navbar() {
   if (location.pathname === '/dashboard') return null;
 
   const textColorClass = 'text-white';
-  const textMutedClass = 'text-white/50';
-  const borderColorClass = 'border-white/8';
-  const bgColorClass = isScrolled ? 'bg-brand-primary/98' : 'bg-transparent';
+  const textMutedClass = 'text-white/70';
+  const borderColorClass = 'border-brand-primary/20';
+  const bgColorClass = 'bg-brand-primary/95';
 
   const navLinks = [
     { label: 'Home',     href: '/' },
@@ -40,9 +40,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex flex-col">
       <div
-        className={`transition-all duration-300 ${bgColorClass} backdrop-blur-md border-b ${borderColorClass} ${
-          isScrolled ? 'py-3' : 'py-4 sm:py-5'
-        }`}
+        className={`transition-all duration-300 ${bgColorClass} backdrop-blur-md border-b ${borderColorClass} py-3 sm:py-4 shadow-sm shadow-slate-950/10`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">

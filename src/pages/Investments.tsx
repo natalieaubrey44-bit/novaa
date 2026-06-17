@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import FinalCta from '../components/sections/FinalCta';
+import { imageSources } from '../data/imageSources';
 
 export default function Investments() {
   return (
@@ -8,7 +9,7 @@ export default function Investments() {
       <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-32 flex items-center bg-brand-primary overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2000&auto=format&fit=crop" 
+            src={imageSources.investmentsHero} 
             alt="Investments" 
             className="w-full h-full object-cover"
           />

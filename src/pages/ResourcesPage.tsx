@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import ResourcesSection from '../components/sections/Resources';
 import FinalCta from '../components/sections/FinalCta';
+import { imageSources } from '../data/imageSources';
 
 export default function ResourcesPage() {
   return (
@@ -9,7 +10,7 @@ export default function ResourcesPage() {
       <section className="relative pt-40 pb-20 lg:pt-48 lg:pb-32 flex items-center bg-brand-primary overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2000&auto=format&fit=crop" 
+            src={imageSources.resourcesHero} 
             alt="Financial Resources" 
             className="w-full h-full object-cover grayscale opacity-40"
           />

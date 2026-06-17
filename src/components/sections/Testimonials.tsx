@@ -1,27 +1,28 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Quote, ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { imageSources } from '../../data/imageSources';
 
 export default function Testimonials() {
   const testimonials = [
     {
       name: "Eleanor Pena",
       role: "Small Business Owner",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
+      image: imageSources.testimonials.eleanor,
       text: "Switching to Novaa was the best decision for my bakery. The business dashboard is incredibly intuitive, and I secured a loan to expand my storefront within a week. The customer support feels truly personal.",
       rating: 5,
     },
     {
       name: "David Chen",
       role: "Tech Entrepreneur",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
+      image: imageSources.testimonials.david,
       text: "The integration between personal and business accounts saves me hours. The API access and virtual cards setup are perfect for a modern startup. I finally feel like my bank understands how modern businesses operate.",
       rating: 5,
     },
     {
       name: "Sarah & Mark Taylor",
       role: "First-time Homebuyers",
-      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
+      image: imageSources.testimonials.sarahMark,
       text: "We were terrified of the mortgage process, but the advisors at Novaa walked us through every step. The rates were competitive, and the online portal made submitting documents a breeze. We have our dream home now!",
       rating: 5,
     }

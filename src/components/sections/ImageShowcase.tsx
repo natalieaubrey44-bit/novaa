@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { imageSources } from '../../data/imageSources';
 
 export default function ImageShowcase() {
   return (
@@ -23,7 +24,7 @@ export default function ImageShowcase() {
             className="md:col-span-2 md:row-span-2 relative rounded-3xl overflow-hidden group"
           >
             <div className="absolute inset-0 bg-brand-primary/40 group-hover:bg-brand-primary/20 transition-all duration-500 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2000&auto=format&fit=crop" alt="Business team" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+            <img src={imageSources.showcase.businessGrowth} alt="Business team" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute bottom-8 left-8 right-8 z-20">
               <h3 className="text-2xl font-bold text-white mb-2">Business Growth</h3>
               <p className="text-white/80 text-sm">Scale your enterprise with custom financing.</p>
@@ -38,7 +39,7 @@ export default function ImageShowcase() {
             className="md:col-span-2 md:row-span-1 relative rounded-3xl overflow-hidden group h-[200px] md:h-auto"
           >
             <div className="absolute inset-0 bg-brand-primary/40 group-hover:bg-brand-primary/20 transition-all duration-500 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1000&auto=format&fit=crop" alt="Retail pos" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+            <img src={imageSources.showcase.retail} alt="Retail pos" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute bottom-6 left-6 right-6 z-20">
               <h3 className="text-xl font-bold text-white mb-1">Retail Banking</h3>
               <p className="text-white/80 text-sm">Daily financial health.</p>
@@ -53,7 +54,7 @@ export default function ImageShowcase() {
             className="md:col-span-1 md:row-span-1 relative rounded-3xl overflow-hidden group h-[200px] md:h-auto"
           >
             <div className="absolute inset-0 bg-brand-primary/40 group-hover:bg-brand-primary/20 transition-all duration-500 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?q=80&w=1000&auto=format&fit=crop" alt="Mobile banking" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+            <img src={imageSources.showcase.mobile} alt="Mobile banking" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute bottom-6 left-6 right-6 z-20">
               <h3 className="text-lg font-bold text-white mb-1">Mobile First</h3>
             </div>
@@ -67,7 +68,7 @@ export default function ImageShowcase() {
             className="md:col-span-1 md:row-span-1 relative rounded-3xl overflow-hidden group h-[200px] md:h-auto"
           >
             <div className="absolute inset-0 bg-brand-primary/40 group-hover:bg-brand-primary/20 transition-all duration-500 z-10"></div>
-            <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1000&auto=format&fit=crop" alt="Financial planning" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
+            <img src={imageSources.showcase.planning} alt="Financial planning" className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700" />
             <div className="absolute bottom-6 left-6 right-6 z-20">
               <h3 className="text-lg font-bold text-white mb-1">Wealth Management</h3>
             </div>

@@ -40,16 +40,55 @@ export interface BankNotification {
   read: boolean;
 }
 
+export interface AdminUser {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'support' | 'user';
+  status: 'active' | 'pending' | 'suspended';
+  lastLogin: string;
+}
+
+export interface AdminAccount {
+  id: string;
+  owner: string;
+  type: 'checking' | 'savings' | 'credit' | 'loan';
+  balance: number;
+  status: 'active' | 'review' | 'suspended';
+}
+
+export interface AdminTransaction {
+  id: string;
+  date: string;
+  user: string;
+  account: string;
+  amount: number;
+  risk: 'low' | 'medium' | 'high';
+  status: 'completed' | 'pending' | 'flagged';
+}
+
+export interface AuditLog {
+  id: string;
+  title: string;
+  message: string;
+  time: string;
+}
+
 interface AuthContextType {
-  user: { name: string; email: string } | null;
+  user: { name: string; email: string; role: 'admin' | 'support' | 'user' } | null;
   accounts: BankAccount[];
   transactions: Transaction[];
   cards: CardState[];
   notifications: BankNotification[];
   creditScore: number;
   savingsGoal: { target: number; current: number; name: string };
+  adminUsers: AdminUser[];
+  adminAccounts: AdminAccount[];
+  adminTransactions: AdminTransaction[];
+  auditLogs: AuditLog[];
   isLoggedIn: boolean;
-  login: (email: string, name: string) => void;
+  isAdmin: boolean;
+  login: (email: string, name: string, role?: 'admin' | 'support' | 'user') => void;
   logout: () => void;
   transferFunds: (fromAccountId: string, toAccountName: string, amount: number, memo: string) => boolean;
   payBill: (payeeName: string, amount: number, category: string, fromAccountId: string) => boolean;
@@ -58,6 +97,10 @@ interface AuthContextType {
   markNotificationAsRead: (id: string) => void;
   clearNotification: (id: string) => void;
   addFunds: (accountId: string, amount: number, reason: string) => void;
+  toggleAdminUserStatus: (id: string) => void;
+  updateAdminUserRole: (id: string, role: AdminUser['role']) => void;
+  updateAdminAccountStatus: (id: string, status: AdminAccount['status']) => void;
+  flagAdminTransaction: (id: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -92,8 +135,34 @@ const INITIAL_NOTIFICATIONS: BankNotification[] = [
   { id: 'notif-3', title: 'Q2 Audit Compiled Statement', message: 'Federal corporate tax records and detailed Novaa fiscal account statements are ready for advisory review.', type: 'info', time: '2 days ago', read: true }
 ];
 
+const INITIAL_ADMIN_USERS: AdminUser[] = [
+  { id: 'admin-1', name: 'Tara Morgan', email: 'tara.morgan@novaa.com', role: 'admin', status: 'active', lastLogin: 'Today, 09:14 AM' },
+  { id: 'admin-2', name: 'Jamal Ortiz', email: 'jamal.ortiz@novaa.com', role: 'support', status: 'active', lastLogin: 'Yesterday, 04:32 PM' },
+  { id: 'admin-3', name: 'Nina Patel', email: 'nina.patel@novaa.com', role: 'user', status: 'pending', lastLogin: '3 days ago' },
+];
+
+const INITIAL_ADMIN_ACCOUNTS: AdminAccount[] = [
+  { id: 'acct-1001', owner: 'Corporate Operating Fund', type: 'checking', balance: 15132500.0, status: 'active' },
+  { id: 'acct-1002', owner: 'Treasury Reserves', type: 'savings', balance: 28950000.0, status: 'active' },
+  { id: 'acct-1003', owner: 'Infinite Commercial Visa', type: 'credit', balance: -142500.75, status: 'review' },
+  { id: 'acct-1004', owner: 'Syndicated Term Facility', type: 'loan', balance: -12241200.0, status: 'active' },
+];
+
+const INITIAL_ADMIN_TRANSACTIONS: AdminTransaction[] = [
+  { id: 'admin-tx-1', date: '2026-06-17', user: 'Alex Carter', account: 'Corporate Operating Fund', amount: 185420.0, risk: 'medium', status: 'completed' },
+  { id: 'admin-tx-2', date: '2026-06-16', user: 'Nina Patel', account: 'Treasury Reserves', amount: 4120000.0, risk: 'high', status: 'pending' },
+  { id: 'admin-tx-3', date: '2026-06-15', user: 'Marcus Fredebel', account: 'Infinite Commercial Visa', amount: 142500.75, risk: 'low', status: 'flagged' },
+  { id: 'admin-tx-4', date: '2026-06-14', user: 'Tara Morgan', account: 'Syndicated Term Facility', amount: 210000.0, risk: 'medium', status: 'completed' },
+];
+
+const INITIAL_AUDIT_LOGS: AuditLog[] = [
+  { id: 'audit-1', title: 'New user onboarding review', message: 'Support team reviewed pending ID verification for a new corporate profile.', time: '1 hour ago' },
+  { id: 'audit-2', title: 'Transaction anomaly flagged', message: 'Auto-monitor detected a large cross-border payment requiring manual approval.', time: '4 hours ago' },
+  { id: 'audit-3', title: 'Account status update', message: 'A treasury account was moved from review to active after compliance checks.', time: 'Yesterday' },
+];
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<{ name: string; email: string } | null>(() => {
+  const [user, setUser] = useState<{ name: string; email: string; role: 'admin' | 'support' | 'user' } | null>(() => {
     const saved = localStorage.getItem('novaa_user');
     return saved ? JSON.parse(saved) : null;
   });
@@ -146,6 +215,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return saved ? JSON.parse(saved) : INITIAL_NOTIFICATIONS;
   });
 
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>(INITIAL_ADMIN_USERS);
+  const [adminAccounts, setAdminAccounts] = useState<AdminAccount[]>(INITIAL_ADMIN_ACCOUNTS);
+  const [adminTransactions, setAdminTransactions] = useState<AdminTransaction[]>(INITIAL_ADMIN_TRANSACTIONS);
+  const [auditLogs, setAuditLogs] = useState<AuditLog[]>(INITIAL_AUDIT_LOGS);
+
   const [savingsGoal, setSavingsGoal] = useState(() => {
     return { name: 'Acquisition & Capital Expansion Portfolio', target: 50000000, current: 28950000.00 };
   });
@@ -171,8 +245,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('novaa_notifs', JSON.stringify(notifications));
   }, [notifications]);
 
-  const login = (email: string, name: string) => {
-    setUser({ name: name || 'Alex Carter', email });
+  const login = (email: string, name: string, role: 'admin' | 'support' | 'user' = 'user') => {
+    setUser({ name: name || 'Alex Carter', email, role });
     setNotifications(prev => [
       {
         id: `notif-${Date.now()}`,
@@ -352,6 +426,65 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setTransactions(prev => [newTx, ...prev]);
   };
 
+  const toggleAdminUserStatus = (id: string) => {
+    setAdminUsers(prev => prev.map((user) => {
+      if (user.id !== id) return user;
+      const nextStatus = user.status === 'active' ? 'suspended' : 'active';
+      return { ...user, status: nextStatus };
+    }));
+    setAuditLogs(prev => [
+      {
+        id: `audit-${Date.now()}`,
+        title: 'Admin user status changed',
+        message: `Admin user status was updated for ${id}.`,
+        time: 'Just now'
+      },
+      ...prev,
+    ]);
+  };
+
+  const updateAdminUserRole = (id: string, role: AdminUser['role']) => {
+    setAdminUsers(prev => prev.map((user) => (user.id === id ? { ...user, role } : user)));
+    setAuditLogs(prev => [
+      {
+        id: `audit-${Date.now()}`,
+        title: 'Admin role updated',
+        message: `Role changed to ${role} for user ${id}.`,
+        time: 'Just now'
+      },
+      ...prev,
+    ]);
+  };
+
+  const updateAdminAccountStatus = (id: string, status: AdminAccount['status']) => {
+    setAdminAccounts(prev => prev.map((account) => (account.id === id ? { ...account, status } : account)));
+    setAuditLogs(prev => [
+      {
+        id: `audit-${Date.now()}`,
+        title: 'Account status updated',
+        message: `Account ${id} status was changed to ${status}.`,
+        time: 'Just now'
+      },
+      ...prev,
+    ]);
+  };
+
+  const flagAdminTransaction = (id: string) => {
+    setAdminTransactions(prev => prev.map((transaction) => {
+      if (transaction.id !== id) return transaction;
+      return { ...transaction, status: 'flagged', risk: 'high' };
+    }));
+    setAuditLogs(prev => [
+      {
+        id: `audit-${Date.now()}`,
+        title: 'Transaction flagged',
+        message: `Transaction ${id} was flagged for manual review.`,
+        time: 'Just now'
+      },
+      ...prev,
+    ]);
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -361,7 +494,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       notifications,
       creditScore: 785,
       savingsGoal,
+      adminUsers,
+      adminAccounts,
+      adminTransactions,
+      auditLogs,
       isLoggedIn: !!user,
+      isAdmin: user?.role === 'admin',
       login,
       logout,
       transferFunds,
@@ -370,7 +508,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       updateCardLimit,
       markNotificationAsRead,
       clearNotification,
-      addFunds
+      addFunds,
+      toggleAdminUserStatus,
+      updateAdminUserRole,
+      updateAdminAccountStatus,
+      flagAdminTransaction,
     }}>
       {children}
     </AuthContext.Provider>

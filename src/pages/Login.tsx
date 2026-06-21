@@ -33,12 +33,25 @@ export default function Login() {
     setError('');
     setIsLoading(true);
 
-    // Simulate authentic MFA verification bank delay
-    setTimeout(() => {
-      login(email, name || 'Alex Carter');
-      setIsLoading(false);
-      navigate('/dashboard');
-    }, 1200);
+    // Use Supabase auth when password provided; otherwise fallback to local demo login
+    if (password) {
+      setError('');
+      try {
+        await login(email, name || 'Alex Carter', 'user', password);
+        setIsLoading(false);
+        navigate('/dashboard');
+      } catch (e: any) {
+        setError(e.message || 'Login failed');
+        setIsLoading(false);
+      }
+    } else {
+      // fallback demo
+      setTimeout(() => {
+        login(email, name || 'Alex Carter');
+        setIsLoading(false);
+        navigate('/dashboard');
+      }, 1200);
+    }
   };
 
   const handleQuickDemo = (demoType: 'alex' | 'marcus' | 'admin') => {
@@ -120,13 +133,6 @@ export default function Login() {
 
       {/* Form Side (Right Column) */}
       <div className="lg:col-span-7 flex flex-col justify-center items-center px-4 sm:px-12 lg:px-20 py-12 bg-brand-dark/95 relative">
-        <div className="absolute top-24 right-12 text-xs text-brand-accent flex items-center gap-2 bg-brand-primary/40 px-3 py-1.5 rounded-full border border-brand-accent/20">
-          <span className="flex h-2 w-2 relative">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-accent opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-accent"></span>
-          </span>
-          NovaaSecure Server Online
-        </div>
 
         <motion.div 
           initial={{ opacity: 0, y: 15 }}
@@ -158,11 +164,11 @@ export default function Login() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="name-input" className="block text-xs font-semibold text-brand-light/80 uppercase tracking-widest mb-2">
+              <label htmlFor="name-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
                 User Name (Optional, defaults to Alex)
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-light/40">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">
                   <User size={18} />
                 </span>
                 <input
@@ -171,17 +177,17 @@ export default function Login() {
                   placeholder="Alex Carter"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/40 border border-brand-secondary/60 text-white placeholder-brand-light/30 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
+                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="email-input" className="block text-xs font-semibold text-brand-light/80 uppercase tracking-widest mb-2">
+              <label htmlFor="email-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
                 Secure Email Address
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-light/40">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">
                   <Mail size={18} />
                 </span>
                 <input
@@ -191,17 +197,17 @@ export default function Login() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/40 border border-brand-secondary/60 text-white placeholder-brand-light/30 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
+                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password-input" className="block text-xs font-semibold text-brand-light/80 uppercase tracking-widest mb-2">
+              <label htmlFor="password-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
                 Authentication Password
               </label>
               <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-light/40">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">
                   <Lock size={18} />
                 </span>
                 <input
@@ -210,7 +216,7 @@ export default function Login() {
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/40 border border-brand-secondary/60 text-white placeholder-brand-light/30 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
+                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
                 />
               </div>
             </div>

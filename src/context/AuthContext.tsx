@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase } from '../lib/supabaseClient';
 
 export interface BankAccount {
   id: string;
@@ -74,8 +75,16 @@ export interface AuditLog {
   time: string;
 }
 
+interface AuthUser {
+  id?: string;
+  name: string;
+  email?: string;
+  role: 'admin' | 'support' | 'user';
+  companyId?: string | null;
+}
+
 interface AuthContextType {
-  user: { name: string; email: string; role: 'admin' | 'support' | 'user' } | null;
+  user: AuthUser | null;
   accounts: BankAccount[];
   transactions: Transaction[];
   cards: CardState[];
@@ -88,7 +97,7 @@ interface AuthContextType {
   auditLogs: AuditLog[];
   isLoggedIn: boolean;
   isAdmin: boolean;
-  login: (email: string, name: string, role?: 'admin' | 'support' | 'user') => void;
+  login: (email: string, name: string, role?: 'admin' | 'support' | 'user', password?: string) => Promise<void> | void;
   logout: () => void;
   transferFunds: (fromAccountId: string, toAccountName: string, amount: number, memo: string) => boolean;
   payBill: (payeeName: string, amount: number, category: string, fromAccountId: string) => boolean;
@@ -163,6 +172,7 @@ const INITIAL_AUDIT_LOGS: AuditLog[] = [
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<{ name: string; email: string; role: 'admin' | 'support' | 'user' } | null>(() => {
+    // Initially keep local fallback; prefer server-side cookie-based detection
     const saved = localStorage.getItem('novaa_user');
     return saved ? JSON.parse(saved) : null;
   });
@@ -225,9 +235,64 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
+    // persist a lightweight client-side cache, but primary authority is server cookies
     if (user) localStorage.setItem('novaa_user', JSON.stringify(user));
     else localStorage.removeItem('novaa_user');
   }, [user]);
+
+  // On mount, attempt to bootstrap auth state from server via cookie
+  const resolveRoleAndCompany = async (userId: string | undefined, email?: string | null) => {
+    if (!userId && !email) return;
+    try {
+      // Prefer company_users by user_id
+      if (userId) {
+        const { data: cu } = await supabase.from('company_users').select('company_id,role').eq('user_id', userId).maybeSingle();
+        if (cu) {
+          setUser(prev => prev ? { ...prev, role: cu.role, companyId: cu.company_id, id: userId } : { id: userId, name: email || '', email: email || undefined, role: cu.role, companyId: cu.company_id });
+          return;
+        }
+      }
+
+      // Fallback: check admin_users by email
+      if (email) {
+        const { data: au } = await supabase.from('admin_users').select('role,user_id').or(`email.eq.${email}`).maybeSingle();
+        if (au) {
+          setUser(prev => prev ? { ...prev, role: au.role || 'admin', companyId: prev?.companyId ?? null, id: au.user_id || prev?.id } : { id: au.user_id || undefined, name: email || '', email: email || undefined, role: au.role || 'admin', companyId: null });
+          return;
+        }
+      }
+
+      // Default to regular user
+      setUser(prev => prev ? { ...prev, role: 'user', companyId: prev?.companyId ?? null } : { name: email || '', email: email || undefined, role: 'user', companyId: null });
+    } catch (e) {
+      // ignore - keep user as-is
+    }
+  };
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      const session = (data as any)?.session;
+      if (session?.user) {
+        const u = session.user;
+        setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user', companyId: null });
+        resolveRoleAndCompany(u.id, u.email);
+      }
+    }).catch(() => {});
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        const u = session.user;
+        setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user', companyId: null });
+        resolveRoleAndCompany(u.id, u.email);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => {
+      try { authListener.subscription.unsubscribe(); } catch (e) {}
+    };
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('novaa_accounts', JSON.stringify(accounts));
@@ -245,7 +310,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('novaa_notifs', JSON.stringify(notifications));
   }, [notifications]);
 
-  const login = (email: string, name: string, role: 'admin' | 'support' | 'user' = 'user') => {
+  const login = async (email: string, name: string, role: 'admin' | 'support' | 'user' = 'user', password?: string) => {
+    // If password provided, attempt Supabase auth; otherwise fall back to local demo login
+    if (password) {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        const userMeta = data.user;
+        setUser({ name: (userMeta?.user_metadata as any)?.full_name || name || email, email: userMeta?.email || email, role: 'user' });
+        setNotifications(prev => [
+          {
+            id: `notif-${Date.now()}`,
+            title: 'Secure Session Initiated',
+            message: `Welcome back, ${(userMeta?.user_metadata as any)?.full_name || name || email}. Access verified securely at ${new Date().toLocaleTimeString()}.`,
+            type: 'success',
+            time: 'Just now',
+            read: false
+          },
+          ...prev
+        ]);
+        return;
+      } catch (e: any) {
+        throw new Error(e.message || 'Authentication failed');
+      }
+    }
+
+    // Local fallback (keeps existing demo behavior)
     setUser({ name: name || 'Alex Carter', email, role });
     setNotifications(prev => [
       {
@@ -260,9 +350,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     ]);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (e) {}
     setUser(null);
-    // Keep internal local storage state so the mock data stays interactive next time
   };
 
   const transferFunds = (fromAccountId: string, toAccountName: string, amount: number, memo: string) => {

@@ -475,7 +475,7 @@ export default function Dashboard() {
 
       <div className="flex-1 flex flex-col lg:flex-row min-w-0 relative">
         {/* Mobile Header / Hamburger Row */}
-        <div className="lg:hidden bg-brand-primary border-b border-white/8 px-4 py-3 flex items-center justify-between relative z-30">
+        <div className="lg:hidden sticky top-0 bg-brand-primary border-b border-white/8 px-4 py-3 flex items-center justify-between z-40">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -513,7 +513,7 @@ export default function Dashboard() {
             LEFT SIDEBAR (Main Navigation)
            ======================================================= */}
         <aside
-          className={`fixed inset-y-0 left-0 z-50 w-72 lg:w-64 bg-brand-primary shrink-0 flex flex-col transition-transform duration-300 lg:relative lg:translate-x-0 lg:border-r border-white/8 ${
+          className={`fixed inset-y-0 left-0 z-50 w-72 lg:w-64 bg-brand-primary shrink-0 flex flex-col transition-transform duration-300 lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto lg:translate-x-0 lg:border-r border-white/8 ${
             mobileSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >

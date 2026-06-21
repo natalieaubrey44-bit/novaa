@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-route
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { useAuth } from './context/AuthContext';
+import ProtectedUserRoute from './components/ProtectedUserRoute';
+import ProtectedAdminRoute from './components/ProtectedAdminRoute';
+import AdminLogin from './pages/AdminLogin';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -22,18 +25,7 @@ import TransactionsPage from './admin/pages/TransactionsPage';
 import ReportsPage from './admin/pages/ReportsPage';
 import SettingsPage from './admin/pages/SettingsPage';
 
-function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isLoggedIn } = useAuth();
-  if (!isLoggedIn) return <Navigate to="/login" replace />;
-  return <>{children}</>;
-}
-
-function ProtectedAdminRoute({ children }: { children: React.ReactNode }) {
-  const { isLoggedIn, isAdmin } = useAuth();
-  if (!isLoggedIn) return <Navigate to="/login" replace />;
-  if (!isAdmin) return <Navigate to="/dashboard" replace />;
-  return <>{children}</>;
-}
+// Route guards moved to components/ProtectedUserRoute and components/ProtectedAdminRoute
 
 function AppShell() {
   const { isLoggedIn } = useAuth();
@@ -43,6 +35,8 @@ function AppShell() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
+
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-brand-light dark:bg-brand-navy text-brand-primary dark:text-white">
@@ -56,22 +50,12 @@ function AppShell() {
           <Route path="/investments" element={<Investments />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/login" element={<Login />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/*"
-            element={
-              <ProtectedAdminRoute>
-                <AdminShell />
-              </ProtectedAdminRoute>
-            }
-          >
+          <Route path="/dashboard" element={<ProtectedUserRoute /> }>
+            <Route index element={<Dashboard />} />
+          </Route>
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/*" element={<ProtectedAdminRoute />}>
+            <Route path="" element={<AdminShell />} />
             <Route index element={<AdminDashboard />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="accounts" element={<AccountsPage />} />
@@ -82,7 +66,7 @@ function AppShell() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
-      <Footer />
+      {!isAdminRoute && <Footer />}
       {!isDashboard && !isLoggedIn && <LiveChatWidget />}
     </div>
   );

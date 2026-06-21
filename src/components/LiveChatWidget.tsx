@@ -29,11 +29,29 @@ export default function LiveChatWidget() {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom of conversation
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -108,23 +126,26 @@ export default function LiveChatWidget() {
   return (
     <>
       {/* Floating Chat Bubble Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <motion.button
-          onClick={() => setIsOpen(true)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="w-14 h-14 rounded-full bg-brand-accent text-white flex items-center justify-center shadow-lg cursor-pointer hover:bg-brand-accent/90 transition-colors border border-white/20"
-          id="live-chat-bubble"
-          aria-label="Open live chat"
-        >
-          <MessageSquare size={26} />
-        </motion.button>
-      </div>
+      {!isOpen && (
+        <div className="fixed bottom-6 right-6 z-50">
+          <motion.button
+            onClick={() => setIsOpen(true)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-14 h-14 rounded-full bg-brand-accent text-white flex items-center justify-center shadow-lg cursor-pointer hover:bg-brand-accent/90 transition-colors border border-white/20"
+            id="live-chat-bubble"
+            aria-label="Open live chat"
+          >
+            <MessageSquare size={26} />
+          </motion.button>
+        </div>
+      )}
 
       {/* Expanded Live Chat Console Panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={panelRef}
             initial={{ opacity: 0, y: 100, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 0.95 }}
@@ -183,7 +204,7 @@ export default function LiveChatWidget() {
                     <div
                       className={`max-w-[80%] rounded-2xl px-4 py-3 text-xs leading-relaxed shadow-sm border ${
                         isAsst
-                          ? "bg-white dark:bg-brand-secondary transition-colors text-brand-accent border-brand-secondary/40 rounded-tl-none"
+                          ? "bg-white dark:bg-brand-secondary transition-colors text-brand-primary dark:text-white border-brand-secondary/40 rounded-tl-none"
                           : "bg-brand-accent text-white border-brand-accent/20 rounded-tr-none"
                       }`}
                     >
@@ -223,7 +244,7 @@ export default function LiveChatWidget() {
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
                 placeholder="Ask our support anything secure..."
-                className="flex-1 px-4 py-2.5 bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-secondary/40 rounded-xl text-xs text-brand-accent placeholder-brand-primary/30 focus:outline-none focus:border-brand-accent"
+                className="flex-1 px-4 py-2.5 bg-brand-muted dark:bg-brand-surface transition-colors border border-brand-secondary/40 rounded-xl text-xs text-brand-primary dark:text-white placeholder-slate-500 focus:outline-none focus:border-brand-accent"
               />
               <button
                 type="submit"

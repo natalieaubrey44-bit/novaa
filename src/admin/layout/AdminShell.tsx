@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import NovaaLogo from '../../components/NovaaLogo';
+import Footer from '../../components/layout/Footer';
 
 const ADMIN_NAV = [
   { id: 'overview', label: 'Overview', href: '/admin', icon: LayoutDashboard },
@@ -32,7 +33,7 @@ export default function AdminShell() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="flex min-h-screen">
-        <aside className="hidden lg:flex w-80 flex-col gap-8 border-r border-white/10 bg-brand-navy px-6 py-8">
+        <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:top-0 lg:left-0 lg:h-screen gap-8 border-r border-white/10 bg-brand-navy px-6 py-8 overflow-y-auto">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-3">
               <NovaaLogo className="text-2xl text-white" iconSize={32} />
@@ -82,7 +83,7 @@ export default function AdminShell() {
           </button>
         </aside>
 
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 lg:ml-80 overflow-hidden">
           <header className="border-b border-white/10 bg-slate-950/90 px-6 py-5 sm:px-8">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
@@ -104,6 +105,7 @@ export default function AdminShell() {
           </main>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

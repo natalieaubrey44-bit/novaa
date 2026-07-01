@@ -6,7 +6,6 @@ import { ShieldCheck, Lock, Mail, User, Landmark, HelpCircle, Check, AlertCircle
 import NovaaLogo from '../components/NovaaLogo';
 import { imageSources } from '../data/imageSources';
 import { supabase } from '../lib/supabaseClient';
-import { getLockoutDurationMs, getLockoutMessage, getSessionExpiryDate, SESSION_TTL_MINUTES } from '../lib/authPolicy';
 
 export default function Login() {
   const { login, isLoggedIn } = useAuth();
@@ -21,7 +20,6 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [rateLimitMessage, setRateLimitMessage] = useState('');
-  const [step, setStep] = useState<'credentials' | 'enrollment'>('credentials');
 
   // Auto redirect if already logged in
   if (isLoggedIn) {
@@ -36,130 +34,24 @@ export default function Login() {
       setError('Please provide a valid email address.');
       return;
     }
-    if (!password) {
-      setError('Please provide your password before continuing.');
-      return;
-    }
-
-    if (step === 'credentials') {
-      setError('');
-      setSuccess('');
-      setRateLimitMessage('');
-      setIsLoading(true);
-
-      try {
-        const { data: rateLimit } = await supabase
-          .from('rate_limits')
-          .select('*')
-          .eq('email', email)
-          .maybeSingle();
-
-        const now = new Date();
-
-        if (rateLimit) {
-          const lockoutUntil = rateLimit.lockout_until ? new Date(rateLimit.lockout_until) : null;
-          const adminOverrideUntil = rateLimit.admin_override_until ? new Date(rateLimit.admin_override_until) : null;
-
-          if (adminOverrideUntil && now < adminOverrideUntil) {
-            setRateLimitMessage('✓ Admin override active - proceeding with login.');
-          } else if (lockoutUntil && now < lockoutUntil) {
-            const remainingMinutes = Math.ceil((lockoutUntil.getTime() - now.getTime()) / 60000);
-            setError(`Too many failed attempts. Please try again in ${remainingMinutes} minute(s). Contact admin for immediate access.`);
-            setIsLoading(false);
-            return;
-          }
-        }
-
-        const { data: existingPlatformUser } = await supabase
-          .from('platform_users')
-          .select('id, role, status, email')
-          .eq('email', email)
-          .maybeSingle();
-
-        if (!existingPlatformUser || existingPlatformUser.status !== 'active') {
-          setError('No active user profile is available for this email address.');
-          setIsLoading(false);
-          return;
-        }
-
-        const { count: activeSessionsCount } = await supabase
-          .from('user_sessions')
-          .select('*', { count: 'exact', head: true })
-          .gt('expires_at', now.toISOString());
-
-        if ((activeSessionsCount ?? 0) >= 10) {
-          setError('The platform has reached its maximum of 10 active sessions. Please try again later.');
-          setIsLoading(false);
-          return;
-        }
-
-        const { count: userSessionsForAccountCount } = await supabase
-          .from('user_sessions')
-          .select('*', { count: 'exact', head: true })
-          .eq('user_id', existingPlatformUser.id)
-          .gt('expires_at', now.toISOString());
-
-        if ((userSessionsForAccountCount ?? 0) > 0) {
-          setError('This account is already active on another device. Please sign out there first.');
-          setIsLoading(false);
-          return;
-        }
-
-        const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
-
-        if (authError) {
-          const { data: existingRateLimit } = await supabase
-            .from('rate_limits')
-            .select('*')
-            .eq('email', email)
-            .maybeSingle();
-
-          const newAttempts = (existingRateLimit?.failed_attempts ?? 0) + 1;
-          const durationMs = getLockoutDurationMs(newAttempts);
-          const lockoutUntil = durationMs > 0 ? new Date(Date.now() + durationMs).toISOString() : null;
-
-          if (existingRateLimit) {
-            await supabase
-              .from('rate_limits')
-              .update({ failed_attempts: newAttempts, last_failed_at: now.toISOString(), lockout_until: lockoutUntil })
-              .eq('email', email);
-          } else {
-            await supabase.from('rate_limits').insert([{ email, failed_attempts: 1, last_failed_at: now.toISOString(), lockout_until: lockoutUntil }]);
-          }
-
-          setError(authError.message || 'Password verification failed.');
-          setIsLoading(false);
-          return;
-        }
-
-        await supabase.auth.signOut();
-        setSuccess('✓ Credentials verified. Please enter your enrollment code to continue.');
-        setStep('enrollment');
-        setIsLoading(false);
-      } catch (err: any) {
-        setError(err.message || 'Login failed');
-        setIsLoading(false);
-      }
-      return;
-    }
-
     if (!authCode) {
       setError('Auth code is required. Contact your admin for an enrollment code.');
       return;
     }
-
     setError('');
     setSuccess('');
     setRateLimitMessage('');
     setIsLoading(true);
 
     try {
-      const now = new Date();
+      // Check if user is rate-limited
       const { data: rateLimit } = await supabase
         .from('rate_limits')
         .select('*')
         .eq('email', email)
         .maybeSingle();
+
+      const now = new Date();
 
       if (rateLimit) {
         const lockoutUntil = rateLimit.lockout_until ? new Date(rateLimit.lockout_until) : null;
@@ -175,6 +67,7 @@ export default function Login() {
         }
       }
 
+      // Verify auth code
       const { data: userAuthCode, error: codeError } = await supabase
         .from('user_auth_codes')
         .select('*')
@@ -201,49 +94,52 @@ export default function Login() {
         return;
       }
 
-      const { data: platformUser } = await supabase
-        .from('platform_users')
-        .select('id')
-        .eq('email', email)
-        .maybeSingle();
+      // Attempt Supabase auth
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
 
-      if (!platformUser) {
-        setError('No active user profile is available for this email address.');
+      if (authError) {
+        // Record failed attempt
+        const { data: existingRateLimit } = await supabase
+          .from('rate_limits')
+          .select('*')
+          .eq('email', email)
+          .maybeSingle();
+
+        if (existingRateLimit) {
+          const newAttempts = existingRateLimit.failed_attempts + 1;
+          let lockoutUntil = null;
+
+          if (newAttempts >= 3 && newAttempts < 5) {
+            lockoutUntil = new Date(Date.now() + 60000).toISOString(); // 1 minute
+          } else if (newAttempts >= 5 && newAttempts < 7) {
+            lockoutUntil = new Date(Date.now() + 300000).toISOString(); // 5 minutes
+          } else if (newAttempts >= 7) {
+            lockoutUntil = new Date(Date.now() + 1800000).toISOString(); // 30 minutes
+          }
+
+          await supabase
+            .from('rate_limits')
+            .update({ failed_attempts: newAttempts, last_failed_at: now.toISOString(), lockout_until: lockoutUntil })
+            .eq('email', email);
+        } else {
+          await supabase.from('rate_limits').insert([{ email, failed_attempts: 1, last_failed_at: now.toISOString() }]);
+        }
+
+        setError(authError.message || 'Login failed');
         setIsLoading(false);
         return;
       }
 
-      const { count: activeSessionsCount } = await supabase
-        .from('user_sessions')
-        .select('*', { count: 'exact', head: true })
-        .gt('expires_at', now.toISOString());
-
-      if ((activeSessionsCount ?? 0) >= 10) {
-        setError('The platform has reached its maximum of 10 active sessions. Please try again later.');
-        setIsLoading(false);
-        return;
-      }
-
-      const { count: existingUserSessionsCount } = await supabase
-        .from('user_sessions')
-        .select('*', { count: 'exact', head: true })
-        .eq('user_id', platformUser.id)
-        .gt('expires_at', now.toISOString());
-
-      if ((existingUserSessionsCount ?? 0) > 0) {
-        setError('This account is already active on another device. Please sign out there first.');
-        setIsLoading(false);
-        return;
-      }
-
+      // Mark auth code as used
       await supabase
         .from('user_auth_codes')
         .update({ is_used: true })
         .eq('id', userAuthCode.id);
 
+      // Reset rate limits on success
       await supabase.from('rate_limits').update({ failed_attempts: 0, lockout_until: null }).eq('email', email);
-      await supabase.from('user_sessions').insert([{ user_id: platformUser.id, session_token: crypto.randomUUID(), expires_at: getSessionExpiryDate(now).toISOString(), user_agent: navigator.userAgent, last_activity_at: now.toISOString() }]);
 
+      // Sign-in successful
       setSuccess('✓ Login successful! Redirecting...');
       await login(email, name || email.split('@')[0], 'user', password);
       setIsLoading(false);
@@ -261,17 +157,22 @@ export default function Login() {
     setIsLoading(true);
     setTimeout(() => {
       if (demoType === 'alex') {
-        setEmail('user1@novaa.test');
-        setName('User 1');
-        setAuthCode('USER-ONE-001');
-        setStep('enrollment');
-        setIsLoading(false);
+        setEmail('alex.carter@novaa.test');
+        setName('Alex Carter');
+        setAuthCode('USER-ABC123XYZ');
+        login('alex.carter@novaa.test', 'Alex Carter');
+        navigate('/dashboard');
+      } else if (demoType === 'marcus') {
+        setEmail('marcus.fredebel@novaa.test');
+        setName('Marcus Fredebel');
+        setAuthCode('USER-DEF456UVW');
+        login('marcus.fredebel@novaa.test', 'Marcus Fredebel');
+        navigate('/dashboard');
       } else {
-        setEmail('tara.morgan@novaa.com');
-        setName('Tara Morgan');
+        setEmail('admin@novaa.com');
+        setName('Nova Admin');
         setAuthCode('');
-        setStep('credentials');
-        setIsLoading(false);
+        login('admin@novaa.com', 'Nova Admin', 'admin');
         navigate('/admin/login');
       }
     }, 800);
@@ -446,23 +347,21 @@ export default function Login() {
               </div>
             </div>
 
-            {step === 'enrollment' && (
-              <div>
-                <label htmlFor="authcode-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
-                  Enrollment Auth Code
-                </label>
-                <input
-                  id="authcode-input"
-                  type="text"
-                  placeholder="USER-ONE-001"
-                  value={authCode}
-                  onChange={(e) => setAuthCode(e.target.value.toUpperCase())}
-                  className="w-full px-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
-                  required={step === 'enrollment'}
-                />
-                <p className="text-xs text-brand-light/50 mt-1.5">Required. Contact your admin for an enrollment code. Codes expire after 7 days.</p>
-              </div>
-            )}
+            <div>
+              <label htmlFor="authcode-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
+                Enrollment Auth Code
+              </label>
+              <input
+                id="authcode-input"
+                type="text"
+                placeholder="USER-ABC123XYZ"
+                value={authCode}
+                onChange={(e) => setAuthCode(e.target.value.toUpperCase())}
+                className="w-full px-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
+                required
+              />
+              <p className="text-xs text-brand-light/50 mt-1.5">Required. Contact your admin for an enrollment code. Codes expire after 7 days.</p>
+            </div>
 
             {/* Remember & Forgot */}
             <div className="flex items-center justify-between text-xs pt-1">
@@ -519,9 +418,25 @@ export default function Login() {
                   Checking Base
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: user1@novaa.test</p>
+              <p className="text-xs text-brand-light/60">Email: alex.carter@novaa.test</p>
               <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-400" /> Code: USER-ONE-001
+                <Check size={12} className="text-green-400" /> Code: USER-ABC123XYZ
+              </p>
+            </button>
+
+            <button
+              onClick={() => handleQuickDemo('marcus')}
+              className="p-4 rounded-2xl bg-brand-primary/40 text-left border border-brand-secondary/60 hover:bg-brand-primary/80 hover:border-brand-accent/30 transition-all group"
+            >
+              <div className="flex justify-between items-start mb-2">
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Marcus Fredebel</p>
+                <span className="text-[10px] bg-sky-500/10 border border-sky-500/20 text-sky-400 px-1.5 py-0.5 rounded font-mono">
+                  Investor
+                </span>
+              </div>
+              <p className="text-xs text-brand-light/60">Email: marcus.fredebel@novaa.test</p>
+              <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
+                <Check size={12} className="text-green-400" /> Code: USER-DEF456UVW
               </p>
             </button>
 

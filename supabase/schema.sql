@@ -123,15 +123,15 @@ create table if not exists user_auth_codes (
   email text not null,
   code text not null unique,
   is_used boolean default false,
-  used_by_user_id uuid references platform_users(id) on delete set null,
+  used_by_user_id uuid references company_users(id) on delete set null,
   expires_at timestamptz not null,
   created_at timestamptz default now()
 );
 
--- sessions: track active user sessions (max 10 concurrent, scalable to 50)
+-- sessions: track active user sessions (max 10 concurrent per company)
 create table if not exists user_sessions (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references platform_users(id) on delete cascade,
+  user_id uuid not null references company_users(id) on delete cascade,
   session_token text not null unique,
   ip_address text,
   user_agent text,

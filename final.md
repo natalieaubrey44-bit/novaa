@@ -41,15 +41,14 @@ A regular user's banking experience should work like this:
   - Notifications
 
 **Session management:**
-- Max 10 concurrent user sessions site-wide
-- Infrastructure is prepared to extend to 50 users in the future
-- Sessions expire after 30 minutes of inactivity
+- Max 10 concurrent user sessions per company
+- Sessions expire after 15 minutes of inactivity
 - Users can see all pages in their dashboard (no page restrictions within the user dashboard)
 
 **Security:**
-- If a user fails password 3 times → locked for 5 minutes
-- If they fail 5 times → locked for 30 minutes
-- If they fail 7+ times → locked for 1 hour
+- If a user fails password 3 times → locked for 1 minute
+- If they fail 5 times → locked for 5 minutes
+- If they fail 7+ times → locked for 30 minutes
 - An admin can override this at any time (e.g., send a "login approval link" or remove the lockout)
 
 ### 1.2 Admin Experience Flow (Bank Headquarters)
@@ -80,7 +79,6 @@ An admin is the "bank headquarters" with mini dashboard control:
 - Manage company settings
 
 **Constraints:**
-- There are exactly two global admins with equal permissions
 - Each admin must have a valid active or upcoming code set
 - Codes must be configured beforehand (not auto-generated on login)
 - All admin actions are logged in `audit_logs` table
@@ -89,8 +87,7 @@ An admin is the "bank headquarters" with mini dashboard control:
 
 **Maximum concurrent sessions:**
 - 1 admin per company (or configurable per platform rules)
-- Max 10 users logged in simultaneously site-wide
-- Infrastructure is sized for up to 50 users in the long run
+- Max 10 users per company logged in simultaneously
 - If a user tries to log in and 10 users are already logged in, the oldest session expires
 
 **One-person-per-account rule (CRITICAL):**

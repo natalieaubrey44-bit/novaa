@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Lock, User, AlertCircle, CheckCircle, Loader } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { getLockoutDurationMs } from '../lib/authPolicy';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');

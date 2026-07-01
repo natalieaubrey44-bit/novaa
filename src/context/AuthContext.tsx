@@ -80,7 +80,6 @@ interface AuthUser {
   name: string;
   email?: string;
   role: 'admin' | 'support' | 'user';
-  companyId?: string | null;
 }
 
 interface AuthContextType {
@@ -244,26 +243,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const resolveRoleAndCompany = async (userId: string | undefined, email?: string | null) => {
     if (!userId && !email) return;
     try {
-      // Prefer company_users by user_id
       if (userId) {
-        const { data: cu } = await supabase.from('company_users').select('company_id,role').eq('user_id', userId).maybeSingle();
-        if (cu) {
-          setUser(prev => prev ? { ...prev, role: cu.role, companyId: cu.company_id, id: userId } : { id: userId, name: email || '', email: email || undefined, role: cu.role, companyId: cu.company_id });
+        const { data: platformUser } = await supabase.from('platform_users').select('role,email,name').eq('user_id', userId).maybeSingle();
+        if (platformUser) {
+          setUser(prev => prev ? { ...prev, role: platformUser.role as AuthUser['role'], id: userId } : { id: userId, name: platformUser.name || email || '', email: platformUser.email || email || undefined, role: platformUser.role as AuthUser['role'] });
           return;
         }
       }
 
-      // Fallback: check admin_users by email
       if (email) {
-        const { data: au } = await supabase.from('admin_users').select('role,user_id').or(`email.eq.${email}`).maybeSingle();
-        if (au) {
-          setUser(prev => prev ? { ...prev, role: au.role || 'admin', companyId: prev?.companyId ?? null, id: au.user_id || prev?.id } : { id: au.user_id || undefined, name: email || '', email: email || undefined, role: au.role || 'admin', companyId: null });
+        const { data: adminUser } = await supabase.from('admin_users').select('role,user_id').eq('email', email).maybeSingle();
+        if (adminUser) {
+          setUser(prev => prev ? { ...prev, role: adminUser.role || 'admin', id: adminUser.user_id || prev?.id } : { id: adminUser.user_id || undefined, name: email || '', email: email || undefined, role: adminUser.role || 'admin' });
           return;
         }
       }
 
-      // Default to regular user
-      setUser(prev => prev ? { ...prev, role: 'user', companyId: prev?.companyId ?? null } : { name: email || '', email: email || undefined, role: 'user', companyId: null });
+      setUser(prev => prev ? { ...prev, role: 'user' } : { name: email || '', email: email || undefined, role: 'user' });
     } catch (e) {
       // ignore - keep user as-is
     }
@@ -274,7 +270,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const session = (data as any)?.session;
       if (session?.user) {
         const u = session.user;
-        setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user', companyId: null });
+        setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user' });
         resolveRoleAndCompany(u.id, u.email);
       }
     }).catch(() => {});
@@ -282,7 +278,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
         const u = session.user;
-        setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user', companyId: null });
+        setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user' });
         resolveRoleAndCompany(u.id, u.email);
       } else {
         setUser(null);
@@ -336,12 +332,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     // Local fallback (keeps existing demo behavior)
-    setUser({ name: name || 'Alex Carter', email, role });
+    setUser({ name: name || 'User 1', email, role });
     setNotifications(prev => [
       {
         id: `notif-${Date.now()}`,
         title: 'Secure Session Initiated',
-        message: `Welcome back, ${name || 'Alex Carter'}. Access verified securely at ${new Date().toLocaleTimeString()}.`,
+        message: `Welcome back, ${name || 'User 1'}. Access verified securely at ${new Date().toLocaleTimeString()}.`,
         type: 'success',
         time: 'Just now',
         read: false

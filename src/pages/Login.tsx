@@ -150,7 +150,7 @@ export default function Login() {
     }
   };
 
-  const handleQuickDemo = (demoType: 'alex' | 'marcus' | 'admin') => {
+  const handleQuickDemo = (demoType: 'alex' | 'admin') => {
     setError('');
     setSuccess('');
     setRateLimitMessage('');
@@ -175,7 +175,6 @@ export default function Login() {
         login('admin@novaa.com', 'Nova Admin', 'admin');
         navigate('/admin/login');
       }
-      setIsLoading(false);
     }, 800);
   };
 
@@ -223,7 +222,7 @@ export default function Login() {
             <ShieldCheck size={28} className="text-brand-accent" />
             <div className="text-xs">
               <p className="font-semibold text-white">256-bit SSL Absolute Encryption</p>
-              <p className="text-brand-light/60">Your access token expires automatically after 15 mins of inactivity.</p>
+              <p className="text-brand-light/60">Your access token expires automatically after {SESSION_TTL_MINUTES} minutes of inactivity.</p>
             </div>
           </div>
           <p className="text-xs text-brand-light/40">
@@ -251,7 +250,7 @@ export default function Login() {
               Access Private Banking
             </h1>
             <p className="text-sm text-brand-light/60 mt-2">
-              Please declare your secure key details or access via demo profile.
+              Please verify your credentials first, then confirm your enrollment code.
             </p>
           </div>
 
@@ -292,7 +291,7 @@ export default function Login() {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label htmlFor="name-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
-                User Name (Optional, defaults to Alex)
+                User Name (Optional)
               </label>
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50">
@@ -301,7 +300,7 @@ export default function Login() {
                 <input
                   id="name-input"
                   type="text"
-                  placeholder="Alex Carter"
+                  placeholder="User 1"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
@@ -320,7 +319,7 @@ export default function Login() {
                 <input
                   id="email-input"
                   type="email"
-                  placeholder="alex.carter@nova.com"
+                  placeholder="user1@novaa.test"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -392,7 +391,7 @@ export default function Login() {
               ) : (
                 <>
                   <ShieldCheck size={20} />
-                  <span>Authenticate Secure Login</span>
+                  <span>{step === 'credentials' ? 'Verify Credentials' : 'Authenticate Secure Login'}</span>
                 </>
               )}
             </button>
@@ -402,7 +401,7 @@ export default function Login() {
           <div className="relative flex py-2 items-center">
             <div className="grow border-t border-brand-secondary/40"></div>
             <span className="shrink-0 mx-4 text-[10px] font-semibold tracking-widest uppercase text-brand-light/40">
-              OR TEST IMMEDIATELY with demo profiles
+              OR USE THE STARTER DEMO ACCESS
             </span>
             <div className="grow border-t border-brand-secondary/40"></div>
           </div>
@@ -414,7 +413,7 @@ export default function Login() {
               className="p-4 rounded-2xl bg-brand-primary/40 text-left border border-brand-secondary/60 hover:bg-brand-primary/80 hover:border-brand-accent/30 transition-all group"
             >
               <div className="flex justify-between items-start mb-2">
-                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Alex Carter</p>
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">User 1</p>
                 <span className="text-[10px] bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-1.5 py-0.5 rounded font-mono">
                   Checking Base
                 </span>
@@ -446,12 +445,12 @@ export default function Login() {
               className="p-4 rounded-2xl bg-slate-900/80 text-left border border-white/10 hover:bg-slate-800 hover:border-brand-accent/40 transition-all group"
             >
               <div className="flex justify-between items-start mb-2">
-                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Admin Console</p>
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Global Admin</p>
                 <span className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono">
                   Role: Admin
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: admin@novaa.com</p>
+              <p className="text-xs text-brand-light/60">Email: tara.morgan@novaa.com</p>
               <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
                 <Check size={12} className="text-green-400" /> Admin route enabled
               </p>

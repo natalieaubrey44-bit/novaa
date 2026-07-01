@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, Lock, User, AlertCircle, CheckCircle, Loader } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
+import { getLockoutDurationMs } from '../lib/authPolicy';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -27,10 +28,9 @@ export default function AdminLogin() {
         return;
       }
 
-      // Find admin by username (email)
       const { data: adminUser, error: lookupError } = await supabase
         .from('admin_users')
-        .select('id, user_id, email, status')
+        .select('id, user_id, email, status, role')
         .eq('email', username)
         .maybeSingle();
 
@@ -42,6 +42,13 @@ export default function AdminLogin() {
 
       if (adminUser.status !== 'active') {
         setError('This admin account is suspended or pending activation.');
+        setIsLoading(false);
+        return;
+      }
+
+      const isGlobalAdmin = ['admin', 'super_admin'].includes(adminUser.role || 'admin');
+      if (!isGlobalAdmin) {
+        setError('Only global admins can access the platform administration console.');
         setIsLoading(false);
         return;
       }
@@ -60,11 +67,11 @@ export default function AdminLogin() {
       }
 
       let validCodeSet = null;
-      const now = new Date();
+      const codeNow = new Date();
 
       for (const codeSet of authCodes) {
         const expiresAt = new Date(codeSet.expires_at);
-        if (now <= expiresAt) {
+        if (codeNow <= expiresAt) {
           // Check if all three codes match
           if (
             (code1 === codeSet.code_1 && code2 === codeSet.code_2 && code3 === codeSet.code_3) ||
@@ -83,7 +90,6 @@ export default function AdminLogin() {
         return;
       }
 
-      // If admin has a Supabase Auth user, attempt sign-in
       if (adminUser.user_id) {
         const { error: authError } = await supabase.auth.signInWithPassword({ 
           email: adminUser.email, 
@@ -97,7 +103,17 @@ export default function AdminLogin() {
         }
       }
 
-      // Log successful admin login
+      const { data: rateLimit } = await supabase.from('rate_limits').select('*').eq('email', adminUser.email).maybeSingle();
+      const lockoutNow = new Date();
+      if (rateLimit?.lockout_until && new Date(rateLimit.lockout_until) > lockoutNow) {
+        const remainingMinutes = Math.ceil((new Date(rateLimit.lockout_until).getTime() - lockoutNow.getTime()) / 60000);
+        setError(`This admin account is locked for ${remainingMinutes} minute(s).`);
+        setIsLoading(false);
+        return;
+      }
+
+      await supabase.from('rate_limits').upsert({ email: adminUser.email, failed_attempts: 0, lockout_until: null, last_failed_at: null }, { onConflict: 'email' });
+
       await supabase.from('audit_logs').insert([{
         actor_user_id: adminUser.user_id,
         actor_email: adminUser.email,
@@ -216,9 +232,9 @@ export default function AdminLogin() {
         </form>
 
         <div className="mt-6 pt-6 border-t border-white/10">
-          <p className="text-xs text-slate-400 mb-2">Demo Admin (for testing):</p>
+          <p className="text-xs text-slate-400 mb-2">Global admins:</p>
           <p className="text-xs text-slate-500">Email: tara.morgan@novaa.com</p>
-          <p className="text-xs text-slate-500">Codes (Set 1): ADMIN001, ADMIN002, ADMIN003</p>
+          <p className="text-xs text-slate-500">Code set: ADMIN001 / ADMIN002 / ADMIN003</p>
         </div>
       </div>
     </div>

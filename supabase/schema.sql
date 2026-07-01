@@ -4,30 +4,23 @@
 -- Enable UUID generation
 create extension if not exists pgcrypto;
 
--- companies: anchor for tenant data
-create table if not exists companies (
+-- Platform-level users (one user represents one company/person)
+create table if not exists platform_users (
   id uuid primary key default gen_random_uuid(),
-  name text not null,
-  domain text,
+  user_id uuid not null, -- references auth.users.id
+  email text not null unique,
+  name text,
+  role text not null default 'user',
+  status text not null default 'active',
   created_at timestamptz default now()
 );
 
--- users are managed by Supabase Auth; this table links auth users to companies
-create table if not exists company_users (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid not null, -- references auth.users.id
-  company_id uuid not null references companies(id) on delete cascade,
-  role text not null default 'user',
-  created_at timestamptz default now(),
-  unique(user_id)
-);
+create index if not exists idx_platform_users_email on platform_users(email);
 
-create index if not exists idx_company_users_company_id on company_users(company_id);
-
--- accounts belong to companies
+-- accounts belong to the platform user
 create table if not exists accounts (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid not null references companies(id) on delete cascade,
+  owner_user_id uuid not null references platform_users(id) on delete cascade,
   name text not null,
   currency_code varchar(3) not null default 'USD',
   balance numeric default 0,
@@ -35,14 +28,14 @@ create table if not exists accounts (
   created_at timestamptz default now()
 );
 
-create index if not exists idx_accounts_company_id on accounts(company_id);
+create index if not exists idx_accounts_owner_user_id on accounts(owner_user_id);
 
 -- transactions
 create table if not exists transactions (
   id uuid primary key default gen_random_uuid(),
   account_id uuid not null references accounts(id) on delete cascade,
-  company_id uuid not null references companies(id) on delete cascade,
-  auth_user_id uuid, -- optional link to auth.users
+  owner_user_id uuid not null references platform_users(id) on delete cascade,
+  auth_user_id uuid,
   fx_rate numeric default 1,
   currency_code varchar(3) not null default 'USD',
   amount numeric not null,
@@ -59,7 +52,7 @@ create index if not exists idx_transactions_account_id on transactions(account_i
 create table if not exists cards (
   id uuid primary key default gen_random_uuid(),
   account_id uuid references accounts(id) on delete cascade,
-  company_id uuid not null references companies(id) on delete cascade,
+  owner_user_id uuid not null references platform_users(id) on delete cascade,
   last4 varchar(4),
   holder_name text,
   expiry_month int,
@@ -72,7 +65,7 @@ create table if not exists cards (
 -- notifications
 create table if not exists notifications (
   id uuid primary key default gen_random_uuid(),
-  company_id uuid references companies(id) on delete cascade,
+  owner_user_id uuid references platform_users(id) on delete cascade,
   title text,
   message text,
   type text,
@@ -130,15 +123,15 @@ create table if not exists user_auth_codes (
   email text not null,
   code text not null unique,
   is_used boolean default false,
-  used_by_user_id uuid references company_users(id) on delete set null,
+  used_by_user_id uuid references platform_users(id) on delete set null,
   expires_at timestamptz not null,
   created_at timestamptz default now()
 );
 
--- sessions: track active user sessions (max 10 concurrent per company)
+-- sessions: track active user sessions (max 10 concurrent, scalable to 50)
 create table if not exists user_sessions (
   id uuid primary key default gen_random_uuid(),
-  user_id uuid not null references company_users(id) on delete cascade,
+  user_id uuid not null references platform_users(id) on delete cascade,
   session_token text not null unique,
   ip_address text,
   user_agent text,
@@ -167,6 +160,6 @@ create index if not exists idx_rate_limits_email on rate_limits(email);
 -- RLS / Policy notes (apply policies in the Supabase UI)
 -- Example (apply after enabling RLS on a table):
 -- enable row level security on accounts;
--- create policy "company users can access" on accounts using (company_id = (select company_id from company_users where user_id = auth.uid()));
+-- create policy "platform users can access" on accounts using (owner_user_id = (select id from platform_users where user_id = auth.uid()));
 
--- Important: create policies for companies, accounts, transactions to restrict by company_id
+-- Important: create policies for platform_users, accounts, transactions to restrict by owner_user_id

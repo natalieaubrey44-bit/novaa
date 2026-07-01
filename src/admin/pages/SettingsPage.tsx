@@ -1,4 +1,4 @@
-import { ShieldCheck, Cog } from 'lucide-react';
+import { Shield, Settings } from 'lucide-react';
 
 export default function SettingsPage() {
   return (
@@ -10,7 +10,7 @@ export default function SettingsPage() {
             <h1 className="mt-2 text-3xl font-semibold text-white">Platform configuration</h1>
           </div>
           <button className="inline-flex items-center gap-2 rounded-3xl bg-brand-accent px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-brand-accent/90">
-            <Cog6Tooth size={18} />
+            <Settings size={18} />
             Save settings
           </button>
         </div>

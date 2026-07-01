@@ -1,4 +1,4 @@
-import { BarChart3, LineChart, PieChart } from 'lucide-react';
+import { BarChart3, LineChart, PieChart, Shield } from 'lucide-react';
 
 export default function ReportsPage() {
   return (
@@ -33,7 +33,7 @@ export default function ReportsPage() {
               title: 'Risk exposure',
               value: 'Low',
               description: 'Only 4 high-risk events pending review for the current cycle.',
-              icon: ShieldCheck,
+              icon: Shield,
             },
           ].map((item) => {
             const Icon = item.icon;

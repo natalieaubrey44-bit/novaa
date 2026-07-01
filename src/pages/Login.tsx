@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, Lock, Mail, User, Landmark, HelpCircle, Check, AlertCircle, UserCheck } from 'lucide-react';
+import { ShieldCheck, Lock, Mail, User, Landmark, HelpCircle, Check, AlertCircle, UserCheck, CheckCircle, Loader } from 'lucide-react';
 import NovaaLogo from '../components/NovaaLogo';
 import { imageSources } from '../data/imageSources';
+import { supabase } from '../lib/supabaseClient';
 
 export default function Login() {
   const { login, isLoggedIn } = useAuth();
@@ -13,9 +14,12 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [authCode, setAuthCode] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
+  const [rateLimitMessage, setRateLimitMessage] = useState('');
 
   // Auto redirect if already logged in
   if (isLoggedIn) {
@@ -24,55 +28,152 @@ export default function Login() {
     }, 100);
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       setError('Please provide a valid email address.');
       return;
     }
+    if (!authCode) {
+      setError('Auth code is required. Contact your admin for an enrollment code.');
+      return;
+    }
     setError('');
+    setSuccess('');
+    setRateLimitMessage('');
     setIsLoading(true);
 
-    // Use Supabase auth when password provided; otherwise fallback to local demo login
-    if (password) {
-      setError('');
-      try {
-        await login(email, name || 'Alex Carter', 'user', password);
-        setIsLoading(false);
-        navigate('/dashboard');
-      } catch (e: any) {
-        setError(e.message || 'Login failed');
-        setIsLoading(false);
+    try {
+      // Check if user is rate-limited
+      const { data: rateLimit } = await supabase
+        .from('rate_limits')
+        .select('*')
+        .eq('email', email)
+        .maybeSingle();
+
+      const now = new Date();
+
+      if (rateLimit) {
+        const lockoutUntil = rateLimit.lockout_until ? new Date(rateLimit.lockout_until) : null;
+        const adminOverrideUntil = rateLimit.admin_override_until ? new Date(rateLimit.admin_override_until) : null;
+
+        if (adminOverrideUntil && now < adminOverrideUntil) {
+          setRateLimitMessage('✓ Admin override active - proceeding with login.');
+        } else if (lockoutUntil && now < lockoutUntil) {
+          const remainingMinutes = Math.ceil((lockoutUntil.getTime() - now.getTime()) / 60000);
+          setError(`Too many failed attempts. Please try again in ${remainingMinutes} minute(s). Contact admin for immediate access.`);
+          setIsLoading(false);
+          return;
+        }
       }
-    } else {
-      // fallback demo
-      setTimeout(() => {
-        login(email, name || 'Alex Carter');
+
+      // Verify auth code
+      const { data: userAuthCode, error: codeError } = await supabase
+        .from('user_auth_codes')
+        .select('*')
+        .eq('code', authCode)
+        .eq('email', email)
+        .maybeSingle();
+
+      if (!userAuthCode || codeError) {
+        setError('Invalid auth code for this email address.');
         setIsLoading(false);
-        navigate('/dashboard');
-      }, 1200);
+        return;
+      }
+
+      if (userAuthCode.is_used) {
+        setError('This auth code has already been used.');
+        setIsLoading(false);
+        return;
+      }
+
+      const codeExpires = new Date(userAuthCode.expires_at);
+      if (now > codeExpires) {
+        setError('Auth code has expired. Contact admin for a new code.');
+        setIsLoading(false);
+        return;
+      }
+
+      // Attempt Supabase auth
+      const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (authError) {
+        // Record failed attempt
+        const { data: existingRateLimit } = await supabase
+          .from('rate_limits')
+          .select('*')
+          .eq('email', email)
+          .maybeSingle();
+
+        if (existingRateLimit) {
+          const newAttempts = existingRateLimit.failed_attempts + 1;
+          let lockoutUntil = null;
+
+          if (newAttempts >= 3 && newAttempts < 5) {
+            lockoutUntil = new Date(Date.now() + 60000).toISOString(); // 1 minute
+          } else if (newAttempts >= 5 && newAttempts < 7) {
+            lockoutUntil = new Date(Date.now() + 300000).toISOString(); // 5 minutes
+          } else if (newAttempts >= 7) {
+            lockoutUntil = new Date(Date.now() + 1800000).toISOString(); // 30 minutes
+          }
+
+          await supabase
+            .from('rate_limits')
+            .update({ failed_attempts: newAttempts, last_failed_at: now.toISOString(), lockout_until: lockoutUntil })
+            .eq('email', email);
+        } else {
+          await supabase.from('rate_limits').insert([{ email, failed_attempts: 1, last_failed_at: now.toISOString() }]);
+        }
+
+        setError(authError.message || 'Login failed');
+        setIsLoading(false);
+        return;
+      }
+
+      // Mark auth code as used
+      await supabase
+        .from('user_auth_codes')
+        .update({ is_used: true })
+        .eq('id', userAuthCode.id);
+
+      // Reset rate limits on success
+      await supabase.from('rate_limits').update({ failed_attempts: 0, lockout_until: null }).eq('email', email);
+
+      // Sign-in successful
+      setSuccess('✓ Login successful! Redirecting...');
+      await login(email, name || email.split('@')[0], 'user', password);
+      setIsLoading(false);
+      setTimeout(() => navigate('/dashboard'), 800);
+    } catch (err: any) {
+      setError(err.message || 'Login failed');
+      setIsLoading(false);
     }
   };
 
   const handleQuickDemo = (demoType: 'alex' | 'marcus' | 'admin') => {
     setError('');
+    setSuccess('');
+    setRateLimitMessage('');
     setIsLoading(true);
     setTimeout(() => {
       if (demoType === 'alex') {
-        setEmail('alex.carter@nova.com');
+        setEmail('alex.carter@novaa.test');
         setName('Alex Carter');
-        login('alex.carter@nova.com', 'Alex Carter');
+        setAuthCode('USER-ABC123XYZ');
+        login('alex.carter@novaa.test', 'Alex Carter');
         navigate('/dashboard');
       } else if (demoType === 'marcus') {
-        setEmail('mfredebel@gmail.com');
+        setEmail('marcus.fredebel@novaa.test');
         setName('Marcus Fredebel');
-        login('mfredebel@gmail.com', 'Marcus Fredebel');
+        setAuthCode('USER-DEF456UVW');
+        login('marcus.fredebel@novaa.test', 'Marcus Fredebel');
         navigate('/dashboard');
       } else {
         setEmail('admin@novaa.com');
         setName('Nova Admin');
+        setAuthCode('');
         login('admin@novaa.com', 'Nova Admin', 'admin');
-        navigate('/admin');
+        navigate('/admin/login');
       }
       setIsLoading(false);
     }, 800);
@@ -155,10 +256,36 @@ export default function Login() {
           </div>
 
           {error && (
-            <div className="p-4 bg-red-950/40 border border-red-500/30 text-red-200 rounded-xl text-sm flex items-center gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 bg-red-950/40 border border-red-500/30 text-red-200 rounded-xl text-sm flex items-center gap-3"
+            >
               <AlertCircle size={18} className="text-red-400 shrink-0" />
               <span>{error}</span>
-            </div>
+            </motion.div>
+          )}
+
+          {success && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 bg-green-950/40 border border-green-500/30 text-green-200 rounded-xl text-sm flex items-center gap-3"
+            >
+              <CheckCircle size={18} className="text-green-400 shrink-0" />
+              <span>{success}</span>
+            </motion.div>
+          )}
+
+          {rateLimitMessage && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="p-4 bg-blue-950/40 border border-blue-500/30 text-blue-200 rounded-xl text-sm flex items-center gap-3"
+            >
+              <CheckCircle size={18} className="text-blue-400 shrink-0" />
+              <span>{rateLimitMessage}</span>
+            </motion.div>
           )}
 
           {/* Form */}
@@ -221,6 +348,22 @@ export default function Login() {
               </div>
             </div>
 
+            <div>
+              <label htmlFor="authcode-input" className="block text-xs font-semibold text-white/80 uppercase tracking-widest mb-2">
+                Enrollment Auth Code
+              </label>
+              <input
+                id="authcode-input"
+                type="text"
+                placeholder="USER-ABC123XYZ"
+                value={authCode}
+                onChange={(e) => setAuthCode(e.target.value.toUpperCase())}
+                className="w-full px-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
+                required
+              />
+              <p className="text-xs text-brand-light/50 mt-1.5">Required. Contact your admin for an enrollment code. Codes expire after 7 days.</p>
+            </div>
+
             {/* Remember & Forgot */}
             <div className="flex items-center justify-between text-xs pt-1">
               <label className="flex items-center gap-2 cursor-pointer text-brand-light/70 select-none">
@@ -276,9 +419,9 @@ export default function Login() {
                   Checking Base
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: alex.carter@nova.com</p>
+              <p className="text-xs text-brand-light/60">Email: alex.carter@novaa.test</p>
               <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-400" /> Presets loaded
+                <Check size={12} className="text-green-400" /> Code: USER-ABC123XYZ
               </p>
             </button>
 
@@ -289,12 +432,12 @@ export default function Login() {
               <div className="flex justify-between items-start mb-2">
                 <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Marcus Fredebel</p>
                 <span className="text-[10px] bg-sky-500/10 border border-sky-500/20 text-sky-400 px-1.5 py-0.5 rounded font-mono">
-                  Gmail Core
+                  Investor
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: mfredebel@gmail.com</p>
+              <p className="text-xs text-brand-light/60">Email: marcus.fredebel@novaa.test</p>
               <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-400" /> Presets loaded
+                <Check size={12} className="text-green-400" /> Code: USER-DEF456UVW
               </p>
             </button>
 

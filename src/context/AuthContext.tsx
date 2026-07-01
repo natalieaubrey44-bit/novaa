@@ -171,7 +171,7 @@ const INITIAL_AUDIT_LOGS: AuditLog[] = [
 ];
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<{ name: string; email: string; role: 'admin' | 'support' | 'user' } | null>(() => {
+  const [user, setUser] = useState<AuthUser | null>(() => {
     // Initially keep local fallback; prefer server-side cookie-based detection
     const saved = localStorage.getItem('novaa_user');
     return saved ? JSON.parse(saved) : null;

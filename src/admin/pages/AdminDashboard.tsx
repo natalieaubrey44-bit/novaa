@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { Users, CreditCard, FileText, Bell, TrendingUp, ShieldCheck } from 'lucide-react';
+import { Users, CreditCard, FileText, Bell, TrendingUp, Shield } from 'lucide-react';
 
 export default function AdminDashboard() {
   const {
@@ -33,7 +33,7 @@ export default function AdminDashboard() {
               </p>
             </div>
             <div className="inline-flex items-center rounded-3xl bg-brand-accent/10 px-4 py-3 text-sm font-semibold text-brand-accent">
-              <ShieldCheck size={18} />
+              <Shield size={18} />
               Live secure view
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function AdminDashboard() {
               {
                 label: 'Recent issues',
                 value: reviewAccounts,
-                icon: TrendUp,
+                icon: TrendingUp,
                 accent: 'text-amber-300',
               },
               {

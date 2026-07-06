@@ -1,6 +1,5 @@
 {
   "name": "Novaa",
   "description": "A premium digital banking platform providing fully automated smart money management, investments, loans, and modern financial security.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "requestFramePermissions": []
 }

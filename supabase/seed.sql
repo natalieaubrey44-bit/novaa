@@ -1,5 +1,12 @@
 -- Seed data for Novaa (run after schema.sql)
--- NOTE: To create `company_users` entries that link to Supabase Auth users, replace USER_AUTH_UID with the real auth user id from Supabase Auth.
+-- NOTE: To create platform_users entries that link to Supabase Auth users, replace USER_AUTH_UID with the real auth user id from Supabase Auth.
+
+-- Example platform user records
+insert into platform_users (id, user_id, email, name, role, status)
+values
+  ('00000000-0000-0000-0000-000000000020', '00000000-0000-0000-0000-000000000021', 'alex.carter@novaa.test', 'Alex Carter', 'user', 'active'),
+  ('00000000-0000-0000-0000-000000000022', '00000000-0000-0000-0000-000000000023', 'marcus.fredebel@novaa.test', 'Marcus Fredebel', 'user', 'active')
+on conflict do nothing;
 
 -- Example admin users (platform-wide global admins)
 insert into admin_users (id, user_id, email, name, role, status)
@@ -42,9 +49,9 @@ values
   ('00000000-0000-0000-0000-000000000302', '00000000-0000-0000-0000-000000000010', 'marcus.fredebel@novaa.test', 'USER-DEF456UVW', false, now() + interval '7 days', now())
 on conflict do nothing;
 
--- Example company user placeholder: replace USER_AUTH_UID with actual auth.users.id
--- insert into company_users (id, user_id, company_id, role)
--- values ('00000000-0000-0000-0000-000000000011', 'USER_AUTH_UID', '00000000-0000-0000-0000-000000000001', 'user');
+-- Example platform user placeholder: replace USER_AUTH_UID with actual auth.users.id
+-- insert into platform_users (id, user_id, email, name, role, status)
+-- values ('00000000-0000-0000-0000-000000000024', 'USER_AUTH_UID', 'demo.user@novaa.test', 'Demo User', 'user', 'active');
 
 -- Starter accounts
 insert into accounts (id, owner_user_id, name, currency_code, balance, type)

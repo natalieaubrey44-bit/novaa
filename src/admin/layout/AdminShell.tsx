@@ -1,4 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import {
   LayoutDashboard,
   Users,
@@ -29,11 +30,12 @@ export default function AdminShell() {
   const activeHref = ADMIN_NAV.find((item) =>
     location.pathname === item.href || location.pathname.startsWith(`${item.href}/`),
   )?.href;
+  const [hovered, setHovered] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <div className="flex min-h-screen">
-        <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:top-0 lg:left-0 lg:h-screen gap-8 border-r border-white/10 bg-brand-navy px-6 py-8 overflow-y-auto">
+        <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:top-0 lg:left-0 lg:h-screen gap-8 border-r border-white/10 bg-brand-navy px-6 py-8 overflow-visible">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-3">
               <NovaaLogo className="text-2xl text-white" iconSize={32} />
@@ -56,12 +58,16 @@ export default function AdminShell() {
             {ADMIN_NAV.map((item) => {
               const Icon = item.icon;
               const isActive = item.href === activeHref;
+              const isHovered = hovered === item.id;
+              const isVisualActive = isActive || isHovered;
               return (
                 <Link
                   key={item.id}
                   to={item.href}
+                  onPointerEnter={() => setHovered(item.id)}
+                  onPointerLeave={() => setHovered((prev) => (prev === item.id ? null : prev))}
                   className={`flex items-center gap-3 rounded-3xl px-4 py-3 text-sm font-medium transition-all ${
-                    isActive
+                    isVisualActive
                       ? 'bg-brand-accent text-slate-950 shadow-[0_12px_30px_-18px_rgba(16,185,129,0.8)]'
                       : 'text-slate-300 hover:bg-white/5 hover:text-white'
                   }`}

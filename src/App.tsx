@@ -15,6 +15,7 @@ import LoansPage from './pages/LoansPage';
 import Investments from './pages/Investments';
 import ResourcesPage from './pages/ResourcesPage';
 import Login from './pages/Login';
+import OpenAccount from './pages/OpenAccount';
 import Dashboard from './pages/Dashboard';
 import LiveChatWidget from './components/LiveChatWidget';
 import AdminShell from './admin/layout/AdminShell';
@@ -50,6 +51,7 @@ function AppShell() {
           <Route path="/investments" element={<Investments />} />
           <Route path="/resources" element={<ResourcesPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/open-account" element={<OpenAccount />} />
           <Route path="/dashboard" element={<ProtectedUserRoute /> }>
             <Route index element={<Dashboard />} />
           </Route>

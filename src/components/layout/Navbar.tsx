@@ -119,7 +119,7 @@ export default function Navbar() {
                     Log in
                   </Link>
                   <Link
-                    to="/login"
+                    to="/open-account"
                     className="ml-2 px-5 py-2 rounded-sm bg-brand-accent text-white text-sm font-normal hover:bg-brand-accent/90 transition-all tracking-wide"
                   >
                     Open Account
@@ -192,7 +192,7 @@ export default function Navbar() {
                       Log in
                     </Link>
                     <Link
-                      to="/login"
+                        to="/open-account"
                       className="flex items-center px-4 py-3 rounded-sm bg-brand-accent text-white text-sm font-medium hover:bg-brand-accent/90 transition-colors"
                     >
                       Open Account

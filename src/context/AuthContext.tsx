@@ -97,6 +97,14 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isAdmin: boolean;
   login: (email: string, name: string, role?: 'admin' | 'support' | 'user', password?: string) => Promise<void> | void;
+  register: (userData: {
+    firstName: string;
+    lastName: string;
+    middleName?: string;
+    username: string;
+    email: string;
+    password: string;
+  }) => Promise<void>;
   logout: () => void;
   transferFunds: (fromAccountId: string, toAccountName: string, amount: number, memo: string) => boolean;
   payBill: (payeeName: string, amount: number, category: string, fromAccountId: string) => boolean;
@@ -240,7 +248,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   // On mount, attempt to bootstrap auth state from server via cookie
-  const resolveRoleAndCompany = async (userId: string | undefined, email?: string | null) => {
+  const resolveRoleAndProfile = async (userId: string | undefined, email?: string | null) => {
     if (!userId && !email) return;
     try {
       if (userId) {
@@ -266,20 +274,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(({ data }: any) => {
       const session = (data as any)?.session;
       if (session?.user) {
         const u = session.user;
         setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user' });
-        resolveRoleAndCompany(u.id, u.email);
+        resolveRoleAndProfile(u.id, u.email);
       }
     }).catch(() => {});
 
-    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       if (session?.user) {
         const u = session.user;
         setUser({ id: u.id, name: (u.user_metadata as any)?.full_name || u.email || '', email: u.email || undefined, role: 'user' });
-        resolveRoleAndCompany(u.id, u.email);
+        resolveRoleAndProfile(u.id, u.email);
       } else {
         setUser(null);
       }
@@ -344,6 +352,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       },
       ...prev
     ]);
+  };
+
+  const register = async (userData: {
+    firstName: string;
+    lastName: string;
+    middleName?: string;
+    username: string;
+    email: string;
+    password: string;
+  }) => {
+    const fullName = `${userData.firstName} ${userData.lastName}`.trim();
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: userData.email,
+        password: userData.password,
+      }, {
+        data: {
+          full_name: fullName,
+          username: userData.username,
+        },
+      });
+      if (error) throw error;
+
+      // If signUp returned a user id, create a platform_users row linking auth user -> platform user
+      const newUserId = (data as any)?.user?.id;
+      if (newUserId) {
+        try {
+          const { error: insertErr } = await supabase.from('platform_users').insert([{ user_id: newUserId, email: userData.email, name: fullName, role: 'user' }]);
+          if (insertErr) {
+            // Non-fatal: log and continue
+            console.warn('platform_users insert error:', insertErr.message || insertErr);
+          }
+        } catch (ie: any) {
+          console.warn('platform_users insert exception:', ie.message || ie);
+        }
+      }
+
+      setUser({ name: fullName || userData.email, email: userData.email, role: 'user' });
+      setNotifications(prev => [
+        {
+          id: `notif-${Date.now()}`,
+          title: 'Account Created',
+          message: `Welcome to Novaa, ${fullName}. Your new account has been initialized securely.`,
+          type: 'success',
+          time: 'Just now',
+          read: false,
+        },
+        ...prev,
+      ]);
+    } catch (e: any) {
+      throw new Error(e.message || 'Registration failed');
+    }
   };
 
   const logout = async () => {
@@ -589,6 +649,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       isLoggedIn: !!user,
       isAdmin: user?.role === 'admin',
       login,
+      register,
       logout,
       transferFunds,
       payBill,

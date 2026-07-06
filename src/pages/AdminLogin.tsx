@@ -149,7 +149,7 @@ export default function AdminLogin() {
                 value={username} 
                 onChange={e => setUsername(e.target.value)} 
                 className="w-full pl-10 pr-3 py-2 rounded bg-slate-700 border border-white/8 focus:border-emerald-500/50 focus:outline-none" 
-                placeholder="tara.morgan@novaa.com" 
+                placeholder="admin@your-domain.com" 
                 required
               />
             </div>
@@ -216,11 +216,7 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        <div className="mt-6 pt-6 border-t border-white/10">
-          <p className="text-xs text-slate-400 mb-2">Demo Admin (for testing):</p>
-          <p className="text-xs text-slate-500">Email: tara.morgan@novaa.com</p>
-          <p className="text-xs text-slate-500">Codes (Set 1): ADMIN001, ADMIN002, ADMIN003</p>
-        </div>
+        {/* Demo credentials removed from UI. Use test admin seed data in your Supabase instance for testing. */}
       </div>
     </div>
   );

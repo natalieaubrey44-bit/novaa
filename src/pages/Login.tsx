@@ -20,6 +20,8 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [rateLimitMessage, setRateLimitMessage] = useState('');
+  const [step, setStep] = useState<'credentials' | 'authenticate'>('credentials');
+  const SESSION_TTL_MINUTES = 15;
 
   // Auto redirect if already logged in
   if (isLoggedIn) {
@@ -150,29 +152,40 @@ export default function Login() {
     }
   };
 
-  const handleQuickDemo = (demoType: 'alex' | 'admin') => {
+  // hidden test account credentials (used by quick demo actions, not shown in UI)
+  // Default test accounts (edit these usernames/emails/passwords here if you want different defaults)
+  const TEST_ACCOUNTS = {
+    user1: { username: 'user1', email: 'user1@novaa.test', name: 'User One', authCode: 'USER-ABC123XYZ', password: 'TestUser1!' },
+    user2: { username: 'user2', email: 'user2@novaa.test', name: 'User Two', authCode: 'USER-DEF456UVW', password: 'TestUser2!' },
+    admin1: { username: 'admin1', email: 'admin1@novaa.test', name: 'Admin One', authCode: '', password: 'AdminUser1!' },
+  } as const;
+
+  const handleQuickDemo = (demoType: 'user1' | 'user2' | 'admin1') => {
     setError('');
     setSuccess('');
     setRateLimitMessage('');
     setIsLoading(true);
     setTimeout(() => {
-      if (demoType === 'alex') {
-        setEmail('alex.carter@novaa.test');
-        setName('Alex Carter');
-        setAuthCode('USER-ABC123XYZ');
-        login('alex.carter@novaa.test', 'Alex Carter');
+      if (demoType === 'user1') {
+        const t = TEST_ACCOUNTS.user1;
+        setEmail(t.email);
+        setName(t.name);
+        setAuthCode(t.authCode);
+        login(t.email, t.name);
         navigate('/dashboard');
-      } else if (demoType === 'marcus') {
-        setEmail('marcus.fredebel@novaa.test');
-        setName('Marcus Fredebel');
-        setAuthCode('USER-DEF456UVW');
-        login('marcus.fredebel@novaa.test', 'Marcus Fredebel');
+      } else if (demoType === 'user2') {
+        const t = TEST_ACCOUNTS.user2;
+        setEmail(t.email);
+        setName(t.name);
+        setAuthCode(t.authCode);
+        login(t.email, t.name);
         navigate('/dashboard');
       } else {
-        setEmail('admin@novaa.com');
-        setName('Nova Admin');
-        setAuthCode('');
-        login('admin@novaa.com', 'Nova Admin', 'admin');
+        const t = TEST_ACCOUNTS.admin1;
+        setEmail(t.email);
+        setName(t.name);
+        setAuthCode(t.authCode);
+        login(t.email, t.name, 'admin');
         navigate('/admin/login');
       }
     }, 800);
@@ -319,7 +332,7 @@ export default function Login() {
                 <input
                   id="email-input"
                   type="email"
-                  placeholder="user1@novaa.test"
+                  placeholder="you@your-domain.com"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -354,7 +367,7 @@ export default function Login() {
               <input
                 id="authcode-input"
                 type="text"
-                placeholder="USER-ABC123XYZ"
+                placeholder="Enter enrollment code"
                 value={authCode}
                 onChange={(e) => setAuthCode(e.target.value.toUpperCase())}
                 className="w-full px-4 py-3.5 rounded-xl bg-brand-secondary/70 border border-white/15 text-white placeholder-white/50 focus:outline-none focus:border-brand-accent/50 focus:ring-1 focus:ring-brand-accent/20 transition-all text-sm"
@@ -409,51 +422,42 @@ export default function Login() {
           {/* Grid of demo profile cards */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             <button
-              onClick={() => handleQuickDemo('alex')}
+              onClick={() => handleQuickDemo('user1')}
               className="p-4 rounded-2xl bg-brand-primary/40 text-left border border-brand-secondary/60 hover:bg-brand-primary/80 hover:border-brand-accent/30 transition-all group"
             >
               <div className="flex justify-between items-start mb-2">
-                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">User 1</p>
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Starter Profile</p>
                 <span className="text-[10px] bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-1.5 py-0.5 rounded font-mono">
                   Checking Base
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: alex.carter@novaa.test</p>
-              <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-400" /> Code: USER-ABC123XYZ
-              </p>
+              <p className="text-xs text-brand-light/60">Use this profile for standard user flows.</p>
             </button>
 
             <button
-              onClick={() => handleQuickDemo('marcus')}
+              onClick={() => handleQuickDemo('user2')}
               className="p-4 rounded-2xl bg-brand-primary/40 text-left border border-brand-secondary/60 hover:bg-brand-primary/80 hover:border-brand-accent/30 transition-all group"
             >
               <div className="flex justify-between items-start mb-2">
-                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Marcus Fredebel</p>
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Investor Profile</p>
                 <span className="text-[10px] bg-sky-500/10 border border-sky-500/20 text-sky-400 px-1.5 py-0.5 rounded font-mono">
                   Investor
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: marcus.fredebel@novaa.test</p>
-              <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-400" /> Code: USER-DEF456UVW
-              </p>
+              <p className="text-xs text-brand-light/60">Use this profile to test investor flows.</p>
             </button>
 
             <button
-              onClick={() => handleQuickDemo('admin')}
+              onClick={() => handleQuickDemo('admin1')}
               className="p-4 rounded-2xl bg-slate-900/80 text-left border border-white/10 hover:bg-slate-800 hover:border-brand-accent/40 transition-all group"
             >
               <div className="flex justify-between items-start mb-2">
-                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Global Admin</p>
+                <p className="font-bold text-white text-sm group-hover:text-brand-accent transition-colors">Administrator</p>
                 <span className="text-[10px] bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 px-1.5 py-0.5 rounded font-mono">
                   Role: Admin
                 </span>
               </div>
-              <p className="text-xs text-brand-light/60">Email: tara.morgan@novaa.com</p>
-              <p className="text-xs text-brand-light/40 mt-1 flex items-center gap-1">
-                <Check size={12} className="text-green-400" /> Admin route enabled
-              </p>
+              <p className="text-xs text-brand-light/60">Use this profile to access admin routes (codes required).</p>
             </button>
           </div>
 

@@ -453,25 +453,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-brand-light dark:bg-brand-primary transition-colors text-brand-primary dark:text-white flex flex-col">
-      {/* Dynamic Sub-header Info Alert Strip */}
-      <div className="bg-brand-primary border-b border-white/8 px-4 py-2 text-xs flex flex-wrap justify-between items-center gap-2 relative z-20">
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-brand-accent"></span>
-          <span className="text-white/60">
-            Multi-Factor Token Status:{" "}
-            <strong className="text-white/90">Secure</strong>
-          </span>
-        </div>
-        <div className="flex items-center gap-4 text-white/40">
-          <span>
-            Client:{" "}
-            <strong className="text-white/70 font-medium">{user.email}</strong>
-          </span>
-          <span className="hidden md:inline">
-            Last login IP: 192.168.1.104
-          </span>
-        </div>
-      </div>
 
       <div className="flex-1 flex flex-col lg:flex-row min-w-0 relative">
         {/* Mobile Header / Hamburger Row */}
@@ -588,7 +569,17 @@ export default function Dashboard() {
           </nav>
 
           {/* Logout Unit */}
-          <div className="p-4 border-t border-white/8">
+          <div className="p-4 space-y-3 border-t border-white/8">
+            {/* Token Status */}
+            <div className="px-3 py-2.5 rounded-sm bg-white/5 border border-white/8 flex items-center justify-between text-xs">
+              <div className="flex items-center gap-2">
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-brand-accent"></span>
+                <div className="text-left">
+                  <p className="text-white/50 text-[10px] font-medium">Token Status</p>
+                  <p className="text-white/80 font-medium">Secure</p>
+                </div>
+              </div>
+            </div>
             <button
               onClick={logout}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-sm bg-white/5 hover:bg-white/10 text-white/50 hover:text-white/80 border border-white/8 transition-all text-xs font-normal tracking-wide"
@@ -600,11 +591,50 @@ export default function Dashboard() {
         </aside>
 
         {/* =======================================================
-            MAIN CONTENT WORKSPACE
+            MAIN CONTENT WORKSPACE - SPLIT LAYOUT
            ======================================================= */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
-          {/* Top Greeting and Notification Bell Row */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div className="flex-1 flex flex-col lg:flex-row gap-0 overflow-hidden">
+          {/* LEFT SIDE - STICKY */}
+          <div className="hidden lg:flex lg:flex-col lg:w-80 lg:h-screen lg:sticky lg:top-0 lg:border-r lg:border-white/8 lg:bg-brand-primary/50 lg:p-6 lg:overflow-y-auto lg:flex-shrink-0">
+            {/* Greeting Section */}
+            <div className="space-y-1 pb-6 border-b border-white/8">
+              <span className="text-[10px] font-medium text-brand-accent uppercase tracking-[3px] block">
+                Operational Portal
+              </span>
+              <h2 className="text-2xl font-display font-semibold text-brand-primary dark:text-white transition-colors">
+                Welcome back, {user.name}
+              </h2>
+              <p className="text-xs text-white/50 mt-2">{user.email}</p>
+            </div>
+
+            {/* Quick Info Card */}
+            <div className="mt-6 p-4 rounded-lg bg-white/5 border border-white/8 space-y-3">
+              <div>
+                <p className="text-[10px] text-white/50 uppercase tracking-widest font-medium">Total Assets</p>
+                <p className="text-xl font-bold text-white font-mono mt-2">
+                  ${" "}
+                  {totalBalance.toLocaleString("en-US", {
+                    minimumFractionDigits: 2,
+                  })}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/8">
+                <div>
+                  <p className="text-[9px] text-white/40 uppercase tracking-wider">Income</p>
+                  <p className="text-sm font-mono text-white mt-1">+${monthlyDirectIncome.toLocaleString()}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] text-white/40 uppercase tracking-wider">Expenses</p>
+                  <p className="text-sm font-mono text-white/60 mt-1">-${monthlyExpensesTotal.toLocaleString("en-US", { maximumFractionDigits: 0 })}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT SIDE - SCROLLABLE */}
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          {/* Top Greeting and Notification Bell Row - Mobile Only */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 lg:hidden">
             <div className="space-y-1">
               <span className="text-[10px] font-medium text-brand-accent uppercase tracking-[3px] block">
                 Operational Portal
@@ -2264,6 +2294,8 @@ export default function Dashboard() {
             )}
           </AnimatePresence>
         </main>
+          </div>
+        </div>
       </div>
     </div>
   );

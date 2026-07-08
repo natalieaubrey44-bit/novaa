@@ -2,56 +2,27 @@
 -- NOTE: To create platform_users entries that link to Supabase Auth users, replace USER_AUTH_UID with the real auth user id from Supabase Auth.
 
 -- Example platform user records
+-- Insert a single platform user for demo. Set `user_id` to NULL and link after creating an Auth user.
 insert into platform_users (id, user_id, email, name, role, status)
 values
-  ('00000000-0000-0000-0000-000000000020', '00000000-0000-0000-0000-000000000021', 'alex.carter@novaa.test', 'Alex Carter', 'user', 'active'),
-  ('00000000-0000-0000-0000-000000000022', '00000000-0000-0000-0000-000000000023', 'marcus.fredebel@novaa.test', 'Marcus Fredebel', 'user', 'active')
+  ('00000000-0000-0000-0000-000000000020', NULL, 'tamayonorma810@gmail.com', 'Alex Carter', 'user', 'active')
 on conflict do nothing;
 
 -- Example admin users (platform-wide global admins)
+-- Single admin user for demo
 insert into admin_users (id, user_id, email, name, role, status)
 values
-  ('00000000-0000-0000-0000-000000000010', null, 'tara.morgan@novaa.com', 'Tara Morgan', 'admin', 'active'),
-  ('00000000-0000-0000-0000-000000000011', null, 'maria.chen@novaa.com', 'Maria Chen', 'admin', 'active')
+  ('00000000-0000-0000-0000-000000000010', null, 'natalieaubrey44@gmail.com', 'Tara Morgan', 'admin', 'active')
 on conflict do nothing;
 
 -- Admin auth codes (two sets, rotated every 30 days)
 -- Set 1: codes for this month
-insert into admin_auth_codes (id, admin_id, code_set, code_1, code_2, code_3, expires_at, is_used, created_at)
-values
-  ('00000000-0000-0000-0000-000000000201', '00000000-0000-0000-0000-000000000010', 1, 'ADMIN001', 'ADMIN002', 'ADMIN003', now() + interval '30 days', false, now())
-on conflict do nothing;
+-- Note: admin/user auth-code seed rows removed because login now uses
+-- Supabase email/password authentication. Seed includes platform users,
+-- admin_users, starter accounts, and transactions only.
 
--- Set 2: standby codes (for next month)
-insert into admin_auth_codes (id, admin_id, code_set, code_1, code_2, code_3, expires_at, is_used, created_at)
-values
-  ('00000000-0000-0000-0000-000000000202', '00000000-0000-0000-0000-000000000010', 2, 'ADMIN004', 'ADMIN005', 'ADMIN006', now() + interval '60 days', false, now())
-on conflict do nothing;
-
--- Admin auth codes (two sets, rotated every 30 days)
--- Set 1: codes for this month
-insert into admin_auth_codes (id, admin_id, code_set, code_1, code_2, code_3, expires_at, is_used, created_at)
-values
-  ('00000000-0000-0000-0000-000000000201', '00000000-0000-0000-0000-000000000010', 1, 'ADMIN001', 'ADMIN002', 'ADMIN003', now() + interval '30 days', false, now())
-on conflict do nothing;
-
--- Set 2: standby codes (for next month)
-insert into admin_auth_codes (id, admin_id, code_set, code_1, code_2, code_3, expires_at, is_used, created_at)
-values
-  ('00000000-0000-0000-0000-000000000202', '00000000-0000-0000-0000-000000000010', 2, 'ADMIN004', 'ADMIN005', 'ADMIN006', now() + interval '60 days', false, now())
-on conflict do nothing;
-
--- User enrollment codes (admin must generate these for new users to sign up)
--- These are examples; admin generates them via dashboard
-insert into user_auth_codes (id, admin_id, email, code, is_used, expires_at, created_at)
-values
-  ('00000000-0000-0000-0000-000000000301', '00000000-0000-0000-0000-000000000010', 'alex.carter@novaa.test', 'USER-ABC123XYZ', false, now() + interval '7 days', now()),
-  ('00000000-0000-0000-0000-000000000302', '00000000-0000-0000-0000-000000000010', 'marcus.fredebel@novaa.test', 'USER-DEF456UVW', false, now() + interval '7 days', now())
-on conflict do nothing;
-
--- Example platform user placeholder: replace USER_AUTH_UID with actual auth.users.id
--- insert into platform_users (id, user_id, email, name, role, status)
--- values ('00000000-0000-0000-0000-000000000024', 'USER_AUTH_UID', 'demo.user@novaa.test', 'Demo User', 'user', 'active');
+-- Example platform user placeholder: after creating an Auth user, link it:
+-- UPDATE platform_users SET user_id = '<AUTH_USER_ID>' WHERE email = 'tamayonorma810@gmail.com';
 
 -- Starter accounts
 insert into accounts (id, owner_user_id, name, currency_code, balance, type)

@@ -1,4 +1,4 @@
-Summary of changes for Open Account wizard and Dashboard header
+# Summary of changes for Open Account wizard and Dashboard header
 
 What's been added
 
@@ -22,7 +22,7 @@ How to run locally
 npm install
 ```
 
-2. Start dev server
+1. Start dev server
 
 ```bash
 npm run dev
@@ -30,11 +30,11 @@ npm run dev
 npm start
 ```
 
-3. Open the app in the browser
+1. Open the app in the browser
 
 Visit `http://localhost:3000/open-account` and try the 4-step flow.
 
-4. Run the E2E script (manual)
+1. Run the E2E script (manual)
 
 Make sure the dev server is running, then in another terminal:
 
@@ -57,6 +57,7 @@ Next recommended steps
 - Add avatar upload and store a profile image URL in `platform_users`.
 
 If you'd like, I can now:
+
 - Wire a full Playwright test suite and CI workflow.
 - Add server-side Supabase function to initialize accounts for new users.
 - Improve accessibility and keyboard navigation for the wizard.

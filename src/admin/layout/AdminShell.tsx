@@ -102,6 +102,26 @@ export default function AdminShell() {
             })}
           </nav>
 
+          <div className="rounded-3xl border border-white/10 bg-slate-950/70 p-4 space-y-3">
+            <p className="text-[10px] uppercase tracking-[0.28em] text-slate-500">
+              Account access
+            </p>
+            <div>
+              <p className="text-sm font-semibold text-white">
+                {user?.name || "Administrator"}
+              </p>
+              <p className="mt-1 text-sm text-slate-400">{user?.email}</p>
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Client info</span>
+              <span className="font-mono text-slate-200">Admin console</span>
+            </div>
+            <div className="flex items-center justify-between text-xs text-slate-400">
+              <span>Last login</span>
+              <span className="text-slate-200">Today • 09:14</span>
+            </div>
+          </div>
+
           <button
             type="button"
             onClick={logout}

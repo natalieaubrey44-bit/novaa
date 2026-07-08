@@ -22,8 +22,33 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <section className="grid gap-6 xl:grid-cols-[1fr]">
-        <div className="space-y-6">
+      <section className="grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+        <aside className="xl:sticky xl:top-6 xl:self-start">
+          <div className="rounded-[2rem] border border-white/10 bg-slate-950/90 p-6">
+            <p className="text-sm uppercase tracking-[0.24em] text-slate-500">
+              Operational overview
+            </p>
+            <h2 className="mt-3 text-xl font-semibold text-white">
+              Admin dashboard
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-slate-400">
+              Monitor user health, risk signals, and account review queues from one place.
+            </p>
+
+            <div className="mt-6 space-y-3">
+              <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
+                <p className="text-sm text-slate-400">Flagged transactions</p>
+                <p className="mt-2 text-2xl font-semibold text-white">{flaggedTransactions}</p>
+              </div>
+              <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
+                <p className="text-sm text-slate-400">Accounts needing review</p>
+                <p className="mt-2 text-2xl font-semibold text-white">{reviewAccounts}</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <div className="space-y-6 xl:max-h-[calc(100vh-8rem)] xl:overflow-y-auto xl:pr-2">
           <div className="rounded-[2rem] border border-white/10 bg-slate-950/90 p-6">
             <div className="flex items-center justify-between gap-4">
               <div>
@@ -48,7 +73,7 @@ export default function AdminDashboard() {
 
           <div className="rounded-[2rem] border border-white/10 bg-slate-950/90 p-6">
             <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Operations queue</p>
-            <div className="mt-6 grid gap-4">
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
               <div className="rounded-3xl border border-white/10 bg-slate-900/80 p-4">
                 <p className="text-sm text-slate-400">Pending verification requests</p>
                 <p className="mt-3 text-2xl font-semibold text-white">{adminUsers.filter((user) => user.status === 'pending').length}</p>

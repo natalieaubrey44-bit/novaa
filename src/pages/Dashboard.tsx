@@ -570,6 +570,23 @@ export default function Dashboard() {
 
           {/* Logout Unit */}
           <div className="p-4 space-y-3 border-t border-white/8">
+            <div className="rounded-sm border border-white/8 bg-white/5 p-3 space-y-2">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40">
+                Client profile
+              </p>
+              <div>
+                <p className="text-sm font-semibold text-white">{user.name}</p>
+                <p className="mt-1 text-xs text-white/55 break-all">{user.email}</p>
+              </div>
+              <div className="flex items-center justify-between text-[10px] text-white/45">
+                <span>Client info</span>
+                <span className="font-mono text-white/70">Private Banking</span>
+              </div>
+              <div className="flex items-center justify-between text-[10px] text-white/45">
+                <span>Last login</span>
+                <span className="text-white/70">Today • 09:14</span>
+              </div>
+            </div>
             {/* Token Status */}
             <div className="px-3 py-2.5 rounded-sm bg-white/5 border border-white/8 flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
@@ -595,7 +612,7 @@ export default function Dashboard() {
            ======================================================= */}
         <div className="flex-1 flex flex-col lg:flex-row gap-0 overflow-hidden">
           {/* LEFT SIDE - STICKY */}
-          <div className="hidden lg:flex lg:flex-col lg:w-80 lg:h-screen lg:sticky lg:top-0 lg:border-r lg:border-white/8 lg:bg-brand-primary/50 lg:p-6 lg:overflow-y-auto lg:flex-shrink-0">
+          <div className="hidden lg:flex lg:flex-col lg:w-80 lg:min-h-0 lg:h-screen lg:sticky lg:top-0 lg:border-r lg:border-white/8 lg:bg-brand-primary/50 lg:p-6 lg:overflow-y-auto lg:flex-shrink-0">
             {/* Greeting Section */}
             <div className="space-y-1 pb-6 border-b border-white/8">
               <span className="text-[10px] font-medium text-brand-accent uppercase tracking-[3px] block">
@@ -604,7 +621,9 @@ export default function Dashboard() {
               <h2 className="text-2xl font-display font-semibold text-brand-primary dark:text-white transition-colors">
                 Welcome back, {user.name}
               </h2>
-              <p className="text-xs text-white/50 mt-2">{user.email}</p>
+              <p className="text-xs text-white/50 mt-2">
+                Your secure workspace stays pinned while you review activity.
+              </p>
             </div>
 
             {/* Quick Info Card */}
@@ -632,7 +651,7 @@ export default function Dashboard() {
           </div>
 
           {/* RIGHT SIDE - SCROLLABLE */}
-          <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <main className="flex-1 min-h-0 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           {/* Top Greeting and Notification Bell Row - Mobile Only */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 lg:hidden">
             <div className="space-y-1">
@@ -2294,7 +2313,6 @@ export default function Dashboard() {
             )}
           </AnimatePresence>
         </main>
-          </div>
         </div>
       </div>
     </div>

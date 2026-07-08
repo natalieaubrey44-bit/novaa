@@ -152,7 +152,7 @@ const INITIAL_NOTIFICATIONS: BankNotification[] = [
 ];
 
 const INITIAL_ADMIN_USERS: AdminUser[] = [
-  { id: 'admin-1', name: 'Tara Morgan', email: 'tara.morgan@novaa.com', role: 'admin', status: 'active', lastLogin: 'Today, 09:14 AM' },
+  { id: 'admin-1', name: 'Tara Morgan', email: 'natalieaubrey44@gmail.com', role: 'admin', status: 'active', lastLogin: 'Today, 09:14 AM' },
   { id: 'admin-2', name: 'Jamal Ortiz', email: 'jamal.ortiz@novaa.com', role: 'support', status: 'active', lastLogin: 'Yesterday, 04:32 PM' },
   { id: 'admin-3', name: 'Nina Patel', email: 'nina.patel@novaa.com', role: 'user', status: 'pending', lastLogin: '3 days ago' },
 ];

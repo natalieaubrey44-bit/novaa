@@ -283,6 +283,7 @@ export default function OpenAccount() {
               onChange={(e) => setForm({ ...form, country: e.target.value })}
               className={inputClass('country')}
               autoComplete="country"
+              aria-label="Select country"
             >
               <option value="">Select Country</option>
               {countries.map((country) => (
@@ -306,6 +307,7 @@ export default function OpenAccount() {
               onChange={(e) => setForm({ ...form, currency: e.target.value })}
               className={inputClass('currency')}
               autoComplete="cc-csc"
+              aria-label="Select currency"
             >
               <option value="">Select Currency</option>
               {currencies.map((currency) => (
@@ -323,6 +325,7 @@ export default function OpenAccount() {
               value={form.accountType}
               onChange={(e) => setForm({ ...form, accountType: e.target.value })}
               className={inputClass('accountType')}
+              aria-label="Select account type"
             >
               <option value="">Select Account Type</option>
               {accountTypes.map((type) => (
@@ -367,7 +370,10 @@ export default function OpenAccount() {
             <div className="mt-2">
               <div className="flex items-center gap-2 mb-2">
                 <div className="flex-1 h-2 bg-white/10 rounded overflow-hidden">
-                  <div className={`h-full bg-emerald-500 transition-all ${passwordStrength() >= 1 ? 'w-[20%]' : 'w-0'}`} style={{ width: `${(passwordStrength() / 5) * 100}%` }} />
+                  <div 
+                    className="h-full bg-emerald-500 transition-all"
+                    style={{ width: `${(passwordStrength() / 5) * 100}%` }} 
+                  />
                 </div>
                 <div className="text-xs text-white/50">{passwordStrength()}/5</div>
               </div>

@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ======================================================
+   NOVAA DESIGN TOKENS — Navy & Platinum
+
+   LIGHT MODE:
+     background  → brand-light  (#F5F6F8)
+     surfaces    → white / brand-muted (#F1F3F6)
+     headings    → brand-primary (#0F172A)
+     body text   → brand-secondary (#374151)
+     borders     → brand-dark (#CBD5E1)
+     accent      → brand-accent (#5B6B85)
+
+   DARK MODE (via dark: utilities):
+     background  → brand-navy (#0A0F1C)
+     surfaces    → brand-primary (#0F172A) / brand-secondary (#161B22)
+     headings    → white
+     body text   → white/70
+     borders     → white/10
+     accent      → #A8AFBC (platinum, brighter for dark contrast)
+   ====================================================== */
+
+@theme {
+  --font-sans:    "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-primary:   #0F172A;
+  --color-brand-secondary: #374151;
+  --color-brand-accent:    #5B6B85;
+  --color-brand-navy:      #0A0F1C;
+  --color-brand-light:     #F5F6F8;
+  --color-brand-muted:     #F1F3F6;
+  --color-brand-dark:      #CBD5E1;
+  --color-brand-success:   #1D9E75;
+  --color-brand-surface:   #161B22;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-brand-light);
+  color: var(--color-brand-primary);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Dark mode body override */
+.dark body {
+  background-color: var(--color-brand-navy);
+  color: #F5F6F8;
+}
+
+/* Smooth transitions on interactive and theme-aware elements only */
+button, a, input, textarea, select,
+[class*="transition-"] {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+}
+
+/* Override for motion/animation elements — don't inherit transition-all on transforms */
+[class*="motion"] {
+  transition-property: opacity, transform;
+}
+
+/* Respect prefers-reduced-motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dark accent glow */
+.dark .glow-accent {
+  box-shadow: 0 0 24px rgba(168, 175, 188, 0.18);
+}

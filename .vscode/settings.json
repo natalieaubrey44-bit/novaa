@@ -1,0 +1,22 @@
+{
+  "css.validate": false,
+  "edge-devtools.webhint": false,
+  "webhint.enable": false,
+  "cSpell.words": [
+    "confrelid",
+    "conname",
+    "conrelid",
+    "constraintdef",
+    "contype",
+    "Copiable",
+    "fkey",
+    "HYSA",
+    "Novaa",
+    "pgcrypto",
+    "regclass",
+    "relname",
+    "relrowsecurity",
+    "schemaname",
+    "supabase"
+  ]
+}
